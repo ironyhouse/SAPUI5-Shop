@@ -1,0 +1,506 @@
+{
+	"State" : {
+		"deleteProduct": false,
+		"deleteSupplier": false,
+		"editProduct": false
+	},
+	"Manufacture" : [
+		{"manufacture": "All"},
+		{"manufacture": "DxA"},
+		{"manufacture": "DG"},
+		{"manufacture": "FPQ"},
+		{"manufacture": "OPA"}
+	],
+	"productForm": {
+		"ProductName": "",
+		"Quantity": null,
+		"Price": null,
+		"CreationDate": "",
+		"Unit": "",
+		"ProductInfo": "",
+		"Manufacture": ""
+
+	},
+	"supplierForm": {
+		"SupplierName": "",
+		"SuppliersAddress": "",
+		"SuppliersCity": "",
+		"SuppliersCountry": ""
+	},
+	"product": [
+		{
+			"ProductName": "Apple",
+			"Quantity": 21,
+			"Price": 35,
+			"CreationDate": "2020-04-01T00:00:00",
+			"Unit": "USD",
+			"ProductImage": "https://picsum.photos/200/300",
+			"ProductInfo": "Lorem ipsum dolor sit amet consectetur adipisicing elit. Quaerat exercitationem, ex nisi iure accusamus, commodi ullam temporibus non nam possimus, qui libero porro nobis.",
+			"Manufacture": "DxA",
+			"Suppliers": [
+				{
+					"SupplierName": "ODa",
+					"SuppliersAddress": "809 Leland Ridge, Suite 844, 87164-8039",
+					"SuppliersCity": "Parkershire",
+					"SuppliersCountry": "United States",
+					"SupplierId": 1
+				},
+				{
+					"SupplierName": "OSFS",
+					"SuppliersAddress": "448 Maple Ave. East Orange, NJ 07017",
+					"SuppliersCity": "Minsk",
+					"SuppliersCountry": "Belarus",
+					"SupplierId": 2
+				},
+				{
+					"SupplierName": "SEDW",
+					"SuppliersAddress": "8503 School Dr. Chicopee, MA 01020",
+					"SuppliersCity": "Moscow",
+					"SuppliersCountry": "Russia",
+					"SupplierId": 3
+				},
+				{
+					"SupplierName": "DFA",
+					"SuppliersAddress": "Solduggstykket 3, Leil. 442, 0461",
+					"SuppliersCity": "Tandhelle",
+					"SuppliersCountry": "Norway",
+					"SupplierId": 4
+				}
+			],
+			"Sale": [
+				{
+					"SalePrice": "35",
+					"SaleQuantity": "35",
+					"SaleDate": "2020-01-01T00:00:00",
+					"SaleId": 0
+				},
+				{
+					"SalePrice": "33",
+					"SaleQuantity": "45",
+					"SaleDate": "2020-02-01T00:00:00",
+					"SaleId": 1
+				},
+				{
+					"SalePrice": "36",
+					"SaleQuantity": "30",
+					"SaleDate": "2020-03-01T00:00:00",
+					"SaleId": 2
+				},
+				{
+					"SalePrice": "34",
+					"SaleQuantity": "40",
+					"SaleDate": "2020-04-01T00:00:00",
+					"SaleId": 3
+				},
+				{
+					"SalePrice": "43",
+					"SaleQuantity": "50",
+					"SaleDate": "2020-05-01T00:00:00",
+					"SaleId": 4
+				},
+				{
+					"SalePrice": "35",
+					"SaleQuantity": "35",
+					"SaleDate": "2020-06-01T00:00:00",
+					"SaleId": 5
+				}
+			],
+			"productId": 0
+		},
+		{
+			"ProductName": "Pineapple",
+			"Quantity": 15,
+			"Price": 25,
+			"CreationDate": "2015-04-01T00:00:00",
+			"Unit": "USD",
+			"ProductImage": "https://picsum.photos/200/300",
+			"ProductInfo": "Lorem ipsum dolor sit amet consectetur adipisicing elit. Quaerat exercitationem, ex nisi iure accusamus, commodi ullam temporibus non nam possimus, qui libero porro nobis.",
+			"Manufacture": "DG",
+			"Suppliers": [
+				{
+					"SupplierName": "ODa",
+					"SuppliersAddress": "8785 Pleasant Street Upper Darby, PA 19082",
+					"SuppliersCity": "Tandhelle",
+					"SuppliersCountry": "Norway",
+					"SupplierId": 1
+				},
+				{
+					"SupplierName": "OSFS",
+					"SuppliersAddress": "80915 Cornell Plains, Apt. 855, 55726",
+					"SuppliersCity": "Janethaven",
+					"SuppliersCountry": "United States",
+					"SupplierId": 2
+				},
+				{
+					"SupplierName": "SEDW",
+					"SuppliersAddress": "Velēnu iela 249 dz. 405, dz. 106, LV6738",
+					"SuppliersCity": "Valdemārpils",
+					"SuppliersCountry": "Latvia",
+					"SupplierId": 3
+				},
+				{
+					"SupplierName": "DFA",
+					"SuppliersAddress": "Grüner Weg 5, Zimmer 453, 26378",
+					"SuppliersCity": "Zoeydorf",
+					"SuppliersCountry": "Germany",
+					"SupplierId": 4
+				}
+			],
+			"Sale": [
+				{
+					"SalePrice": "25",
+					"SaleQuantity": "35",
+					"SaleDate": "2020-01-01T00:00:00",
+					"SaleId": 0
+				},
+				{
+					"SalePrice": "20",
+					"SaleQuantity": "45",
+					"SaleDate": "2020-02-01T00:00:00",
+					"SaleId": 1
+				},
+				{
+					"SalePrice": "25",
+					"SaleQuantity": "30",
+					"SaleDate": "2020-03-01T00:00:00",
+					"SaleId": 2
+				},
+				{
+					"SalePrice": "23",
+					"SaleQuantity": "40",
+					"SaleDate": "2020-04-01T00:00:00",
+					"SaleId": 3
+				},
+				{
+					"SalePrice": "15",
+					"SaleQuantity": "50",
+					"SaleDate": "2020-05-01T00:00:00",
+					"SaleId": 4
+				},
+				{
+					"SalePrice": "25",
+					"SaleQuantity": "35",
+					"SaleDate": "2020-06-01T00:00:00",
+					"SaleId": 5
+				}
+			],
+			"productId": 1
+		},
+		{
+			"ProductName": "Milk",
+			"Quantity": 0,
+			"Price": 35,
+			"CreationDate": "2015-02-18T00:00:00",
+			"Unit": "EUR",
+			"ProductImage": "https://picsum.photos/200/300",
+			"ProductInfo": "Lorem ipsum dolor sit amet consectetur adipisicing elit. Quaerat exercitationem, ex nisi iure accusamus, commodi ullam temporibus non nam possimus, qui libero porro nobis.",
+			"Manufacture": "FPQ",
+			"Suppliers": [
+				{
+					"SupplierName": "ODa",
+					"SuppliersAddress": "809 Leland Ridge, Suite 844, 87164-8039",
+					"SuppliersCity": "Parkershire",
+					"SuppliersCountry": "United States",
+					"SupplierId": 1
+				},
+				{
+					"SupplierName": "OSFS",
+					"SuppliersAddress": "Rotonda Ido 0, Appartamento 53, 79715",
+					"SuppliersCity": "Franco",
+					"SuppliersCountry": "Italy",
+					"SupplierId": 2
+				},
+				{
+					"SupplierName": "SEDW",
+					"SuppliersAddress": "Grüner Weg 5, Zimmer 453, 26378",
+					"SuppliersCity": "Zoeydorf",
+					"SuppliersCountry": "Germany",
+					"SupplierId": 3
+				},
+				{
+					"SupplierName": "DFA",
+					"SuppliersAddress": "Geigergasse 21, 5 OG, 9390",
+					"SuppliersCity": "Johnsbach",
+					"SuppliersCountry": "Austria",
+					"SupplierId": 4
+				}
+			],
+			"Sale": [
+				{
+					"SalePrice": "25",
+					"SaleQuantity": "35",
+					"SaleDate": "2020-01-01T00:00:00",
+					"SaleId": 0
+				},
+				{
+					"SalePrice": "25",
+					"SaleQuantity": "45",
+					"SaleDate": "2020-02-01T00:00:00",
+					"SaleId": 1
+				},
+				{
+					"SalePrice": "6",
+					"SaleQuantity": "30",
+					"SaleDate": "2020-03-01T00:00:00",
+					"SaleId": 2
+				},
+				{
+					"SalePrice": "35",
+					"SaleQuantity": "40",
+					"SaleDate": "2020-04-01T00:00:00",
+					"SaleId": 3
+				},
+				{
+					"SalePrice": "30",
+					"SaleQuantity": "50",
+					"SaleDate": "2020-05-01T00:00:00",
+					"SaleId": 4
+				},
+				{
+					"SalePrice": "35",
+					"SaleQuantity": "35",
+					"SaleDate": "2020-06-01T00:00:00",
+					"SaleId": 5
+				}
+			],
+			"productId": 2
+		},
+		{
+			"ProductName": "Canned Beans",
+			"Quantity": 6,
+			"Price": 30,
+			"CreationDate": "2015-03-02T00:00:00",
+			"Unit": "RUB",
+			"ProductImage": "https://picsum.photos/200/300",
+			"ProductInfo": "Lorem ipsum dolor sit amet consectetur adipisicing elit. Quaerat exercitationem, ex nisi iure accusamus, commodi ullam temporibus non nam possimus, qui libero porro nobis.",
+			"Manufacture": "OPA",
+			"Suppliers": [
+				{
+					"SupplierName": "ODa",
+					"SuppliersAddress": "Grüner Weg 5, Zimmer 453, 26378",
+					"SuppliersCity": "Zoeydorf",
+					"SuppliersCountry": "Germany",
+					"SupplierId": 0
+				},
+				{
+					"SupplierName": "OSFS",
+					"SuppliersAddress": "Rotonda Ido 0, Appartamento 53, 79715",
+					"SuppliersCity": "Franco",
+					"SuppliersCountry": "Italy",
+					"SupplierId": 2
+				},
+				{
+					"SupplierName": "SEDW",
+					"SuppliersAddress": "809 Leland Ridge, Suite 844, 87164-8039",
+					"SuppliersCity": "Parkershire",
+					"SuppliersCountry": "United States",
+					"SupplierId": 3
+				},
+				{
+					"SupplierName": "DFA",
+					"SuppliersAddress": "Solduggstykket 3, Leil. 442, 0461",
+					"SuppliersCity": "Tandhelle",
+					"SuppliersCountry": "Norway",
+					"SupplierId": 4
+				}
+			],
+			"Sale": [
+				{
+					"SalePrice": "25",
+					"SaleQuantity": "35",
+					"SaleDate": "2020-01-01T00:00:00",
+					"SaleId": 0
+				},
+				{
+					"SalePrice": "20",
+					"SaleQuantity": "45",
+					"SaleDate": "2020-02-01T00:00:00",
+					"SaleId": 1
+				},
+				{
+					"SalePrice": "30",
+					"SaleQuantity": "30",
+					"SaleDate": "2020-03-01T00:00:00",
+					"SaleId": 2
+				},
+				{
+					"SalePrice": "25",
+					"SaleQuantity": "40",
+					"SaleDate": "2020-04-01T00:00:00",
+					"SaleId": 3
+				},
+				{
+					"SalePrice": "20",
+					"SaleQuantity": "50",
+					"SaleDate": "2020-05-01T00:00:00",
+					"SaleId": 4
+				},
+				{
+					"SalePrice": "35",
+					"SaleQuantity": "35",
+					"SaleDate": "2020-06-01T00:00:00",
+					"SaleId": 5
+				}
+			],
+			"productId": 3
+		},
+		{
+			"ProductName": "Salad",
+			"Quantity": 0,
+			"Price": 45,
+			"CreationDate": "2015-04-12T00:00:00",
+			"Unit": "USD",
+			"ProductImage": "https://picsum.photos/200/300",
+			"ProductInfo": "Lorem ipsum dolor sit amet consectetur adipisicing elit. Quaerat exercitationem, ex nisi iure accusamus, commodi ullam temporibus non nam possimus, qui libero porro nobis.",
+			"Manufacture": "POAI",
+			"Suppliers": [
+				{
+					"SupplierName": "ODa",
+					"SuppliersAddress": "809 Leland Ridge, Suite 844, 87164-8039",
+					"SuppliersCity": "Parkershire",
+					"SuppliersCountry": "United States",
+					"SupplierId": 1
+				},
+				{
+					"SupplierName": "OSFS",
+					"SuppliersAddress": "Geigergasse 21, 5 OG, 9390",
+					"SuppliersCity": "Johnsbach",
+					"SuppliersCountry": "Austria",
+					"SupplierId": 2
+				},
+				{
+					"SupplierName": "SEDW",
+					"SuppliersAddress": "Rotonda Ido 0, Appartamento 53, 79715",
+					"SuppliersCity": "Franco",
+					"SuppliersCountry": "Italy",
+					"SupplierId": 3
+				},
+				{
+					"SupplierName": "DFA",
+					"SuppliersAddress": "Grüner Weg 5, Zimmer 453, 26378",
+					"SuppliersCity": "Zoeydorf",
+					"SuppliersCountry": "Germany",
+					"SupplierId": 4
+				}
+			],
+			"Sale": [
+				{
+					"SalePrice": "30",
+					"SaleQuantity": "35",
+					"SaleDate": "2020-01-01T00:00:00",
+					"SaleId": 0
+				},
+				{
+					"SalePrice": "35",
+					"SaleQuantity": "45",
+					"SaleDate": "2020-02-01T00:00:00",
+					"SaleId": 1
+				},
+				{
+					"SalePrice": "35",
+					"SaleQuantity": "30",
+					"SaleDate": "2020-03-01T00:00:00",
+					"SaleId": 2
+				},
+				{
+					"SalePrice": "30",
+					"SaleQuantity": "40",
+					"SaleDate": "2020-04-01T00:00:00",
+					"SaleId": 3
+				},
+				{
+					"SalePrice": "30",
+					"SaleQuantity": "50",
+					"SaleDate": "2020-05-01T00:00:00",
+					"SaleId": 4
+				},
+				{
+					"SalePrice": "45",
+					"SaleQuantity": "35",
+					"SaleDate": "2020-06-01T00:00:00",
+					"SaleId": 5
+				}
+			],
+			"productId": 4
+		},
+		{
+			"ProductName": "Bread",
+			"Quantity": 1,
+			"Price": 150,
+			"CreationDate": "2015-01-27T00:00:00",
+			"Unit": "BYN",
+			"ProductImage": "https://picsum.photos/200/300",
+			"ProductInfo": "Lorem ipsum dolor sit amet consectetur adipisicing elit. Quaerat exercitationem, ex nisi iure accusamus, commodi ullam temporibus non nam possimus, qui libero porro nobis.",
+			"Manufacture": "DxA",
+			"Suppliers": [
+				{
+					"SupplierName": "ODa",
+					"SuppliersAddress": "809 Leland Ridge, Suite 844, 87164-8039",
+					"SuppliersCity": "Parkershire",
+					"SuppliersCountry": "United States",
+					"SupplierId": 1
+				},
+				{
+					"SupplierName": "OSFS",
+					"SuppliersAddress": "Grüner Weg 5, Zimmer 453, 26378",
+					"SuppliersCity": "Zoeydorf",
+					"SuppliersCountry": "Germany",
+					"SupplierId": 2
+				},
+				{
+					"SupplierName": "SEDW",
+					"SuppliersAddress": "Solduggstykket 3, Leil. 442, 0461",
+					"SuppliersCity": "Tandhelle",
+					"SuppliersCountry": "Norway",
+					"SupplierId": 3
+				},
+				{
+					"SupplierName": "DFA",
+					"SuppliersAddress": "Rotonda Ido 0, Appartamento 53, 79715",
+					"SuppliersCity": "Franco",
+					"SuppliersCountry": "Italy",
+					"SupplierId": 4
+				}
+			],
+			"Sale": [
+				{
+					"SalePrice": "100",
+					"SaleQuantity": "130",
+					"SaleDate": "2020-01-01T00:00:00",
+					"SaleId": 0
+				},
+				{
+					"SalePrice": "90",
+					"SaleQuantity": "100",
+					"SaleDate": "2020-02-01T00:00:00",
+					"SaleId": 1
+				},
+				{
+					"SalePrice": "150",
+					"SaleQuantity": "90",
+					"SaleDate": "2020-03-01T00:00:00",
+					"SaleId": 2
+				},
+				{
+					"SalePrice": "80",
+					"SaleQuantity": "120",
+					"SaleDate": "2020-04-01T00:00:00",
+					"SaleId": 3
+				},
+				{
+					"SalePrice": "100",
+					"SaleQuantity": "110",
+					"SaleDate": "2020-05-01T00:00:00",
+					"SaleId": 4
+				},
+				{
+					"SalePrice": "150",
+					"SaleQuantity": "90",
+					"SaleDate": "2020-06-01T00:00:00",
+					"SaleId": 5
+				}
+			],
+			"productId": 5
+		}
+	]
+}

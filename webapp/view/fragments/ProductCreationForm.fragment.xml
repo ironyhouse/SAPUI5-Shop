@@ -1,0 +1,133 @@
+<core:FragmentDefinition xmlns="sap.m"
+    xmlns:f="sap.ui.layout.form"
+    xmlns:core="sap.ui.core">
+    <Dialog
+        title="{i18n>productCreationTitle}"
+        id="productCreator">
+        <f:SimpleForm
+            maxContainerCols="1"
+            layout="ResponsiveGridLayout"
+            labelSpanL="12"
+            labelSpanM="12"
+            emptySpanL="0"
+            emptySpanM="0"
+            columnsL="1"
+            columnsM="1">
+            <f:content>
+                <!-- Name -->
+                <Label text="{i18n>productName}"/>
+                <Input
+                    id="ProductName"
+                    value= "{
+						path: 'ProductList>/productForm/ProductName',
+						type: 'sap.ui.model.type.String',
+						constraints: {
+							minLength: 3,
+							maxLength: 255
+						}
+					}"
+                    required="true"
+                    placeholder="{i18n>productPlaceholderName}" />
+                <!-- Price -->
+                <Label text="{i18n>price}"/>
+                <Input
+                    id="Price"
+                    value="{
+						path: 'ProductList>/productForm/Price',
+						type: 'sap.ui.model.type.Float',
+						formatOptions: {
+							decimals: 0
+						},
+						constraints: {
+							minimum: 1,
+							maximum: 100000000
+						}
+					}"
+                    required="true"
+                    placeholder="{i18n>producPlaceholderPrice}"/>
+                <!-- Unit -->
+                <Label
+                    text="{i18n>unit}"
+                    required="true"/>
+                <Select
+                    id="Unit"
+                    forceSelection="false"
+                    selectedKey="{ProductList>/productForm/Unit}">
+                    <core:Item key="EUR" text="EUR"/>
+                    <core:Item key="USD" text="USD"/>
+                    <core:Item key="RUB" text="RUB"/>
+                    <core:Item key="BYN" text="BYN"/>
+                </Select>
+                <!-- Quantity -->
+                <Label text="{i18n>quantity}"/>
+                <Input
+                    id="Quantity"
+                    value="{
+                        path: 'ProductList>/productForm/Quantity',
+                        type: 'sap.ui.model.type.Float',
+                        formatOptions: {
+                            decimals: 0
+                        },
+                        constraints: {
+                            minimum: 1,
+                            maximum: 100000000
+                        }
+                    }"
+                    required="true"
+                    placeholder="{i18n>producPlaceholderQuantity}"/>
+                <!-- Product Info -->
+                <Label text="{i18n>productInfo}"/>
+                <Input
+                    id="ProductInfo"
+                    value="{
+						path: 'ProductList>/productForm/ProductInfo',
+						type: 'sap.ui.model.type.String',
+						constraints: {
+							minLength: 3,
+							maxLength: 255
+						}
+					}"
+                    required="true"
+                    placeholder="{i18n>producPlaceholdertInfo}"/>
+                <!-- Creation Date -->
+                <Label
+                    text="{i18n>productCreationDate}"
+                    required="true" />
+                <DatePicker
+                    id="CreationDate"
+                    value="{
+                        path: 'ProductList>/productForm/CreationDate',
+                        type: 'sap.ui.model.type.Date',
+					    formatOptions: {
+                            style: 'long'
+                        }
+                    }" />
+                <!-- Manufacture -->
+                <Label
+                    text="{i18n>manufacture}"
+                    required="true"/>
+                <Select
+                    id="Manufacture"
+                    forceSelection="false"
+                    selectedKey="{ProductList>/productForm/Manufacture}">
+                    <core:Item key="DxA" text="DxA"/>
+                    <core:Item key="DG" text="DG"/>
+                    <core:Item key="FPQ" text="FPQ"/>
+                    <core:Item key="OPA" text="OPA"/>
+                </Select>
+
+            </f:content>
+        </f:SimpleForm>
+        <!-- Buttons -->
+        <buttons>
+            <Button
+                id="formButton"
+                type="Emphasized"
+                text="{i18n>create}"
+                press="onCreateProductPress"/>
+            <Button
+                text="{i18n>cancel}"
+                press="onCancelProductPress" />
+        </buttons>
+    </Dialog>
+</core:FragmentDefinition>

@@ -1,0 +1,504 @@
+<mvc:View controllerName="sap.ui.Shop.controller.ProductInfo"
+    xmlns:mvc="sap.ui.core.mvc"
+	xmlns:core="sap.ui.core"
+	xmlns="sap.uxap"
+	xmlns:layout="sap.ui.layout"
+	xmlns:m="sap.m"
+	xmlns:f="sap.f"
+	xmlns:forms="sap.ui.layout.form"
+    xmlns:viz="sap.viz.ui5.controls"
+    xmlns:viz.feeds="sap.viz.ui5.controls.common.feeds"
+    xmlns:viz.data="sap.viz.ui5.data">
+	<ObjectPageLayout
+		showTitleInHeaderContent="true"
+		showEditHeaderButton="true"
+		upperCaseAnchorBar="false"
+		editHeaderButtonPress="handleEditBtnPress"
+		showFooter="{ProductList>/State/editProduct}">
+		<headerTitle>
+			<ObjectPageDynamicHeaderTitle>
+				<!-- Breadcrumbs -->
+				<breadcrumbs>
+					<m:Breadcrumbs id="breadcrumbsId">
+						<m:Link
+							text="{i18n>productListTitle}"
+							press="navToProductList"/>
+						<m:Link text="{i18n>productInfoTitle}" />
+					</m:Breadcrumbs>
+				</breadcrumbs>
+				<!-- Title -->
+				<heading>
+					<m:FlexBox
+						fitContainer="true"
+						alignItems="Center">
+						<f:Avatar
+								src="{ProductList>ProductImage}"
+								class="sapUiTinyMarginEnd"/>
+						<layout:VerticalLayout class="sapUiSmallMarginBeginEnd">
+							<m:Title
+								text="{ProductList>ProductName}"
+								wrapping="true"
+								visible="{= !${ProductList>/State/editProduct}}"/>
+							<m:Label text="{i18n>name}"
+								visible="{ProductList>/State/editProduct}" />
+							<m:Input
+								id="ProductName"
+								value="{ProductList>ProductName}"
+								visible="{ProductList>/State/editProduct}" />
+						</layout:VerticalLayout>
+					</m:FlexBox>
+				</heading>
+				<!-- Edit Button -->
+				<actions>
+					<m:Button
+						text="{i18n>edit}"
+						type="Emphasized"
+						enabled="{= !${ProductList>/State/editProduct}}"
+						press="onEditProductPress"/>
+				</actions>
+			</ObjectPageDynamicHeaderTitle>
+		</headerTitle>
+		<headerContent>
+		</headerContent>
+
+		<!-- Content -->
+		<sections>
+			<ObjectPageSection
+				titleUppercase="false"
+				title="{i18n>productTitleAboutProduct}">
+				<subSections>
+					<ObjectPageSubSection title="Connect">
+						<m:VBox>
+							<forms:SimpleForm
+								editable="true"
+								layout="ColumnLayout"
+								columnsM="2"
+								columnsL="2"
+								columnsXL="2"
+								adjustLabelSpan="true">
+
+								<!-- Column 1 -->
+								<!-- Price -->
+								<m:Label text="{i18n>price}" />
+								<m:ObjectNumber
+										number="{
+											parts:[{path:'ProductList>Price'}],
+											formatOptions: {showMeasure: false}}"
+										unit="{path:'ProductList>Unit'}"
+										state="{=	${ProductList>Quantity} > 0 ? 'Success' : 'Error' }"
+										visible="{= !${ProductList>/State/editProduct}}"/>
+								<m:Input
+									id="ProductPrice"
+									value="{
+										path: 'ProductList>Price',
+										type: 'sap.ui.model.type.Float',
+										formatOptions: {
+											decimals: 0
+										},
+										constraints: {
+											minimum: 1,
+											maximum: 100000000
+										}
+									}"
+									visible="{ProductList>/State/editProduct}"/>
+								<!-- Unit -->
+								<m:Label
+									text="{i18n>unit}"
+									visible="{ProductList>/State/editProduct}"/>
+								<m:ActionSelect
+									id="ProductUnit"
+									width="50%"
+									forceSelection="false"
+									selectedKey="{ProductList>Unit}"
+									visible="{ProductList>/State/editProduct}">
+									<m:items>
+										<core:Item
+											key="EUR" text="EUR"/>
+										<core:Item
+											key="USD" text="USD"/>
+										<core:Item
+											key="RUB" text="RUB"/>
+										<core:Item
+											key="BYN" text="BYN"/>
+									</m:items>
+								</m:ActionSelect>
+								<!-- Quantity -->
+								<m:Label text="{i18n>quantity}"/>
+								<m:ObjectNumber
+										number="{
+											parts:[{path:'ProductList>Quantity'}],
+											formatOptions: {showMeasure: false}}"
+										state="{=	${ProductList>Quantity} > 0 ? 'Success' : 'Error' }"
+										visible="{= !${ProductList>/State/editProduct}}"/>
+								<m:Input
+									id="ProductQuantity"
+									value="{
+										path: 'ProductList>Quantity',
+										type: 'sap.ui.model.type.Float',
+										formatOptions: {
+											decimals: 0
+										},
+										constraints: {
+											minimum: 1,
+											maximum: 100000000
+										}
+									}"
+									visible="{ProductList>/State/editProduct}"/>
+
+								<!-- Column 2 -->
+								<!-- Manufacture -->
+								<m:Label text="{i18n>manufacture}"/>
+								<m:Text
+									text="{ProductList>Manufacture}"
+									visible="{= !${ProductList>/State/editProduct}}"/>
+								<m:Select
+									id="ProductManufacture"
+									forceSelection="false"
+									selectedKey="{ProductList>Manufacture}"
+									visible="{ProductList>/State/editProduct}">
+									<m:items>
+										<core:Item
+											key="DxA" text="DxA"/>
+										<core:Item
+											key="DG" text="DG"/>
+										<core:Item
+											key="FPQ" text="FPQ"/>
+										<core:Item
+											key="OPA" text="OPA"/>
+									</m:items>
+								</m:Select>
+								<!-- CreationDate -->
+								<m:Label text="{i18n>productTitleDate}"/>
+								<m:Text text="{
+											path: 'ProductList>CreationDate',
+											type: 'sap.ui.model.type.Date',
+											formatOptions: {
+												source: {
+													pattern: 'yyyy-MM-ddTHH:mm:ss'
+												}
+											}
+										}"
+										visible="{= !${ProductList>/State/editProduct}}"
+								/>
+								<m:DatePicker
+									id="ProductDate"
+                    				value="{
+											path: 'ProductList>CreationDate',
+											type: 'sap.ui.model.type.Date',
+											formatOptions: {
+												source: {
+													pattern: 'yyyy-MM-ddTHH:mm:ss'
+												}
+											}
+										}"
+									visible="{ProductList>/State/editProduct}" />
+							</forms:SimpleForm>
+						</m:VBox>
+						<!-- <m:FlexBox wrap="Wrap"> -->
+							<!-- Price -->
+							<!-- <layout:VerticalLayout>
+								<m:Label text="{i18n>price}"/>
+								<m:ObjectNumber
+										number="{
+											parts:[{path:'ProductList>Price'}],
+											formatOptions: {showMeasure: false}}"
+										unit="{path:'ProductList>Unit'}"
+										state="{=	${ProductList>Quantity} > 0 ? 'Success' : 'Error' }"
+										visible="{= !${ProductList>/State/editProduct}}"/>
+								<m:Input
+									id="ProductPrice"
+									value="{
+										path: 'ProductList>Price',
+										type: 'sap.ui.model.type.Float',
+										formatOptions: {
+											decimals: 0
+										},
+										constraints: {
+											minimum: 1,
+											maximum: 100000000
+										}
+									}"
+									visible="{ProductList>/State/editProduct}"/>
+							</layout:VerticalLayout> -->
+							<!-- Unit -->
+							<!-- <layout:VerticalLayout
+								class="sapUiSmallMarginBeginEnd"
+								visible="{ProductList>/State/editProduct}">
+								<m:Label text="{i18n>unit}"/>
+								<m:ActionSelect
+									id="ProductUnit"
+									forceSelection="false"
+									selectedKey="{ProductList>Unit}">
+									<m:items>
+										<core:Item
+											key="EUR" text="EUR"/>
+										<core:Item
+											key="USD" text="USD"/>
+										<core:Item
+											key="RUB" text="RUB"/>
+										<core:Item
+											key="BYN" text="BYN"/>
+									</m:items>
+								</m:ActionSelect>
+							</layout:VerticalLayout> -->
+							<!-- Quantity -->
+							<!-- <layout:VerticalLayout class="sapUiSmallMarginBeginEnd">
+								<m:Label text="{i18n>quantity}"/>
+								<m:ObjectNumber
+										number="{
+											parts:[{path:'ProductList>Quantity'}],
+											formatOptions: {showMeasure: false}}"
+										state="{=	${ProductList>Quantity} > 0 ? 'Success' : 'Error' }"
+										visible="{= !${ProductList>/State/editProduct}}"/>
+								<m:Input
+									id="ProductQuantity"
+									value="{
+										path: 'ProductList>Quantity',
+										type: 'sap.ui.model.type.Float',
+										formatOptions: {
+											decimals: 0
+										},
+										constraints: {
+											minimum: 1,
+											maximum: 100000000
+										}
+									}"
+									visible="{ProductList>/State/editProduct}"/>
+							</layout:VerticalLayout>
+						</m:FlexBox> -->
+					<!-- </ObjectPageSubSection> -->
+
+					<!-- <ObjectPageSubSection >
+						<m:FlexBox wrap="Wrap"> -->
+							<!-- Manufacture -->
+							<!-- <layout:VerticalLayout class="sapUiSmallMarginBeginEnd">
+								<m:Label text="{i18n>manufacture}"/>
+								<m:Text
+									text="{ProductList>Manufacture}"
+									visible="{= !${ProductList>/State/editProduct}}"/>
+								<m:Select
+									id="ProductManufacture"
+									forceSelection="false"
+									selectedKey="{ProductList>Manufacture}"
+									visible="{ProductList>/State/editProduct}">
+									<m:items>
+										<core:Item
+											key="DxA" text="DxA"/>
+										<core:Item
+											key="DG" text="DG"/>
+										<core:Item
+											key="FPQ" text="FPQ"/>
+										<core:Item
+											key="OPA" text="OPA"/>
+									</m:items>
+								</m:Select>
+							</layout:VerticalLayout> -->
+
+							<!-- <layout:VerticalLayout class="sapUiSmallMarginBeginEnd">
+								<m:Label text="{i18n>productTitleDate}"/>
+								<m:Text text="{
+											path: 'ProductList>CreationDate',
+											type: 'sap.ui.model.type.Date',
+											formatOptions: {
+												source: {
+													pattern: 'yyyy-MM-ddTHH:mm:ss'
+												}
+											}
+										}"
+										visible="{= !${ProductList>/State/editProduct}}"
+								/>
+								<m:DatePicker
+									id="ProductDate"
+                    				value="{
+											path: 'ProductList>CreationDate',
+											type: 'sap.ui.model.type.Date',
+											formatOptions: {
+												source: {
+													pattern: 'yyyy-MM-ddTHH:mm:ss'
+												}
+											}
+										}"
+									visible="{ProductList>/State/editProduct}" />
+							</layout:VerticalLayout> -->
+
+						<!-- </m:FlexBox> -->
+					</ObjectPageSubSection>
+				</subSections>
+			</ObjectPageSection>
+			<ObjectPageSection
+				titleUppercase="false"
+				showTitle="false"
+				title="{i18n>productTitleSuppliers}">
+				<subSections>
+					<ObjectPageSubSection>
+						<blocks>
+							<!-- Table -->
+							<m:Table
+								id="SuppliersTable"
+								mode="MultiSelect"
+								selectionChange="onSelectSupplierPress"
+								items="{path : 'ProductList>Suppliers'}">
+								<m:headerToolbar>
+									<m:OverflowToolbar design="Solid">
+										<!-- Title -->
+										<m:Title
+											class="sapUiSmallMarginBegin"
+											text="{i18n>suppliersTableTitle}" />
+										<!-- Spacer -->
+										<m:ToolbarSpacer />
+										<!-- Search Product -->
+										<m:SearchField
+											id="suppliersSearch"
+											value="" width="30%"
+											placeholder="{i18n>suppliersSearchPlaceholder}"
+											search="onSuppliersSearch" />
+										<!-- Edit Buttons -->
+										<m:Button
+											text="{i18n>add}"
+											type="Transparent"
+											press="onAddSupplierPress" />
+										<m:Button
+											text= "{i18n>delete}"
+											type="Transparent"
+											enabled="{ProductList>/State/deleteSupplier}"
+											press="onDeleteSupplierPress" />
+									</m:OverflowToolbar>
+								</m:headerToolbar>
+								<m:columns>
+									<m:Column width="25%">
+										<m:HBox
+											alignItems="Center"
+											justifyContent="Center">
+												<m:Label
+													text="{i18n>supplierName}"
+													design="Bold" />
+										</m:HBox>
+									</m:Column>
+									<m:Column>
+										<m:HBox
+											alignItems="Center"
+											justifyContent="Center">
+												<m:Label
+													text="{i18n>supplierAddress}"
+													design="Bold" />
+										</m:HBox>
+									</m:Column>
+								</m:columns>
+								<m:items>
+									<m:ColumnListItem>
+										<m:HBox
+											width="30%"
+											alignItems="Center"
+											justifyContent="Start">
+												<m:Text text="{ProductList>SupplierName}" />
+										</m:HBox>
+										<m:HBox
+											width="100%"
+											alignItems="Center"
+											justifyContent="Start">
+												<m:Text
+													core:require="{
+														formatMessage: 'sap/base/strings/formatMessage'
+													}"
+													text="{
+														parts: [
+															{path: 'i18n>supplierFullAddress'},
+															{path: 'ProductList>SuppliersAddress'},
+															{path: 'ProductList>SuppliersCity'},
+															{path: 'ProductList>SuppliersCountry'}
+														],
+														formatter: 'formatMessage'
+													}" />
+										</m:HBox>
+									</m:ColumnListItem>
+								</m:items>
+							</m:Table>
+						</blocks>
+					</ObjectPageSubSection>
+				</subSections>
+			</ObjectPageSection>
+		</sections>
+
+		<sections>
+			<ObjectPageSection
+					titleUppercase="false"
+					showTitle="false"
+					title="{i18n>productTitleSales}">
+					<subSections>
+						<ObjectPageSubSection>
+							<blocks>
+								<layout:FixFlex
+									minFlexSize="300">
+									<layout:flexContent>
+										<viz:VizFrame
+										 	vizProperties="{
+												 title: {
+													text : 'Sales',
+													visible : true
+												}
+											}"
+											height="100%"
+											width="100%"
+											vizType='dual_timeseries_combination'>
+											<viz:dataset>
+												<viz.data:FlattenedDataset data="{ProductList>Sale}">
+													<viz.data:dimensions>
+														<viz.data:DimensionDefinition
+															name="Date"
+															value="{SaleDate}"
+															dataType="date" />
+													</viz.data:dimensions>
+
+													<viz.data:measures>
+														<viz.data:MeasureDefinition
+															name="Price"
+															value="{SalePrice}" />
+													</viz.data:measures>
+
+													<viz.data:measures>
+														<viz.data:MeasureDefinition
+															name="Quantity"
+															value="{SaleQuantity}" />
+													</viz.data:measures>
+												</viz.data:FlattenedDataset>
+											</viz:dataset>
+
+											<viz:feeds>
+												<viz.feeds:FeedItem
+													uid="valueAxis"
+													type="Measure"
+													values="Price" />
+												<viz.feeds:FeedItem
+													uid="valueAxis2"
+													type="Measure"
+													values="Quantity" />
+												<viz.feeds:FeedItem
+													uid="timeAxis"
+													type="Dimension"
+													values="Date" />
+											</viz:feeds>
+										</viz:VizFrame>
+									</layout:flexContent>
+								</layout:FixFlex>
+							</blocks>
+						</ObjectPageSubSection>
+					</subSections>
+			</ObjectPageSection>
+		</sections>
+
+		<footer>
+			<m:OverflowToolbar>
+				<m:content>
+					<m:ToolbarSpacer />
+					<m:Button
+						text="{i18n>save}"
+						type="Emphasized"
+						press="onSaveChangesPress" />
+					<m:Button
+						text="{i18n>cancel}"
+						press="onCancelChangesPress" />
+				</m:content>
+			</m:OverflowToolbar>
+		</footer>
+	</ObjectPageLayout>
+</mvc:View>
