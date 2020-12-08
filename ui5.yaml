@@ -1,0 +1,7 @@
+specVersion: '2.2'
+metadata:
+  name: leverx-task-1-shop
+type: application
+framework:
+  name: OpenUI5
+  version: "1.84.0"
