@@ -124,7 +124,13 @@ sap.ui.define([
          *  This method change a product.
          */
         onSaveChangesPress: function () {
-            this.getView().getModel("ProductList").setProperty("/State/editProduct", false);
+            var nValidationError = sap.ui
+                .getCore()
+                .getMessageManager().getMessageModel().oData.length;
+
+            if (nValidationError === 0) {
+                this.getView().getModel("ProductList").setProperty("/State/editProduct", false);
+            }
         },
 
         /**
@@ -275,7 +281,7 @@ sap.ui.define([
          * Execute "delete" request of the supplier.
          */
         onDeleteSupplier: function () {
-            var oSupplier, nSupplierId,
+            var nSupplierId,
                 sSupplierMessageDeleteSuccessful = this.getView().getModel("i18n").getProperty("supplierMessageDeleteSuccessful"),
                 oModel = this.getView().getModel("ProductList"),
                 aProducts = oModel.getProperty("/product"),
@@ -287,27 +293,17 @@ sap.ui.define([
                 onSelectSupplier = this.onSelectSupplierPress.bind(this);
 
             // filtered suppliers
-            // if (aSelectedSuppliers.length) {
-            //     aSelectedSuppliers.forEach((item) => {
-            //         oSupplier = item;
-            //         nSupplierId = oSupplier.getBindingContext("ProductList").getProperty("SupplierId");
-            //         aSuppliers = aSuppliers.filter(item => item.SupplierId !== nSupplierId);
-            //     });
-            // }
-
-            // filtered suppliers
             if (aSelectedSuppliers.length) {
                 aSuppliers = aSuppliers.filter(function(item) {
                     var bIsValid = true;
-
                     // check item
                     for (var i = 0; i < aSelectedSuppliers.length; i++) {
                         nSupplierId = aSelectedSuppliers[i].getBindingContext("ProductList").getProperty("SupplierId")
                         if (item.SupplierId === nSupplierId) {
                             bIsValid = false;
+                            break;
                         }
                     }
-
                     return bIsValid
                 });
             }

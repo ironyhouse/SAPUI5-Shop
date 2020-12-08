@@ -151,7 +151,16 @@
 								<m:Text
 									text="{ProductList>Manufacture}"
 									visible="{= !${ProductList>/State/editProduct}}"/>
-								<m:Select
+								<m:ComboBox
+									items="{
+										path: 'ProductList>/Manufacture'
+									}"
+									selectedKey="{ProductList>Manufacture}">
+									<core:Item
+										key="{ProductList>manufacture}"
+										text="{ProductList>manufacture}" />
+								</m:ComboBox>
+								<!-- <m:Select
 									id="ProductManufacture"
 									forceSelection="false"
 									selectedKey="{ProductList>Manufacture}"
@@ -166,7 +175,7 @@
 										<core:Item
 											key="OPA" text="OPA"/>
 									</m:items>
-								</m:Select>
+								</m:Select> -->
 								<!-- CreationDate -->
 								<m:Label text="{i18n>productTitleDate}"/>
 								<m:Text text="{
