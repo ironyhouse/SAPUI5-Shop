@@ -26,13 +26,12 @@
 							maxLength: 255
 						}
 					}"
-                    change=".onInputChange"
                     required="true"
-                    placeholder="{i18n>productPlaceholderName}" />
+                    placeholder="{i18n>productPlaceholderName}"
+                    change="checkFormValid" />
                 <!-- Price -->
                 <Label text="{i18n>price}"/>
                 <Input
-                change=".onInputChange"
                     id="Price"
                     value="{
 						path: 'ProductList>/productForm/Price',
@@ -46,7 +45,8 @@
 						}
 					}"
                     required="true"
-                    placeholder="{i18n>producPlaceholderPrice}"/>
+                    placeholder="{i18n>producPlaceholderPrice}"
+                    change="checkFormValid"/>
                 <!-- Unit -->
                 <Label
                     text="{i18n>unit}"
@@ -55,7 +55,8 @@
                     id="Unit"
                     items="{ProductList>/Unit}"
                     forceSelection="false"
-                    selectedKey="{ProductList>/productForm/Unit}">
+                    selectedKey="{ProductList>/productForm/Unit}"
+                    change="checkFormValid">
                     <core:Item key="{ProductList>unit}" text="{ProductList>unit}"/>
                 </Select>
                 <!-- Quantity -->
@@ -74,7 +75,8 @@
                         }
                     }"
                     required="true"
-                    placeholder="{i18n>producPlaceholderQuantity}"/>
+                    placeholder="{i18n>producPlaceholderQuantity}"
+                    change="checkFormValid"/>
                 <!-- Product Info -->
                 <Label text="{i18n>productInfo}"/>
                 <Input
@@ -88,7 +90,8 @@
 						}
 					}"
                     required="true"
-                    placeholder="{i18n>producPlaceholdertInfo}"/>
+                    placeholder="{i18n>producPlaceholdertInfo}"
+                    change="checkFormValid"/>
                 <!-- Creation Date -->
                 <Label
                     text="{i18n>productCreationDate}"
@@ -101,7 +104,8 @@
 					    formatOptions: {
                             style: 'long'
                         }
-                    }" />
+                    }"
+                    change="checkFormValid" />
                 <!-- Manufacture -->
                 <Label
                     text="{i18n>manufacture}"
@@ -109,20 +113,21 @@
                 <Select
                     id="Manufacture"
                     forceSelection="false"
-                    selectedKey="{ProductList>/productForm/Manufacture}">
+                    selectedKey="{ProductList>/productForm/Manufacture}"
+                    change="checkFormValid">
                     <core:Item key="DxA" text="DxA"/>
                     <core:Item key="DG" text="DG"/>
                     <core:Item key="FPQ" text="FPQ"/>
                     <core:Item key="OPA" text="OPA"/>
                 </Select>
-
             </f:content>
         </f:SimpleForm>
         <!-- Buttons -->
         <buttons>
             <Button
-                id="formButton"
+                id="ProductFormButton"
                 type="Emphasized"
+                enabled="false"
                 text="{i18n>create}"
                 press="onCreateProductPress"/>
             <Button

@@ -40,17 +40,6 @@ sap.ui.define([
 				oRouter.navTo("ProductInfo", { productId: nProductId });
 			},
 
-
-
-
-
-
-
-
-			onInputChange: function (oEvent) {
-
-			},
-
 			/**
              * "Filter" event handler of the "FilterBar".
              */
@@ -141,56 +130,32 @@ sap.ui.define([
             onCreateProductPress: function () {
 				var sProductMessageCreate = this.getView().getModel("i18n").getProperty("productCreate"),
 					oModel = this.getView().getModel("ProductList"),
+					oStoreCreatorForm = this.byId("productCreator"),
 					// get product list
 					oProducts = oModel.getProperty("/product"),
 					// get product form
-					oProductForm = oModel.getProperty("/productForm"),
-					bCheckForm;
+					oProductForm = oModel.getProperty("/productForm");
+					// bCheckForm;
 
 				// copy product form
 				oProductForm = jQuery.extend(true, {}, oProductForm);
 
-				// check form
-				bCheckForm = this.checkFormValid(oProductForm);
+				// create new product id
+				oProductForm.productId = oProducts[oProducts.length - 1].productId + 1;
+				// set product img
+				oProductForm.ProductImage = "https://picsum.photos/200/300";
 
-				if (bCheckForm) {
-					// create new product id
-					oProductForm.productId = oProducts[oProducts.length - 1].productId + 1;
-					// set product img
-					oProductForm.ProductImage = "https://picsum.photos/200/300";
+				// add product
+				oProducts.push(oProductForm);
 
-					// add product
-					oProducts.push(oProductForm);
-					// set new products
-					oModel.setProperty("/product", oProducts)
-					// show message
-					MessageToast.show(sProductMessageCreate);
-					// close dialog
-					this.byId("productCreator").close();
-				}
-			},
+				console.log(oProductForm)
 
-			/**
-			 * Check form validation.
-			 */
-			checkFormValid: function (oProductForm) {
-				var nValidationError = sap.ui
-					.getCore()
-					.getMessageManager().getMessageModel().oData.length,
-					// check invalid value
-					bCheckForm = nValidationError === 0;
-
-				// check empty value
-				for (let key in oProductForm) {
-					if(!oProductForm[key]) {
-						bCheckForm = false;
-						this.byId(key).setProperty("valueState", "Error");
-					} else {
-						this.byId(key).setProperty("valueState", "None");
-					}
-				}
-
-				return bCheckForm;
+				// set new products
+				oModel.setProperty("/product", oProducts)
+				// show message
+				MessageToast.show(sProductMessageCreate);
+				// close dialog
+				oStoreCreatorForm.close();
 			},
 
 			/**
@@ -198,7 +163,30 @@ sap.ui.define([
              */
             onCancelProductPress: function () {
 				this.byId("productCreator").close();
-				this.onClearForm()
+				this.onClearForm();
+			},
+
+			/**
+			 * Check form validation.
+			 */
+			checkFormValid: function () {
+				var oModel = this.getView().getModel("ProductList"),
+					oProductForm = oModel.getProperty("/productForm"),
+					oProductFormButton = this.byId("ProductFormButton"),
+					nValidationError = sap.ui
+						.getCore()
+						.getMessageManager().getMessageModel().oData.length,
+					// check invalid value
+					bCheckForm = nValidationError === 0;
+
+				// check empty value
+				for (let key in oProductForm) {
+					if(!oProductForm[key]) {
+						bCheckForm = false;
+					}
+				}
+
+				oProductFormButton.setProperty("enabled", bCheckForm);
 			},
 
 			/**

@@ -5,7 +5,8 @@ sap.ui.define([
     "sap/ui/model/FilterOperator",
     "sap/m/MessageToast",
     "sap/m/MessageBox",
-	"sap/ui/core/Fragment"
+    "sap/ui/core/Fragment",
+    "sap/ui/model/json/JSONModel",
 ], function (
         Controller,
         formatter,
@@ -13,7 +14,8 @@ sap.ui.define([
         FilterOperator,
         MessageToast,
         MessageBox,
-        Fragment
+        Fragment,
+        JSONModel
     ) {
 	"use strict";
 	return Controller.extend("sap.ui.Shop.controller.ProductInfo", {
@@ -27,16 +29,46 @@ sap.ui.define([
             // Route
             var oRouter = sap.ui.core.UIComponent.getRouterFor(this);
 
-            // Register the view with the message manager
-            sap.ui
-                .getCore()
-                .getMessageManager()
-                .registerObject(this.getView(), true);
-
             oRouter
                 .getRoute("ProductInfo")
                 .attachPatternMatched(this._onObjectMatched, this);
             this.myRouter = oRouter;
+
+            // Validation
+            var oMessageManager, oView;
+			oView = this.getView();
+
+			// set message model
+			oMessageManager = sap.ui.getCore().getMessageManager();
+			oView.setModel(oMessageManager.getMessageModel(), "message");
+			// or just do it for the whole view
+			oMessageManager.registerObject(oView, true);
+        },
+
+        /**
+         * "Open Popover" button press event handler.
+         *
+         *  @param {sap.ui.base.Event} oEvent event object.
+         */
+        onMessagePopoverPress : function (oEvent) {
+			this._getMessagePopover().openBy(oEvent.getSource());
+		},
+
+        /**
+         * This method create Popover.
+         *
+         *  @param {sap.ui.base.Event} oEvent event object.
+         */
+        _getMessagePopover : function () {
+			// create popover lazily (singleton)
+			if (!this._oMessagePopover) {
+				this._oMessagePopover = sap.ui.xmlfragment(
+                    this.getView().getId(),
+                    "sap.ui.Shop.view.fragments.MessageErrorPopover",
+                    this);
+				this.getView().addDependent(this._oMessagePopover);
+			}
+			return this._oMessagePopover;
         },
 
         /**
@@ -183,34 +215,37 @@ sap.ui.define([
                 oModel = this.getView().getModel("ProductList"),
                 oProducts = oModel.getProperty("/product"),
                 oSupplierForm = oModel.getProperty("/supplierForm"),
+                oSupplierCreatorForm = this.byId("supplierCreator"),
                 nProductIndex = this.getProductIndex(nProductId),
-                bCheckForm = true;
+                // get product suppliers
+                aSuppliers = oProducts[nProductIndex].Suppliers;
 
             // copy supplier form
             oSupplierForm = jQuery.extend(true, {}, oSupplierForm);
 
-            // get product suppliers
-            var aSuppliers = oProducts[nProductIndex].Suppliers
-
             // create supplier list empty
             if (!aSuppliers) { aSuppliers = [] };
 
-            if (bCheckForm) {
-                // create new supplier id
-                oSupplierForm.SupplierId = aSuppliers[aSuppliers.length - 1].SupplierId + 1;
+            // create new supplier id
+            oSupplierForm.SupplierId = aSuppliers[aSuppliers.length - 1].SupplierId + 1;
 
-                // create new supplier
-                aSuppliers.push(oSupplierForm);
+            // create new supplier
+            aSuppliers.push(oSupplierForm);
 
-                // set new products
-                oModel.setProperty("/product", oProducts)
-                // show message
-                MessageToast.show(sSupplierMessageCreate);
-                // close dialog
-                this.byId("supplierCreator").close();
-            }
+            // set new products
+            oModel.setProperty("/product", oProducts)
+            // show message
+            MessageToast.show(sSupplierMessageCreate);
+            // close dialog
+            oSupplierCreatorForm.close();
         },
 
+        /**
+         * "Cancel" button press event handler (in the suppliers dialog).
+         */
+        onCancelSupplierPress: function () {
+            this.byId("supplierCreator").close();
+        },
 
         /**
          * Check form validation.
@@ -232,15 +267,7 @@ sap.ui.define([
                 }
             }
 
-            oSupplierFormButton.setProperty("enabled", bCheckForm)
-        },
-
-
-        /**
-         * "Cancel" button press event handler (in the suppliers dialog).
-         */
-        onCancelSupplierPress: function () {
-            this.byId("supplierCreator").close();
+            oSupplierFormButton.setProperty("enabled", bCheckForm);
         },
 
         /**

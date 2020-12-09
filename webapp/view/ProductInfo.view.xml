@@ -247,7 +247,8 @@
 										<!-- Search Product -->
 										<m:SearchField
 											id="suppliersSearch"
-											value="" width="30%"
+											value=""
+											width="30%"
 											placeholder="{i18n>suppliersSearchPlaceholder}"
 											search="onSuppliersSearch" />
 										<!-- Edit Buttons -->
@@ -317,78 +318,86 @@
 				</subSections>
 			</ObjectPageSection>
 		</sections>
-
 		<sections>
+			<!-- Chart -->
 			<ObjectPageSection
-					titleUppercase="false"
-					showTitle="false"
-					title="{i18n>productTitleSales}">
-					<subSections>
-						<ObjectPageSubSection>
-							<blocks>
-								<layout:FixFlex
-									minFlexSize="300">
-									<layout:flexContent>
-										<viz:VizFrame
-										 	vizProperties="{
-												 title: {
-													text : 'Sales',
-													visible : true
-												}
-											}"
-											height="100%"
-											width="100%"
-											vizType='dual_timeseries_combination'>
-											<viz:dataset>
-												<viz.data:FlattenedDataset data="{ProductList>Sale}">
-													<viz.data:dimensions>
-														<viz.data:DimensionDefinition
-															name="Date"
-															value="{SaleDate}"
-															dataType="date" />
-													</viz.data:dimensions>
+				titleUppercase="false"
+				showTitle="false"
+				title="{i18n>productTitleSales}">
+				<subSections>
+					<ObjectPageSubSection>
+						<blocks>
+							<layout:FixFlex
+								minFlexSize="300">
+								<layout:flexContent>
+									<viz:VizFrame
+										vizProperties="{
+											title: {
+												text : 'Sales',
+												visible : true
+											}
+										}"
+										height="100%"
+										width="100%"
+										vizType='dual_timeseries_combination'>
+										<viz:dataset>
+											<viz.data:FlattenedDataset data="{ProductList>Sale}">
+												<viz.data:dimensions>
+													<viz.data:DimensionDefinition
+														name="Date"
+														value="{SaleDate}"
+														dataType="date" />
+												</viz.data:dimensions>
 
-													<viz.data:measures>
-														<viz.data:MeasureDefinition
-															name="Price"
-															value="{SalePrice}" />
-													</viz.data:measures>
+												<viz.data:measures>
+													<viz.data:MeasureDefinition
+														name="Price"
+														value="{SalePrice}" />
+												</viz.data:measures>
 
-													<viz.data:measures>
-														<viz.data:MeasureDefinition
-															name="Quantity"
-															value="{SaleQuantity}" />
-													</viz.data:measures>
-												</viz.data:FlattenedDataset>
-											</viz:dataset>
+												<viz.data:measures>
+													<viz.data:MeasureDefinition
+														name="Quantity"
+														value="{SaleQuantity}" />
+												</viz.data:measures>
+											</viz.data:FlattenedDataset>
+										</viz:dataset>
 
-											<viz:feeds>
-												<viz.feeds:FeedItem
-													uid="valueAxis"
-													type="Measure"
-													values="Price" />
-												<viz.feeds:FeedItem
-													uid="valueAxis2"
-													type="Measure"
-													values="Quantity" />
-												<viz.feeds:FeedItem
-													uid="timeAxis"
-													type="Dimension"
-													values="Date" />
-											</viz:feeds>
-										</viz:VizFrame>
-									</layout:flexContent>
-								</layout:FixFlex>
-							</blocks>
-						</ObjectPageSubSection>
-					</subSections>
+										<viz:feeds>
+											<viz.feeds:FeedItem
+												uid="valueAxis"
+												type="Measure"
+												values="Price" />
+											<viz.feeds:FeedItem
+												uid="valueAxis2"
+												type="Measure"
+												values="Quantity" />
+											<viz.feeds:FeedItem
+												uid="timeAxis"
+												type="Dimension"
+												values="Date" />
+										</viz:feeds>
+									</viz:VizFrame>
+								</layout:flexContent>
+							</layout:FixFlex>
+						</blocks>
+					</ObjectPageSubSection>
+				</subSections>
 			</ObjectPageSection>
 		</sections>
 
 		<footer>
 			<m:OverflowToolbar>
 				<m:content>
+					<m:Button
+						icon="sap-icon://sys-cancel"
+						text="{= ${message>/}.length }"
+						visible="{= ${message>/}.length > 0 }"
+						type="Reject"
+						press="onMessagePopoverPress" />
+
 					<m:ToolbarSpacer />
+
 					<m:Button
 						text="{i18n>save}"
 						type="Emphasized"
