@@ -11,6 +11,12 @@
 		{"manufacture": "FPQ"},
 		{"manufacture": "OPA"}
 	],
+	"Unit" : [
+		{"unit": "EUR"},
+		{"unit": "USD"},
+		{"unit": "RUB"},
+		{"unit": "BYN"}
+	],
 	"productForm": {
 		"ProductName": "",
 		"Quantity": null,

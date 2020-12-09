@@ -43,7 +43,14 @@
 								visible="{ProductList>/State/editProduct}" />
 							<m:Input
 								id="ProductName"
-								value="{ProductList>ProductName}"
+								value= "{
+									path: 'ProductList>ProductName',
+									type: 'sap.ui.model.type.String',
+									constraints: {
+										minLength: 1,
+										maxLength: 255
+									}
+								}"
 								visible="{ProductList>/State/editProduct}" />
 						</layout:VerticalLayout>
 					</m:FlexBox>
@@ -68,7 +75,7 @@
 				title="{i18n>productTitleAboutProduct}">
 				<subSections>
 					<ObjectPageSubSection title="Connect">
-						<m:VBox>
+						<m:VBox class="sapUiSmallMargin">
 							<forms:SimpleForm
 								editable="true"
 								layout="ColumnLayout"
@@ -79,14 +86,22 @@
 
 								<!-- Column 1 -->
 								<!-- Price -->
-								<m:Label text="{i18n>price}" />
+								<m:Label text="{i18n>price}">
+										<m:layoutData>
+											<forms:ColumnElementData cellsSmall="4" cellsLarge="1" />
+										</m:layoutData>
+								</m:Label>
 								<m:ObjectNumber
 										number="{
 											parts:[{path:'ProductList>Price'}],
 											formatOptions: {showMeasure: false}}"
 										unit="{path:'ProductList>Unit'}"
 										state="{=	${ProductList>Quantity} > 0 ? 'Success' : 'Error' }"
-										visible="{= !${ProductList>/State/editProduct}}"/>
+										visible="{= !${ProductList>/State/editProduct}}">
+										<!-- <m:layoutData>
+											<forms:ColumnElementData cellsSmall="2" cellsLarge="1" />
+										</m:layoutData> -->
+								</m:ObjectNumber>
 								<m:Input
 									id="ProductPrice"
 									value="{
@@ -100,30 +115,39 @@
 											maximum: 100000000
 										}
 									}"
-									visible="{ProductList>/State/editProduct}"/>
+									visible="{ProductList>/State/editProduct}">
+									<!-- <m:layoutData>
+										<forms:ColumnElementData cellsSmall="2" cellsLarge="1" />
+									</m:layoutData> -->
+								</m:Input>
 								<!-- Unit -->
 								<m:Label
 									text="{i18n>unit}"
-									visible="{ProductList>/State/editProduct}"/>
+									visible="{ProductList>/State/editProduct}">
+									<m:layoutData>
+										<forms:ColumnElementData cellsSmall="4" cellsLarge="1" />
+									</m:layoutData>
+								</m:Label>
 								<m:ActionSelect
 									id="ProductUnit"
+									items="{ProductList>/Unit}"
+									selectedKey="{ProductList>Unit}"
 									width="50%"
 									forceSelection="false"
-									selectedKey="{ProductList>Unit}"
 									visible="{ProductList>/State/editProduct}">
-									<m:items>
-										<core:Item
-											key="EUR" text="EUR"/>
-										<core:Item
-											key="USD" text="USD"/>
-										<core:Item
-											key="RUB" text="RUB"/>
-										<core:Item
-											key="BYN" text="BYN"/>
-									</m:items>
+									<core:Item
+										key="{ProductList>unit}"
+										text="{ProductList>unit}" />
+									<!-- <m:layoutData>
+										<forms:ColumnElementData cellsSmall="2" cellsLarge="2" />
+									</m:layoutData> -->
 								</m:ActionSelect>
 								<!-- Quantity -->
-								<m:Label text="{i18n>quantity}"/>
+								<m:Label text="{i18n>quantity}">
+									<m:layoutData>
+										<forms:ColumnElementData cellsSmall="4" cellsLarge="1" />
+									</m:layoutData>
+								</m:Label>
 								<m:ObjectNumber
 										number="{
 											parts:[{path:'ProductList>Quantity'}],
@@ -147,37 +171,35 @@
 
 								<!-- Column 2 -->
 								<!-- Manufacture -->
-								<m:Label text="{i18n>manufacture}"/>
+								<m:Label text="{i18n>manufacture}">
+									<m:layoutData>
+										<forms:ColumnElementData cellsSmall="4" cellsLarge="1" />
+									</m:layoutData>
+								</m:Label>
 								<m:Text
 									text="{ProductList>Manufacture}"
 									visible="{= !${ProductList>/State/editProduct}}"/>
 								<m:ComboBox
-									items="{
-										path: 'ProductList>/Manufacture'
+									items="{ProductList>/Manufacture}"
+									selectedKey="{
+										path: 'ProductList>Manufacture',
+										type: 'sap.ui.model.type.String',
+										constraints: {
+											minLength: 1,
+											maxLength: 255
+										}
 									}"
-									selectedKey="{ProductList>Manufacture}">
+									visible="{ProductList>/State/editProduct}" >
 									<core:Item
 										key="{ProductList>manufacture}"
 										text="{ProductList>manufacture}" />
 								</m:ComboBox>
-								<!-- <m:Select
-									id="ProductManufacture"
-									forceSelection="false"
-									selectedKey="{ProductList>Manufacture}"
-									visible="{ProductList>/State/editProduct}">
-									<m:items>
-										<core:Item
-											key="DxA" text="DxA"/>
-										<core:Item
-											key="DG" text="DG"/>
-										<core:Item
-											key="FPQ" text="FPQ"/>
-										<core:Item
-											key="OPA" text="OPA"/>
-									</m:items>
-								</m:Select> -->
 								<!-- CreationDate -->
-								<m:Label text="{i18n>productTitleDate}"/>
+								<m:Label text="{i18n>productTitleDate}">
+									<m:layoutData>
+										<forms:ColumnElementData cellsSmall="4" cellsLarge="4" />
+									</m:layoutData>
+								</m:Label>
 								<m:Text text="{
 											path: 'ProductList>CreationDate',
 											type: 'sap.ui.model.type.Date',
@@ -203,134 +225,6 @@
 									visible="{ProductList>/State/editProduct}" />
 							</forms:SimpleForm>
 						</m:VBox>
-						<!-- <m:FlexBox wrap="Wrap"> -->
-							<!-- Price -->
-							<!-- <layout:VerticalLayout>
-								<m:Label text="{i18n>price}"/>
-								<m:ObjectNumber
-										number="{
-											parts:[{path:'ProductList>Price'}],
-											formatOptions: {showMeasure: false}}"
-										unit="{path:'ProductList>Unit'}"
-										state="{=	${ProductList>Quantity} > 0 ? 'Success' : 'Error' }"
-										visible="{= !${ProductList>/State/editProduct}}"/>
-								<m:Input
-									id="ProductPrice"
-									value="{
-										path: 'ProductList>Price',
-										type: 'sap.ui.model.type.Float',
-										formatOptions: {
-											decimals: 0
-										},
-										constraints: {
-											minimum: 1,
-											maximum: 100000000
-										}
-									}"
-									visible="{ProductList>/State/editProduct}"/>
-							</layout:VerticalLayout> -->
-							<!-- Unit -->
-							<!-- <layout:VerticalLayout
-								class="sapUiSmallMarginBeginEnd"
-								visible="{ProductList>/State/editProduct}">
-								<m:Label text="{i18n>unit}"/>
-								<m:ActionSelect
-									id="ProductUnit"
-									forceSelection="false"
-									selectedKey="{ProductList>Unit}">
-									<m:items>
-										<core:Item
-											key="EUR" text="EUR"/>
-										<core:Item
-											key="USD" text="USD"/>
-										<core:Item
-											key="RUB" text="RUB"/>
-										<core:Item
-											key="BYN" text="BYN"/>
-									</m:items>
-								</m:ActionSelect>
-							</layout:VerticalLayout> -->
-							<!-- Quantity -->
-							<!-- <layout:VerticalLayout class="sapUiSmallMarginBeginEnd">
-								<m:Label text="{i18n>quantity}"/>
-								<m:ObjectNumber
-										number="{
-											parts:[{path:'ProductList>Quantity'}],
-											formatOptions: {showMeasure: false}}"
-										state="{=	${ProductList>Quantity} > 0 ? 'Success' : 'Error' }"
-										visible="{= !${ProductList>/State/editProduct}}"/>
-								<m:Input
-									id="ProductQuantity"
-									value="{
-										path: 'ProductList>Quantity',
-										type: 'sap.ui.model.type.Float',
-										formatOptions: {
-											decimals: 0
-										},
-										constraints: {
-											minimum: 1,
-											maximum: 100000000
-										}
-									}"
-									visible="{ProductList>/State/editProduct}"/>
-							</layout:VerticalLayout>
-						</m:FlexBox> -->
-					<!-- </ObjectPageSubSection> -->
-
-					<!-- <ObjectPageSubSection >
-						<m:FlexBox wrap="Wrap"> -->
-							<!-- Manufacture -->
-							<!-- <layout:VerticalLayout class="sapUiSmallMarginBeginEnd">
-								<m:Label text="{i18n>manufacture}"/>
-								<m:Text
-									text="{ProductList>Manufacture}"
-									visible="{= !${ProductList>/State/editProduct}}"/>
-								<m:Select
-									id="ProductManufacture"
-									forceSelection="false"
-									selectedKey="{ProductList>Manufacture}"
-									visible="{ProductList>/State/editProduct}">
-									<m:items>
-										<core:Item
-											key="DxA" text="DxA"/>
-										<core:Item
-											key="DG" text="DG"/>
-										<core:Item
-											key="FPQ" text="FPQ"/>
-										<core:Item
-											key="OPA" text="OPA"/>
-									</m:items>
-								</m:Select>
-							</layout:VerticalLayout> -->
-
-							<!-- <layout:VerticalLayout class="sapUiSmallMarginBeginEnd">
-								<m:Label text="{i18n>productTitleDate}"/>
-								<m:Text text="{
-											path: 'ProductList>CreationDate',
-											type: 'sap.ui.model.type.Date',
-											formatOptions: {
-												source: {
-													pattern: 'yyyy-MM-ddTHH:mm:ss'
-												}
-											}
-										}"
-										visible="{= !${ProductList>/State/editProduct}}"
-								/>
-								<m:DatePicker
-									id="ProductDate"
-                    				value="{
-											path: 'ProductList>CreationDate',
-											type: 'sap.ui.model.type.Date',
-											formatOptions: {
-												source: {
-													pattern: 'yyyy-MM-ddTHH:mm:ss'
-												}
-											}
-										}"
-									visible="{ProductList>/State/editProduct}" />
-							</layout:VerticalLayout> -->
-
-						<!-- </m:FlexBox> -->
 					</ObjectPageSubSection>
 				</subSections>
 			</ObjectPageSection>

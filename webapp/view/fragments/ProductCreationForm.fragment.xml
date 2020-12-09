@@ -26,11 +26,13 @@
 							maxLength: 255
 						}
 					}"
+                    change=".onInputChange"
                     required="true"
                     placeholder="{i18n>productPlaceholderName}" />
                 <!-- Price -->
                 <Label text="{i18n>price}"/>
                 <Input
+                change=".onInputChange"
                     id="Price"
                     value="{
 						path: 'ProductList>/productForm/Price',
@@ -51,12 +53,10 @@
                     required="true"/>
                 <Select
                     id="Unit"
+                    items="{ProductList>/Unit}"
                     forceSelection="false"
                     selectedKey="{ProductList>/productForm/Unit}">
-                    <core:Item key="EUR" text="EUR"/>
-                    <core:Item key="USD" text="USD"/>
-                    <core:Item key="RUB" text="RUB"/>
-                    <core:Item key="BYN" text="BYN"/>
+                    <core:Item key="{ProductList>unit}" text="{ProductList>unit}"/>
                 </Select>
                 <!-- Quantity -->
                 <Label text="{i18n>quantity}"/>

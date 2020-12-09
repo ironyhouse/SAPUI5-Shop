@@ -40,6 +40,42 @@ sap.ui.define([
 				oRouter.navTo("ProductInfo", { productId: nProductId });
 			},
 
+
+
+
+
+
+
+
+			onInputChange: function (oEvent) {
+				// console.log(oEvent
+				// 	.getSource()
+				// 	.getBinding("value").oValue);
+
+				// console.log(oEvent.getParameter("value"));
+
+				// console.log(oEvent
+				// 	.getSource()
+				// 	.getBinding("value"));
+
+				// console.log(oEvent.setValueState("Error"));
+
+				// this.byId("ProductName").setValueState("Error");
+				// console.log(this.byId("ProductName"));
+
+				// oEvent.getParameter("id");
+
+				// console.log(oEvent
+				// 	.getSource()
+				// 	.getBinding("value")
+				// 	.getType()
+				// 	.validateValue(oEvent.getSource().getValue()));
+
+				// console.log(oEvent
+				// 	.getSource()
+				// 	.getBinding("value").oValue.length);
+			},
+
 			/**
              * "Filter" event handler of the "FilterBar".
              */
@@ -128,7 +164,6 @@ sap.ui.define([
              */
             onCreateProductPress: function (oEvent) {
 				var sProductMessageCreate = this.getView().getModel("i18n").getProperty("productCreate"),
-					sProductFormValid = this.getView().getModel("i18n").getProperty("productFormValid"),
 					oModel = this.getView().getModel("ProductList"),
 					// get product list
 					oProducts = oModel.getProperty("/product"),
@@ -142,7 +177,7 @@ sap.ui.define([
 				// check form
 				bCheckForm = this.checkFormValid(oProductForm);
 
-				if (bCheckForm && oEvent) {
+				if (bCheckForm) {
 					// create new product id
 					oProductForm.productId = oProducts[oProducts.length - 1].productId + 1;
 					// set product img
@@ -157,14 +192,6 @@ sap.ui.define([
 					// close dialog
 					this.byId("productCreator").close();
 				}
-			},
-
-			/**
-             * "Cancel" button press event handler (in the dialog).
-             */
-            onCancelProductPress: function () {
-				this.byId("productCreator").close();
-				this.onClearForm()
 			},
 
 			/**
@@ -191,6 +218,14 @@ sap.ui.define([
 			},
 
 			/**
+             * "Cancel" button press event handler (in the dialog).
+             */
+            onCancelProductPress: function () {
+				this.byId("productCreator").close();
+				this.onClearForm()
+			},
+
+			/**
 			 * Clearing product form data.
 			 */
 			onClearForm: function () {
@@ -210,11 +245,6 @@ sap.ui.define([
 				// set product form
 				this.getView().getModel("ProductList").setProperty("/productForm", oProductForm);
 			},
-
-
-
-
-
 
             /**
              * Execute "delete" request of the product.
