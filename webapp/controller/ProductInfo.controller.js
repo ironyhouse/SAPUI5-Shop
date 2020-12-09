@@ -153,10 +153,10 @@ sap.ui.define([
                 oSupplierCreatorForm = this.byId("supplierCreator");
 
             // clear form
-            this.onClearForm();
+            // this.onClearForm();
 
             // create dialog lazily
-            if (!this.oSupplierCreatorForm) {
+            if (!oSupplierCreatorForm) {
                 // load asynchronous XML fragment
                 Fragment.load({
                     id: oView.getId(),
@@ -168,7 +168,7 @@ sap.ui.define([
                     oSupplierCreatorForm.open();
                 });
             } else {
-                this.oSupplierCreatorForm.open();
+                oSupplierCreatorForm.open();
             }
         },
 
