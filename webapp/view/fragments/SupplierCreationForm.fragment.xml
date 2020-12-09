@@ -26,7 +26,8 @@
 						}
 					}"
                     required="true"
-                    placeholder="{i18n>supplierPlaceholderName}" />
+                    placeholder="{i18n>supplierPlaceholderName}"
+                    change="checkFormValid" />
                 <!-- Suppliers Address -->
                 <Label text="{i18n>supplierAddress}"/>
                 <Input
@@ -39,7 +40,8 @@
 						}
 					}"
                     required="true"
-                    placeholder="{i18n>supplierPlaceholderAddress}" />
+                    placeholder="{i18n>supplierPlaceholderAddress}"
+                    change="checkFormValid"/>
                 <!-- Suppliers City -->
                 <Label text="{i18n>supplierCity}"/>
                 <Input
@@ -52,7 +54,8 @@
 						}
 					}"
                     required="true"
-                    placeholder="{i18n>supplierPlaceholderCity}" />
+                    placeholder="{i18n>supplierPlaceholderCity}"
+                    change="checkFormValid" />
                 <!-- Suppliers Country -->
                 <Label text="{i18n>supplierCountry}"/>
                 <Input
@@ -65,14 +68,17 @@
 						}
 					}"
                     required="true"
-                    placeholder="{i18n>supplierPlaceholderCountry}" />
+                    placeholder="{i18n>supplierPlaceholderCountry}"
+                    change="checkFormValid" />
             </f:content>
         </f:SimpleForm>
         <!-- Buttons -->
         <buttons>
             <Button
+                id="SupplierFormButton"
                 type="Emphasized"
                 text="{i18n>create}"
+                enabled="false"
                 press="onCreateSupplierPress"/>
             <Button
                 text="{i18n>cancel}"

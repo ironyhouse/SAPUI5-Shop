@@ -35,6 +35,7 @@
 								src="{ProductList>ProductImage}"
 								class="sapUiTinyMarginEnd"/>
 						<layout:VerticalLayout class="sapUiSmallMarginBeginEnd">
+							<!-- Name -->
 							<m:Title
 								text="{ProductList>ProductName}"
 								wrapping="true"
@@ -75,156 +76,150 @@
 				title="{i18n>productTitleAboutProduct}">
 				<subSections>
 					<ObjectPageSubSection title="Connect">
-						<m:VBox class="sapUiSmallMargin">
-							<forms:SimpleForm
-								editable="true"
-								layout="ColumnLayout"
-								columnsM="2"
-								columnsL="2"
-								columnsXL="2"
-								adjustLabelSpan="true">
+						<forms:SimpleForm
+							editable="true"
+							layout="ColumnLayout"
+							columnsM="2"
+							columnsL="2"
+							columnsXL="2"
+							adjustLabelSpan="true">
 
-								<!-- Column 1 -->
-								<!-- Price -->
-								<m:Label text="{i18n>price}">
-										<m:layoutData>
-											<forms:ColumnElementData cellsSmall="4" cellsLarge="1" />
-										</m:layoutData>
-								</m:Label>
-								<m:ObjectNumber
-										number="{
-											parts:[{path:'ProductList>Price'}],
-											formatOptions: {showMeasure: false}}"
-										unit="{path:'ProductList>Unit'}"
-										state="{=	${ProductList>Quantity} > 0 ? 'Success' : 'Error' }"
-										visible="{= !${ProductList>/State/editProduct}}">
-										<!-- <m:layoutData>
-											<forms:ColumnElementData cellsSmall="2" cellsLarge="1" />
-										</m:layoutData> -->
-								</m:ObjectNumber>
-								<m:Input
-									id="ProductPrice"
-									value="{
-										path: 'ProductList>Price',
-										type: 'sap.ui.model.type.Float',
-										formatOptions: {
-											decimals: 0
-										},
-										constraints: {
-											minimum: 1,
-											maximum: 100000000
-										}
-									}"
-									visible="{ProductList>/State/editProduct}">
-									<!-- <m:layoutData>
-										<forms:ColumnElementData cellsSmall="2" cellsLarge="1" />
-									</m:layoutData> -->
-								</m:Input>
-								<!-- Unit -->
-								<m:Label
-									text="{i18n>unit}"
-									visible="{ProductList>/State/editProduct}">
-									<m:layoutData>
-										<forms:ColumnElementData cellsSmall="4" cellsLarge="1" />
-									</m:layoutData>
-								</m:Label>
-								<m:ActionSelect
-									id="ProductUnit"
-									items="{ProductList>/Unit}"
-									selectedKey="{ProductList>Unit}"
-									width="50%"
-									forceSelection="false"
-									visible="{ProductList>/State/editProduct}">
-									<core:Item
-										key="{ProductList>unit}"
-										text="{ProductList>unit}" />
-									<!-- <m:layoutData>
-										<forms:ColumnElementData cellsSmall="2" cellsLarge="2" />
-									</m:layoutData> -->
-								</m:ActionSelect>
-								<!-- Quantity -->
-								<m:Label text="{i18n>quantity}">
-									<m:layoutData>
-										<forms:ColumnElementData cellsSmall="4" cellsLarge="1" />
-									</m:layoutData>
-								</m:Label>
-								<m:ObjectNumber
-										number="{
-											parts:[{path:'ProductList>Quantity'}],
-											formatOptions: {showMeasure: false}}"
-										state="{=	${ProductList>Quantity} > 0 ? 'Success' : 'Error' }"
-										visible="{= !${ProductList>/State/editProduct}}"/>
-								<m:Input
-									id="ProductQuantity"
-									value="{
-										path: 'ProductList>Quantity',
-										type: 'sap.ui.model.type.Float',
-										formatOptions: {
-											decimals: 0
-										},
-										constraints: {
-											minimum: 1,
-											maximum: 100000000
-										}
-									}"
-									visible="{ProductList>/State/editProduct}"/>
+							<!-- Column 1 -->
+							<!-- Price -->
+							<m:Label text="{i18n>price}">
+								<m:layoutData>
+									<forms:ColumnElementData cellsSmall="4" cellsLarge="1" />
+								</m:layoutData>
+							</m:Label>
+							<m:ObjectNumber
+								number="{
+									parts:[{path:'ProductList>Price'}],
+									formatOptions: {showMeasure: false}}"
+								unit="{path:'ProductList>Unit'}"
+								state="{=	${ProductList>Quantity} > 0 ? 'Success' : 'Error' }"
+								visible="{= !${ProductList>/State/editProduct}}">
+							</m:ObjectNumber>
+							<m:Input
+								id="ProductPrice"
+								value="{
+									path: 'ProductList>Price',
+									type: 'sap.ui.model.type.Float',
+									formatOptions: {
+										decimals: 0
+									},
+									constraints: {
+										minimum: 1,
+										maximum: 100000000
+									}
+								}"
+								visible="{ProductList>/State/editProduct}">
+							</m:Input>
+							<!-- Unit -->
+							<m:Label
+								text="{i18n>unit}"
+								visible="{ProductList>/State/editProduct}">
+								<m:layoutData>
+									<forms:ColumnElementData cellsSmall="4" cellsLarge="1" />
+								</m:layoutData>
+							</m:Label>
+							<m:ComboBox
+								items="{ProductList>/Unit}"
+								selectedKey="{
+									path: 'ProductList>Unit',
+									type: 'sap.ui.model.type.String',
+									constraints: {
+										minLength: 1,
+										maxLength: 255
+									}
+								}"
+								width="50%"
+								visible="{ProductList>/State/editProduct}" >
+								<core:Item
+									key="{ProductList>unit}"
+									text="{ProductList>unit}" />
+							</m:ComboBox>
+							<!-- Quantity -->
+							<m:Label text="{i18n>quantity}">
+								<m:layoutData>
+									<forms:ColumnElementData cellsSmall="4" cellsLarge="1" />
+								</m:layoutData>
+							</m:Label>
+							<m:ObjectNumber
+								number="{
+									parts:[{path:'ProductList>Quantity'}],
+									formatOptions: {showMeasure: false}}"
+								state="{=	${ProductList>Quantity} > 0 ? 'Success' : 'Error' }"
+								visible="{= !${ProductList>/State/editProduct}}"/>
+							<m:Input
+								id="ProductQuantity"
+								value="{
+									path: 'ProductList>Quantity',
+									type: 'sap.ui.model.type.Float',
+									formatOptions: {
+										decimals: 0
+									},
+									constraints: {
+										minimum: 1,
+										maximum: 100000000
+									}
+								}"
+								visible="{ProductList>/State/editProduct}"/>
 
-								<!-- Column 2 -->
-								<!-- Manufacture -->
-								<m:Label text="{i18n>manufacture}">
-									<m:layoutData>
-										<forms:ColumnElementData cellsSmall="4" cellsLarge="1" />
-									</m:layoutData>
-								</m:Label>
-								<m:Text
-									text="{ProductList>Manufacture}"
-									visible="{= !${ProductList>/State/editProduct}}"/>
-								<m:ComboBox
-									items="{ProductList>/Manufacture}"
-									selectedKey="{
-										path: 'ProductList>Manufacture',
-										type: 'sap.ui.model.type.String',
-										constraints: {
-											minLength: 1,
-											maxLength: 255
+							<!-- Column 2 -->
+							<!-- Manufacture -->
+							<m:Label text="{i18n>manufacture}">
+								<m:layoutData>
+									<forms:ColumnElementData cellsSmall="4" cellsLarge="1" />
+								</m:layoutData>
+							</m:Label>
+							<m:Text
+								text="{ProductList>Manufacture}"
+								visible="{= !${ProductList>/State/editProduct}}"/>
+							<m:ComboBox
+								items="{ProductList>/Manufacture}"
+								selectedKey="{
+									path: 'ProductList>Manufacture',
+									type: 'sap.ui.model.type.String',
+									constraints: {
+										minLength: 1,
+										maxLength: 255
+									}
+								}"
+								visible="{ProductList>/State/editProduct}" >
+								<core:Item
+									key="{ProductList>manufacture}"
+									text="{ProductList>manufacture}" />
+							</m:ComboBox>
+							<!-- CreationDate -->
+							<m:Label text="{i18n>productTitleDate}">
+								<m:layoutData>
+									<forms:ColumnElementData cellsSmall="4" cellsLarge="4" />
+								</m:layoutData>
+							</m:Label>
+							<m:Text text="{
+										path: 'ProductList>CreationDate',
+										type: 'sap.ui.model.type.Date',
+										formatOptions: {
+											source: {
+												pattern: 'yyyy-MM-ddTHH:mm:ss'
+											}
 										}
 									}"
-									visible="{ProductList>/State/editProduct}" >
-									<core:Item
-										key="{ProductList>manufacture}"
-										text="{ProductList>manufacture}" />
-								</m:ComboBox>
-								<!-- CreationDate -->
-								<m:Label text="{i18n>productTitleDate}">
-									<m:layoutData>
-										<forms:ColumnElementData cellsSmall="4" cellsLarge="4" />
-									</m:layoutData>
-								</m:Label>
-								<m:Text text="{
-											path: 'ProductList>CreationDate',
-											type: 'sap.ui.model.type.Date',
-											formatOptions: {
-												source: {
-													pattern: 'yyyy-MM-ddTHH:mm:ss'
-												}
+									visible="{= !${ProductList>/State/editProduct}}"
+							/>
+							<m:DatePicker
+								id="ProductDate"
+								value="{
+										path: 'ProductList>CreationDate',
+										type: 'sap.ui.model.type.Date',
+										formatOptions: {
+											source: {
+												pattern: 'yyyy-MM-ddTHH:mm:ss'
 											}
-										}"
-										visible="{= !${ProductList>/State/editProduct}}"
-								/>
-								<m:DatePicker
-									id="ProductDate"
-                    				value="{
-											path: 'ProductList>CreationDate',
-											type: 'sap.ui.model.type.Date',
-											formatOptions: {
-												source: {
-													pattern: 'yyyy-MM-ddTHH:mm:ss'
-												}
-											}
-										}"
-									visible="{ProductList>/State/editProduct}" />
-							</forms:SimpleForm>
-						</m:VBox>
+										}
+									}"
+								visible="{ProductList>/State/editProduct}" />
+						</forms:SimpleForm>
 					</ObjectPageSubSection>
 				</subSections>
 			</ObjectPageSection>
@@ -272,18 +267,18 @@
 										<m:HBox
 											alignItems="Center"
 											justifyContent="Center">
-												<m:Label
-													text="{i18n>supplierName}"
-													design="Bold" />
+											<m:Label
+												text="{i18n>supplierName}"
+												design="Bold" />
 										</m:HBox>
 									</m:Column>
 									<m:Column>
 										<m:HBox
 											alignItems="Center"
 											justifyContent="Center">
-												<m:Label
-													text="{i18n>supplierAddress}"
-													design="Bold" />
+											<m:Label
+												text="{i18n>supplierAddress}"
+												design="Bold" />
 										</m:HBox>
 									</m:Column>
 								</m:columns>
@@ -299,19 +294,19 @@
 											width="100%"
 											alignItems="Center"
 											justifyContent="Start">
-												<m:Text
-													core:require="{
-														formatMessage: 'sap/base/strings/formatMessage'
-													}"
-													text="{
-														parts: [
-															{path: 'i18n>supplierFullAddress'},
-															{path: 'ProductList>SuppliersAddress'},
-															{path: 'ProductList>SuppliersCity'},
-															{path: 'ProductList>SuppliersCountry'}
-														],
-														formatter: 'formatMessage'
-													}" />
+											<m:Text
+												core:require="{
+													formatMessage: 'sap/base/strings/formatMessage'
+												}"
+												text="{
+													parts: [
+														{path: 'i18n>supplierFullAddress'},
+														{path: 'ProductList>SuppliersAddress'},
+														{path: 'ProductList>SuppliersCity'},
+														{path: 'ProductList>SuppliersCountry'}
+													],
+													formatter: 'formatMessage'
+												}" />
 										</m:HBox>
 									</m:ColumnListItem>
 								</m:items>

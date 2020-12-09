@@ -48,32 +48,7 @@ sap.ui.define([
 
 
 			onInputChange: function (oEvent) {
-				// console.log(oEvent
-				// 	.getSource()
-				// 	.getBinding("value").oValue);
 
-				// console.log(oEvent.getParameter("value"));
-
-				// console.log(oEvent
-				// 	.getSource()
-				// 	.getBinding("value"));
-
-				// console.log(oEvent.setValueState("Error"));
-
-				// this.byId("ProductName").setValueState("Error");
-				// console.log(this.byId("ProductName"));
-
-				// oEvent.getParameter("id");
-
-				// console.log(oEvent
-				// 	.getSource()
-				// 	.getBinding("value")
-				// 	.getType()
-				// 	.validateValue(oEvent.getSource().getValue()));
-
-				// console.log(oEvent
-				// 	.getSource()
-				// 	.getBinding("value").oValue.length);
 			},
 
 			/**
@@ -133,6 +108,7 @@ sap.ui.define([
 					oStoreCreatorForm = this.byId("productCreator"),
 					onClearForm = this.onClearForm.bind(this);
 
+				// Error: The given date instance isn't valid
 				oProductForm.CreationDate = new Date();
 
 				// create dialog lazily
@@ -162,7 +138,7 @@ sap.ui.define([
 			/**
              *  This method create a product.
              */
-            onCreateProductPress: function (oEvent) {
+            onCreateProductPress: function () {
 				var sProductMessageCreate = this.getView().getModel("i18n").getProperty("productCreate"),
 					oModel = this.getView().getModel("ProductList"),
 					// get product list

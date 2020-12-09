@@ -150,10 +150,11 @@ sap.ui.define([
          */
         onAddSupplierPress: function () {
             var oView = this.getView(),
+                oSupplierFormButton = this.byId("SupplierFormButton"),
                 oSupplierCreatorForm = this.byId("supplierCreator");
 
             // clear form
-            // this.onClearForm();
+            this.onClearForm();
 
             // create dialog lazily
             if (!oSupplierCreatorForm) {
@@ -169,6 +170,7 @@ sap.ui.define([
                 });
             } else {
                 oSupplierCreatorForm.open();
+                oSupplierFormButton.setProperty("enabled", false);
             }
         },
 
@@ -177,14 +179,10 @@ sap.ui.define([
          */
         onCreateSupplierPress: function () {
             var sSupplierMessageCreate = this.getView().getModel("i18n").getProperty("supplierCreate"),
-                sProductFormValid = this.getView().getModel("i18n").getProperty("productFormValid"),
                 nProductId = this.getView().getBindingContext("ProductList").getProperty("productId"),
                 oModel = this.getView().getModel("ProductList"),
-                // get product list
                 oProducts = oModel.getProperty("/product"),
-                // get product form
                 oSupplierForm = oModel.getProperty("/supplierForm"),
-                // product index
                 nProductIndex = this.getProductIndex(nProductId),
                 bCheckForm = true;
 
@@ -195,19 +193,10 @@ sap.ui.define([
             var aSuppliers = oProducts[nProductIndex].Suppliers
 
             // create supplier list empty
-            if (!aSuppliers) {
-                aSuppliers = [];
-            };
-
-            // validation form
-            for (let key in oSupplierForm) {
-                if(!oSupplierForm[key]) {
-                    bCheckForm = false;
-                }
-            }
+            if (!aSuppliers) { aSuppliers = [] };
 
             if (bCheckForm) {
-                // create new product id
+                // create new supplier id
                 oSupplierForm.SupplierId = aSuppliers[aSuppliers.length - 1].SupplierId + 1;
 
                 // create new supplier
@@ -219,10 +208,33 @@ sap.ui.define([
                 MessageToast.show(sSupplierMessageCreate);
                 // close dialog
                 this.byId("supplierCreator").close();
-            } else {
-                MessageBox.alert(sProductFormValid);
             }
         },
+
+
+        /**
+         * Check form validation.
+         */
+        checkFormValid: function () {
+            var oModel = this.getView().getModel("ProductList"),
+                oSupplierForm = oModel.getProperty("/supplierForm"),
+                oSupplierFormButton = this.byId("SupplierFormButton"),
+                nValidationError = sap.ui
+                    .getCore()
+                    .getMessageManager().getMessageModel().oData.length,
+                // check invalid value
+                bCheckForm = nValidationError === 0;
+
+            // validation form
+            for (let key in oSupplierForm) {
+                if(!oSupplierForm[key]) {
+                    bCheckForm = false;
+                }
+            }
+
+            oSupplierFormButton.setProperty("enabled", bCheckForm)
+        },
+
 
         /**
          * "Cancel" button press event handler (in the suppliers dialog).
