@@ -254,6 +254,7 @@
 										<m:Button
 											text="{i18n>add}"
 											type="Transparent"
+											enabled="{= !${ProductList>/State/editProduct}}"
 											press="onAddSupplierPress" />
 										<m:Button
 											text= "{i18n>delete}"
