@@ -1,24 +1,22 @@
 sap.ui.define([
-    "sap/ui/core/mvc/Controller",
+    "./BaseController",
     "sap/ui/Shop/Controller/utils/formatter",
     "sap/ui/model/Filter",
     "sap/ui/model/FilterOperator",
     "sap/m/MessageToast",
     "sap/m/MessageBox",
-    "sap/ui/core/Fragment",
-    "sap/ui/model/json/JSONModel",
+    "sap/ui/core/Fragment"
 ], function (
-        Controller,
+        BaseController,
         formatter,
         Filter,
         FilterOperator,
         MessageToast,
         MessageBox,
         Fragment,
-        JSONModel
     ) {
 	"use strict";
-	return Controller.extend("sap.ui.Shop.controller.ProductInfo", {
+	return BaseController.extend("sap.ui.Shop.controller.ProductInfo", {
 
         formatter: formatter,
 
@@ -80,7 +78,7 @@ sap.ui.define([
             var nProductId = parseInt(oEvent.getParameter("arguments").productId, 10),
                 nProductIndex = this.getProductIndex(nProductId);
 
-            this.getView().getModel("ProductList").getProperty("/Sale");
+            this.getModel("ProductList").getProperty("/Sale");
 
             this.getView().bindElement({
                 path: "/product/" + nProductIndex,
@@ -94,7 +92,7 @@ sap.ui.define([
          * @param {sap.ui.base.Event} oEvent event object.
          */
         getProductIndex: function (nProductId) {
-            var oModel = this.getView().getModel("ProductList"),
+            var oModel = this.getModel("ProductList"),
                 aProducts = oModel.getProperty("/product"),
                 nProductIndex = null;
 
@@ -144,12 +142,12 @@ sap.ui.define([
          */
         onEditProductPress: function () {
             // toggle "Edit Product"
-            this.getView().getModel("ProductList").setProperty("/State/editProduct", true);
+            this.getModel("ProductList").setProperty("/State/editProduct", true);
 
             // copy product list
-            var oProduct = this.getView().getModel("ProductList").getProperty("/product");
+            var oProduct = this.getModel("ProductList").getProperty("/product");
             var oOldProducts = jQuery.extend(true, {}, oProduct);
-            this.getView().getModel("ProductList").setProperty("/oldProducts", oOldProducts);
+            this.getModel("ProductList").setProperty("/oldProducts", oOldProducts);
         },
 
         /**
@@ -161,7 +159,7 @@ sap.ui.define([
                 .getMessageManager().getMessageModel().oData.length;
 
             if (nValidationError === 0) {
-                this.getView().getModel("ProductList").setProperty("/State/editProduct", false);
+                this.getModel("ProductList").setProperty("/State/editProduct", false);
             }
         },
 
@@ -170,11 +168,11 @@ sap.ui.define([
          */
         onCancelChangesPress: function () {
             // toggle edit
-            this.getView().getModel("ProductList").setProperty("/State/editProduct", false);
+            this.getModel("ProductList").setProperty("/State/editProduct", false);
 
             // set old products
-            var oProduct = this.getView().getModel("ProductList").getProperty("/oldProducts");
-            this.getView().getModel("ProductList").setProperty("/product", oProduct);
+            var oProduct = this.getModel("ProductList").getProperty("/oldProducts");
+            this.getModel("ProductList").setProperty("product", oProduct);
         },
 
         /**
@@ -210,9 +208,9 @@ sap.ui.define([
          *  This method create a supplier.
          */
         onCreateSupplierPress: function () {
-            var sSupplierMessageCreate = this.getView().getModel("i18n").getProperty("supplierCreate"),
+            var sSupplierMessageCreate = this.getI18nWord("supplierCreate"),
                 nProductId = this.getView().getBindingContext("ProductList").getProperty("productId"),
-                oModel = this.getView().getModel("ProductList"),
+                oModel = this.getModel("ProductList"),
                 oProducts = oModel.getProperty("/product"),
                 oSupplierForm = oModel.getProperty("/supplierForm"),
                 oSupplierCreatorForm = this.byId("supplierCreator"),
@@ -251,7 +249,7 @@ sap.ui.define([
          * Check form validation.
          */
         checkFormValid: function () {
-            var oModel = this.getView().getModel("ProductList"),
+            var oModel = this.getModel("ProductList"),
                 oSupplierForm = oModel.getProperty("/supplierForm"),
                 oSupplierFormButton = this.byId("SupplierFormButton"),
                 nValidationError = sap.ui
@@ -274,7 +272,7 @@ sap.ui.define([
          * Clearing supplier form data.
          */
         onClearForm: function () {
-            var oModel = this.getView().getModel("ProductList"),
+            var oModel = this.getModel("ProductList"),
                 oSupplierForm = oModel.getProperty("/supplierForm");
 
             for (let key in oSupplierForm) {
@@ -292,7 +290,7 @@ sap.ui.define([
         onSelectSupplierPress: function () {
             var bIsDelete = !!this.byId("SuppliersTable").getSelectedItems().length;
 
-            this.getView().getModel("ProductList").setProperty("/State/deleteSupplier", bIsDelete);
+            this.getModel("ProductList").setProperty("/State/deleteSupplier", bIsDelete);
         },
 
         /**
@@ -301,7 +299,7 @@ sap.ui.define([
          * @param {sap.ui.base.Event} oEvent event object
          */
         onDeleteSupplierPress: function () {
-            var sSupplierMessageDelete = this.getView().getModel("i18n").getProperty("supplierMessageDelete"),
+            var sSupplierMessageDelete = this.getI18nWord("supplierMessageDelete"),
                 onDeleteSupplier = this.onDeleteSupplier.bind(this);
 
             MessageBox.confirm(
@@ -321,8 +319,8 @@ sap.ui.define([
          */
         onDeleteSupplier: function () {
             var nSupplierId,
-                sSupplierMessageDeleteSuccessful = this.getView().getModel("i18n").getProperty("supplierMessageDeleteSuccessful"),
-                oModel = this.getView().getModel("ProductList"),
+                sSupplierMessageDeleteSuccessful = this.getI18nWord("supplierMessageDeleteSuccessful"),
+                oModel = this.getModel("ProductList"),
                 aProducts = oModel.getProperty("/product"),
                 aSuppliers = this.getView().getBindingContext("ProductList").getProperty("Suppliers"),
                 oSuppliersTable = this.byId("SuppliersTable"),

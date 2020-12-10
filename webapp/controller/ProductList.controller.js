@@ -1,12 +1,12 @@
 sap.ui.define([
-	"sap/ui/core/mvc/Controller",
+	"./BaseController",
 	"sap/ui/model/Filter",
 	"sap/ui/model/FilterOperator",
 	"sap/m/MessageToast",
 	"sap/m/MessageBox",
 	"sap/ui/core/Fragment"
 	], function (
-		Controller,
+		BaseController,
 		Filter,
 		FilterOperator,
 		MessageToast,
@@ -14,7 +14,7 @@ sap.ui.define([
 		Fragment
 	) {
 		"use strict";
-		return Controller.extend("sap.ui.Shop.controller.ProductList", {
+		return BaseController.extend("sap.ui.Shop.controller.ProductList", {
 			/**
              * Controller's "init" lifecycle method.
              */
@@ -84,7 +84,7 @@ sap.ui.define([
              */
 			onSelectProductPress: function () {
 				var bIsDelete = !!this.byId("ProductsTable").getSelectedItems().length;
-				this.getView().getModel("ProductList").setProperty("/State/deleteProduct", bIsDelete);
+				this.getModel("ProductList").setProperty("/State/deleteProduct", bIsDelete);
 			},
 
 			/**
@@ -128,8 +128,8 @@ sap.ui.define([
              *  This method create a product.
              */
             onCreateProductPress: function () {
-				var sProductMessageCreate = this.getView().getModel("i18n").getProperty("productCreate"),
-					oModel = this.getView().getModel("ProductList"),
+				var sProductMessageCreate = this.getI18nWord("productCreate"),
+					oModel = this.getModel("ProductList"),
 					oStoreCreatorForm = this.byId("productCreator"),
 					// get product list
 					oProducts = oModel.getProperty("/product"),
@@ -147,8 +147,6 @@ sap.ui.define([
 
 				// add product
 				oProducts.push(oProductForm);
-
-				console.log(oProductForm)
 
 				// set new products
 				oModel.setProperty("/product", oProducts)
@@ -170,7 +168,7 @@ sap.ui.define([
 			 * Check form validation.
 			 */
 			checkFormValid: function () {
-				var oModel = this.getView().getModel("ProductList"),
+				var oModel = this.getModel("ProductList"),
 					oProductForm = oModel.getProperty("/productForm"),
 					oProductFormButton = this.byId("ProductFormButton"),
 					nValidationError = sap.ui
@@ -193,7 +191,7 @@ sap.ui.define([
 			 * Clearing product form data.
 			 */
 			onClearForm: function () {
-				var oModel = this.getView().getModel("ProductList"),
+				var oModel = this.getModel("ProductList"),
 					oProductForm = oModel.getProperty("/productForm");
 
 				// clear form
@@ -207,20 +205,20 @@ sap.ui.define([
 				// creat new date
 				oProductForm.CreationDate = new Date();
 				// set product form
-				this.getView().getModel("ProductList").setProperty("/productForm", oProductForm);
+				this.getModel("ProductList").setProperty("/productForm", oProductForm);
 			},
 
             /**
              * Execute "delete" request of the product.
              */
 			onDeleteProductPress: function () {
-				var oModel = this.getView().getModel("ProductList"),
+				var oModel = this.getModel("ProductList"),
 					// get product list
 					aProducts = oModel.getProperty("/product"),
 					// get product Id
 					nProductId = this.byId("ProductsTable").getSelectedItem().getBindingContext("ProductList").getProperty("productId"),
 					onDeleteProduct = this.onDeleteProduct.bind(this),
-					oBundle = this.getView().getModel("i18n").getResourceBundle(),
+					oBundle = this.getModel("i18n").getResourceBundle(),
 					sMessageWord = [];
 
 				// get product name
@@ -252,8 +250,8 @@ sap.ui.define([
              * @param {number} nProductId event object
              */
             onDeleteProduct: function (aProducts, nProductId, sMessageWord) {
-                var oModel = this.getView().getModel("ProductList"),
-					oBundle = this.getView().getModel("i18n").getResourceBundle(),
+                var oModel = this.getModel("ProductList"),
+					oBundle = this.getModel("i18n").getResourceBundle(),
 					sMessage = oBundle.getText("productMessageDeleteSuccessful", sMessageWord);
 
 				// filtered products

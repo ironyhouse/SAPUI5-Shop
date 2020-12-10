@@ -8,7 +8,8 @@
 	xmlns:forms="sap.ui.layout.form"
     xmlns:viz="sap.viz.ui5.controls"
     xmlns:viz.feeds="sap.viz.ui5.controls.common.feeds"
-    xmlns:viz.data="sap.viz.ui5.data">
+    xmlns:viz.data="sap.viz.ui5.data"
+	xmlns:fc="sap.ui.Shop.comp">
 	<ObjectPageLayout
 		showTitleInHeaderContent="true"
 		showEditHeaderButton="true"
@@ -252,7 +253,18 @@
 											placeholder="{i18n>suppliersSearchPlaceholder}"
 											search="onSuppliersSearch" />
 										<!-- Edit Buttons -->
-										<m:Button
+										<fc:TableButtons
+											width="auto"
+											buttonAddText="{i18n>add}"
+											buttonDeleteText="{i18n>delete}"
+											pressAdd="onAddSupplierPress"
+											pressDelete="onDeleteSupplierPress"
+											enabledAdd="{= !${ProductList>/State/editProduct}}"
+											enabledDelete="{ProductList>/State/deleteSupplier}" >
+										</fc:TableButtons>
+
+										<!-- Edit Buttons -->
+										<!-- <m:Button
 											text="{i18n>add}"
 											type="Transparent"
 											enabled="{= !${ProductList>/State/editProduct}}"
@@ -261,7 +273,7 @@
 											text= "{i18n>delete}"
 											type="Transparent"
 											enabled="{ProductList>/State/deleteSupplier}"
-											press="onDeleteSupplierPress" />
+											press="onDeleteSupplierPress" /> -->
 									</m:OverflowToolbar>
 								</m:headerToolbar>
 								<m:columns>
