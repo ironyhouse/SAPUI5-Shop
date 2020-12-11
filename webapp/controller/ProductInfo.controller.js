@@ -76,9 +76,9 @@ sap.ui.define([
          */
         _onObjectMatched: function (oEvent) {
             var nProductId = parseInt(oEvent.getParameter("arguments").productId, 10),
-                nProductIndex = this.getProductIndex(nProductId);
+                nProductIndex = this._getProductIndex(nProductId);
 
-            this.getModel("ProductList").getProperty("/Sale");
+            // this.getModel("ProductList").getProperty("/Sale");
 
             this.getView().bindElement({
                 path: "/product/" + nProductIndex,
@@ -87,11 +87,36 @@ sap.ui.define([
         },
 
         /**
+         *  This method navigates to supplier info.
+         */
+        onNavToSupplierInfo: function (oEvent) {
+            var oSelectedListItem = oEvent.getSource(),
+                oRouter = sap.ui.core.UIComponent.getRouterFor(this),
+                nSupplierId = oSelectedListItem
+                    .getBindingContext("ProductList")
+                    .getProperty("productId");
+
+            console.log(nSupplierId);
+
+            // var nSupplierId = 0;
+
+            // oRouter.navTo("SupplierInfo", { SupplierId: nSupplierId });
+        },
+
+        /**
+         *  This method navigates to product list.
+         *
+         */
+        navToProductList: function () {
+			this.myRouter.navTo("ProductList");
+        },
+
+        /**
          *  Bind context to the view.
          *
          * @param {sap.ui.base.Event} oEvent event object.
          */
-        getProductIndex: function (nProductId) {
+        _getProductIndex: function (nProductId) {
             var oModel = this.getModel("ProductList"),
                 aProducts = oModel.getProperty("/product"),
                 nProductIndex = null;
@@ -104,14 +129,6 @@ sap.ui.define([
             });
 
             return nProductIndex;
-        },
-
-        /**
-         *  This method navigates to product list.
-         *
-         */
-        navToProductList: function () {
-			this.myRouter.navTo("ProductList");
         },
 
         /**
@@ -233,7 +250,7 @@ sap.ui.define([
                 oProducts = oModel.getProperty("/product"),
                 oSupplierForm = oModel.getProperty("/supplierForm"),
                 oSupplierCreatorForm = this.byId("supplierCreator"),
-                nProductIndex = this.getProductIndex(nProductId),
+                nProductIndex = this._getProductIndex(nProductId),
                 // get product suppliers
                 aSuppliers = oProducts[nProductIndex].Suppliers;
 
@@ -345,7 +362,7 @@ sap.ui.define([
                 oSuppliersTable = this.byId("SuppliersTable"),
                 aSelectedSuppliers = oSuppliersTable.getSelectedItems(),
                 nProductId = this.getView().getBindingContext("ProductList").getProperty("productId"),
-                nProductIndex = this.getProductIndex(nProductId),
+                nProductIndex = this._getProductIndex(nProductId),
                 onSelectSupplier = this.onSelectSupplierPress.bind(this);
 
             // filtered suppliers

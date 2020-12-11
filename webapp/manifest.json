@@ -73,6 +73,11 @@
 					"pattern": "product/{productId}",
 					"name": "ProductInfo",
 					"target": "ProductInfo"
+				},
+				{
+					"pattern": "supplier/{SupplierId}",
+					"name": "SupplierInfo",
+					"target": "SupplierInfo"
 				}
 			],
 			"targets": {
@@ -83,6 +88,10 @@
 				"ProductInfo": {
 					"viewId": "2",
 					"viewName": "ProductInfo"
+				},
+				"SupplierInfo": {
+					"viewId": "3",
+					"viewName": "SupplierInfo"
 				}
 			}
 		}

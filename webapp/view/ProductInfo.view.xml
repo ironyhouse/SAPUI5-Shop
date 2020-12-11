@@ -262,18 +262,6 @@
 											enabledAdd="{= !${ProductList>/State/editProduct}}"
 											enabledDelete="{ProductList>/State/deleteSupplier}" >
 										</fc:TableButtons>
-
-										<!-- Edit Buttons -->
-										<!-- <m:Button
-											text="{i18n>add}"
-											type="Transparent"
-											enabled="{= !${ProductList>/State/editProduct}}"
-											press="onAddSupplierPress" />
-										<m:Button
-											text= "{i18n>delete}"
-											type="Transparent"
-											enabled="{ProductList>/State/deleteSupplier}"
-											press="onDeleteSupplierPress" /> -->
 									</m:OverflowToolbar>
 								</m:headerToolbar>
 								<m:columns>
@@ -297,7 +285,9 @@
 									</m:Column>
 								</m:columns>
 								<m:items>
-									<m:ColumnListItem>
+									<m:ColumnListItem
+										type="Navigation"
+										press=".onNavToSupplierInfo">
 										<m:HBox
 											width="30%"
 											alignItems="Center"
