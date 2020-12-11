@@ -187,7 +187,7 @@ sap.ui.define([
          */
         onCancelChanges: function () {
             var oProduct = this.getModel("ProductList").getProperty("/oldProducts");
-            
+
             // toggle edit
             this.getModel("ProductList").setProperty("/State/editProduct", false);
             // set old products
