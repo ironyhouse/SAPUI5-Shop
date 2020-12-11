@@ -164,15 +164,34 @@ sap.ui.define([
         },
 
         /**
-         * "Cancel edit supplier" button press event handler.
+         * "Cancel edit product" button press event handler.
          */
         onCancelChangesPress: function () {
+            var sEditCancel = this.getI18nWord("editCancel"),
+                onCancelChanges = this.onCancelChanges.bind(this);
+
+            MessageBox.confirm(
+                sEditCancel,
+                {
+                    onClose: function (oAction) {
+                        if (oAction === "OK") {
+                            onCancelChanges();
+                        }
+                    },
+                }
+            );
+        },
+
+        /**
+         * This method cancels edit.
+         */
+        onCancelChanges: function () {
+            var oProduct = this.getModel("ProductList").getProperty("/oldProducts");
+            
             // toggle edit
             this.getModel("ProductList").setProperty("/State/editProduct", false);
-
             // set old products
-            var oProduct = this.getModel("ProductList").getProperty("/oldProducts");
-            this.getModel("ProductList").setProperty("product", oProduct);
+            this.getModel("ProductList").setProperty("/product", oProduct);
         },
 
         /**
