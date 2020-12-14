@@ -49,7 +49,7 @@
 									path: 'ProductList>ProductName',
 									type: 'sap.ui.model.type.String',
 									constraints: {
-										minLength: 1,
+										minLength: 5,
 										maxLength: 255
 									}
 								}"
@@ -94,7 +94,7 @@
 							</m:Label>
 							<m:ObjectNumber
 								number="{
-									parts:[{path:'ProductList>Price'}],
+									parts: [{path:'ProductList>Price'}],
 									formatOptions: {showMeasure: false}}"
 								unit="{path:'ProductList>Unit'}"
 								state="{=	${ProductList>Quantity} > 0 ? 'Success' : 'Error' }"
@@ -116,13 +116,13 @@
 								visible="{ProductList>/State/editProduct}">
 							</m:Input>
 							<!-- Unit -->
-							<m:Label
+							<!-- <m:Label
 								text="{i18n>unit}"
 								visible="{ProductList>/State/editProduct}">
 								<m:layoutData>
 									<forms:ColumnElementData cellsSmall="4" cellsLarge="1" />
 								</m:layoutData>
-							</m:Label>
+							</m:Label> -->
 							<m:ComboBox
 								items="{ProductList>/Unit}"
 								selectedKey="{
@@ -133,7 +133,7 @@
 										maxLength: 255
 									}
 								}"
-								width="50%"
+								width=""
 								visible="{ProductList>/State/editProduct}" >
 								<core:Item
 									key="{ProductList>unit}"
@@ -236,7 +236,7 @@
 								id="SuppliersTable"
 								mode="MultiSelect"
 								selectionChange="onSelectSupplierPress"
-								items="{path : 'ProductList>Suppliers'}">
+								items="{ProductList>Suppliers}">
 								<m:headerToolbar>
 									<m:OverflowToolbar design="Solid">
 										<!-- Title -->

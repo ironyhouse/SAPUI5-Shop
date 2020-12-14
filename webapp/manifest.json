@@ -75,7 +75,7 @@
 					"target": "ProductInfo"
 				},
 				{
-					"pattern": "supplier/{SupplierId}",
+					"pattern": "product/{productId}/supplier/{SupplierId}",
 					"name": "SupplierInfo",
 					"target": "SupplierInfo"
 				}

@@ -33,6 +33,188 @@
 		"SuppliersCity": "",
 		"SuppliersCountry": ""
 	},
+	"Supplier": [
+		{
+			"supplierName": "ODa",
+			"products": [
+				{
+					"productName": "Apple",
+					"productPrice": "12",
+					"productUnit": "USD"
+				},
+				{
+					"productName": "Salad",
+					"productPrice": "12",
+					"productUnit": "USD"
+				},
+				{
+					"productName": "Apple",
+					"productPrice": "12",
+					"productUnit": "USD"
+				},
+				{
+					"productName": "Bread",
+					"productPrice": "12",
+					"productUnit": "USD"
+				},
+				{
+					"productName": "Pumpkin Pie",
+					"productPrice": "12",
+					"productUnit": "USD"
+				}
+			]
+		},
+		{
+			"supplierName": "OSFS",
+			"products": [
+				{
+					"productName": "Apple",
+					"productPrice": "12",
+					"productUnit": "USD"
+				},
+				{
+					"productName": "Salad",
+					"productPrice": "12",
+					"productUnit": "USD"
+				},
+				{
+					"productName": "Apple",
+					"productPrice": "12",
+					"productUnit": "USD"
+				},
+				{
+					"productName": "Bread",
+					"productPrice": "12",
+					"productUnit": "USD"
+				},
+				{
+					"productName": "Pumpkin Pie",
+					"productPrice": "12",
+					"productUnit": "USD"
+				}
+			]
+		},
+		{
+			"supplierName": "SEDW",
+			"products": [
+				{
+					"productName": "Apple",
+					"productPrice": "12",
+					"productUnit": "USD"
+				},
+				{
+					"productName": "Salad",
+					"productPrice": "12",
+					"productUnit": "USD"
+				},
+				{
+					"productName": "Apple",
+					"productPrice": "12",
+					"productUnit": "USD"
+				},
+				{
+					"productName": "Bread",
+					"productPrice": "12",
+					"productUnit": "USD"
+				},
+				{
+					"productName": "Pumpkin Pie",
+					"productPrice": "12",
+					"productUnit": "USD"
+				}
+			]
+		},
+		{
+			"supplierName": "DFA",
+			"products": [
+				{
+					"productName": "Apple",
+					"productPrice": "12",
+					"productUnit": "USD"
+				},
+				{
+					"productName": "Salad",
+					"productPrice": "12",
+					"productUnit": "USD"
+				},
+				{
+					"productName": "Apple",
+					"productPrice": "12",
+					"productUnit": "USD"
+				},
+				{
+					"productName": "Bread",
+					"productPrice": "12",
+					"productUnit": "USD"
+				},
+				{
+					"productName": "Pumpkin Pie",
+					"productPrice": "12",
+					"productUnit": "USD"
+				}
+			]
+		},
+		{
+			"supplierName": "OSFS",
+			"products": [
+				{
+					"productName": "Apple",
+					"productPrice": "12",
+					"productUnit": "USD"
+				},
+				{
+					"productName": "Salad",
+					"productPrice": "12",
+					"productUnit": "USD"
+				},
+				{
+					"productName": "Apple",
+					"productPrice": "12",
+					"productUnit": "USD"
+				},
+				{
+					"productName": "Bread",
+					"productPrice": "12",
+					"productUnit": "USD"
+				},
+				{
+					"productName": "Pumpkin Pie",
+					"productPrice": "12",
+					"productUnit": "USD"
+				}
+			]
+		},
+		{
+			"supplierName": "OSFS",
+			"products": [
+				{
+					"productName": "Apple",
+					"productPrice": "12",
+					"productUnit": "USD"
+				},
+				{
+					"productName": "Salad",
+					"productPrice": "12",
+					"productUnit": "USD"
+				},
+				{
+					"productName": "Apple",
+					"productPrice": "12",
+					"productUnit": "USD"
+				},
+				{
+					"productName": "Bread",
+					"productPrice": "12",
+					"productUnit": "USD"
+				},
+				{
+					"productName": "Pumpkin Pie",
+					"productPrice": "12",
+					"productUnit": "USD"
+				}
+			]
+		}
+	],
 	"product": [
 		{
 			"ProductName": "Apple",
@@ -43,6 +225,7 @@
 			"ProductImage": "https://picsum.photos/200/300",
 			"ProductInfo": "Lorem ipsum dolor sit amet consectetur adipisicing elit. Quaerat exercitationem, ex nisi iure accusamus, commodi ullam temporibus non nam possimus, qui libero porro nobis.",
 			"Manufacture": "DxA",
+			"productId": 0,
 			"Suppliers": [
 				{
 					"SupplierName": "ODa",
@@ -110,8 +293,7 @@
 					"SaleDate": "2020-06-01T00:00:00",
 					"SaleId": 5
 				}
-			],
-			"productId": 0
+			]
 		},
 		{
 			"ProductName": "Pineapple",
@@ -122,6 +304,7 @@
 			"ProductImage": "https://picsum.photos/200/300",
 			"ProductInfo": "Lorem ipsum dolor sit amet consectetur adipisicing elit. Quaerat exercitationem, ex nisi iure accusamus, commodi ullam temporibus non nam possimus, qui libero porro nobis.",
 			"Manufacture": "DG",
+			"productId": 1,
 			"Suppliers": [
 				{
 					"SupplierName": "ODa",
@@ -189,8 +372,7 @@
 					"SaleDate": "2020-06-01T00:00:00",
 					"SaleId": 5
 				}
-			],
-			"productId": 1
+			]
 		},
 		{
 			"ProductName": "Milk",
@@ -201,6 +383,7 @@
 			"ProductImage": "https://picsum.photos/200/300",
 			"ProductInfo": "Lorem ipsum dolor sit amet consectetur adipisicing elit. Quaerat exercitationem, ex nisi iure accusamus, commodi ullam temporibus non nam possimus, qui libero porro nobis.",
 			"Manufacture": "FPQ",
+			"productId": 2,
 			"Suppliers": [
 				{
 					"SupplierName": "ODa",
@@ -268,8 +451,7 @@
 					"SaleDate": "2020-06-01T00:00:00",
 					"SaleId": 5
 				}
-			],
-			"productId": 2
+			]
 		},
 		{
 			"ProductName": "Canned Beans",
@@ -280,6 +462,7 @@
 			"ProductImage": "https://picsum.photos/200/300",
 			"ProductInfo": "Lorem ipsum dolor sit amet consectetur adipisicing elit. Quaerat exercitationem, ex nisi iure accusamus, commodi ullam temporibus non nam possimus, qui libero porro nobis.",
 			"Manufacture": "OPA",
+			"productId": 3,
 			"Suppliers": [
 				{
 					"SupplierName": "ODa",
@@ -347,8 +530,7 @@
 					"SaleDate": "2020-06-01T00:00:00",
 					"SaleId": 5
 				}
-			],
-			"productId": 3
+			]
 		},
 		{
 			"ProductName": "Salad",
@@ -359,6 +541,7 @@
 			"ProductImage": "https://picsum.photos/200/300",
 			"ProductInfo": "Lorem ipsum dolor sit amet consectetur adipisicing elit. Quaerat exercitationem, ex nisi iure accusamus, commodi ullam temporibus non nam possimus, qui libero porro nobis.",
 			"Manufacture": "POAI",
+			"productId": 4,
 			"Suppliers": [
 				{
 					"SupplierName": "ODa",
@@ -426,8 +609,7 @@
 					"SaleDate": "2020-06-01T00:00:00",
 					"SaleId": 5
 				}
-			],
-			"productId": 4
+			]
 		},
 		{
 			"ProductName": "Bread",
@@ -438,6 +620,7 @@
 			"ProductImage": "https://picsum.photos/200/300",
 			"ProductInfo": "Lorem ipsum dolor sit amet consectetur adipisicing elit. Quaerat exercitationem, ex nisi iure accusamus, commodi ullam temporibus non nam possimus, qui libero porro nobis.",
 			"Manufacture": "DxA",
+			"productId": 8,
 			"Suppliers": [
 				{
 					"SupplierName": "ODa",
@@ -505,8 +688,7 @@
 					"SaleDate": "2020-06-01T00:00:00",
 					"SaleId": 5
 				}
-			],
-			"productId": 5
+			]
 		}
 	]
 }

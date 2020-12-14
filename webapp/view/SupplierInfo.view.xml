@@ -1,179 +1,44 @@
-<mvc:View controllerName="sap.ui.Shop.controller.ProductList" height="100%"
+<mvc:View
+	xmlns="sap.f"
 	xmlns:mvc="sap.ui.core.mvc"
-	xmlns:core="sap.ui.core"
-	xmlns:layout="sap.ui.layout"
-	xmlns="sap.m"
-	xmlns:f="sap.f"
-	xmlns:fb="sap.ui.comp.filterbar"
-	xmlns:vm="sap.ui.comp.variants">
-	<f:DynamicPage>
-		<!-- Title -->
-		<f:title>
-			<f:DynamicPageTitle>
-				<f:heading>
-					<Title
-						class="sapUiSmallMarginBegin"
-						text="{i18n>homePageTitle}" />
-				</f:heading>
-			</f:DynamicPageTitle>
-		</f:title>
-		<!-- Header -->
-		<f:header>
-			<f:DynamicPageHeader pinnable="true">
-				<f:content>
-					<fb:FilterBar
-						showClearOnFB="true"
-						clear="onFiltersClear"
-						showFilterConfiguration="true"
-						id="filterbar" reset="onReset"
-						search="onSelectFilter"
-						useToolbar="false"
-						showGoOnFB="true">
-						<fb:filterGroupItems >
-							<!-- Name -->
-							<fb:FilterGroupItem
-								groupName="G1"
-								visibleInFilterBar="true"
-								name="Name"
-								label="{i18n>name}">
-								<fb:control>
-									<Input
-										id="FilterName"
-										placeholder="{i18n>productSearchPlaceholder}"
-										value=""
-										submit="onSelectFilter" />
-								</fb:control>
-							</fb:FilterGroupItem>
-							<!-- Manufacture -->
-							<fb:FilterGroupItem
-								groupName="G1"
-								visibleInFilterBar="true"
-								visible="true"
-								name="Manufacture"
-								label="{i18n>manufacture}">
-								<fb:control>
-									<Select
-										id="FilterManufacture"
-										change="onSelectFilter"
-										forceSelection="true"
-										items="{
-											path:'ProductList>/Manufacture',
-											templateShareable:false
-										}">
-										<core:Item
-											key="{ProductList>manufacture}"
-											text="{ProductList>manufacture}"/>
-									</Select>
-								</fb:control>
-							</fb:FilterGroupItem>
-						</fb:filterGroupItems>
-					</fb:FilterBar>
-				</f:content>
-			</f:DynamicPageHeader>
-		</f:header>
-		<!-- Content -->
-		<f:content>
-			<Table
-				id="ProductsTable"
-				items="{ProductList>/product}"
-				class="sapUiResponsiveMargin"
-				mode="SingleSelectLeft"
-				selectionChange="onSelectProductPress"
-				width="auto">
-				<!-- Product List Title -->
-				<headerToolbar>
-					<OverflowToolbar design="Solid">
-						<!-- Title -->
-						<Title
-							class="sapUiSmallMarginBegin"
-							text="{i18n>productListTitle}" />
-						<!-- Spacer -->
-						<ToolbarSpacer />
-						<!-- Edit Buttons -->
-						<Button
-							text="{i18n>add}"
-							type="Transparent"
-							press="onAddProductPress" />
-						<Button
-							text= "{i18n>delete}"
-							type="Transparent"
-							enabled="{ProductList>/State/deleteProduct}"
-							press="onDeleteProductPress" />
-					</OverflowToolbar>
-				</headerToolbar>
-				<!-- Product List Header -->
-				<columns>
-					<Column>
-						<HBox
-							alignItems="Center"
-							justifyContent="Center">
-							<Label
-								text="{i18n>name}"
-								design="Bold" />
-						</HBox>
-					</Column>
-					<Column>
-						<HBox
-							alignItems="Center"
-							justifyContent="Center">
-							<Label
-								text="{i18n>quantity}"
-								design="Bold" />
-						</HBox>
-					</Column>
-					<Column>
-						<HBox
-							alignItems="Center"
-							justifyContent="Center">
-							<Label
-								text="{i18n>price}"
-								design="Bold" />
-						</HBox>
-					</Column>
-					<Column>
-						<HBox
-							alignItems="Center"
-							justifyContent="Center">
-							<Label
-								text="{i18n>manufacture}"
-								design="Bold" />
-						</HBox>
-					</Column>
-				</columns>
-				<!-- Product List -->
-				<items>
-					<ColumnListItem
-						type="Navigation"
-						press=".onNavToProductInfo">
-						<VBox>
-							<ObjectIdentifier title="{ProductList>ProductName}"/>
-						</VBox>
-						<VBox>
-							<ObjectNumber
-								number="{
-									parts:[{path:'ProductList>Quantity'}]
-								}"
-								state="{= ${ProductList>Quantity} > 0 ? 'Success' : 'Error' }"/>
-						</VBox>
-						<VBox>
-							<ObjectNumber
-								number="{
-									parts:[{path:'ProductList>Price'}]
-								}"
-								unit="{path:'ProductList>Unit'}"
-								state="{= ${ProductList>Quantity} > 0 ? 'Success' : 'Error' }"/>
-						</VBox>
-						<VBox>
-							<ObjectIdentifier title="{ProductList>Manufacture}"/>
-						</VBox>
-					</ColumnListItem>
-				</items>
-			</Table>
-		</f:content>
-		<!-- Footer -->
-		<f:footer>
-			<OverflowToolbar>
-			</OverflowToolbar>
-		</f:footer>
-	</f:DynamicPage>
+	displayBlock="true"
+	height="100%">
+	<f:FlexibleColumnLayout
+		layout="TwoColumnsMidExpanded">
+		<!-- Products -->
+		<f:beginColumnPages>
+			<!-- Products -->
+			<!-- <List
+				items="{/ProductCollection}"
+				headerText="Products">
+				<ObjectListItem
+					title="{Name}"
+					type="Active"
+					press="onListItemPress"
+					number="{
+						parts:[{path:'Price'},{path:'CurrencyCode'}],
+						type: 'sap.ui.model.type.Currency',
+						formatOptions: {showMeasure: false}
+					}"
+					numberUnit="{CurrencyCode}">
+					<firstStatus>
+						<ObjectStatus
+							text="{Status}"
+							state="{
+								path: 'Status',
+								formatter: 'sap.m.sample.ObjectListItem.Formatter.status'
+							}" />
+					</firstStatus>
+					<ObjectAttribute text="{WeightMeasure} {WeightUnit}" />
+					<ObjectAttribute text="{Width} x {Depth} x {Height} {DimUnit}" />
+				</ObjectListItem>
+			</List> -->
+		</f:beginColumnPages>
+		<!-- Product Info -->
+		<f:midColumnPages>
+
+			
+		</f:midColumnPages>
+
+	</f:FlexibleColumnLayout>
 </mvc:View>

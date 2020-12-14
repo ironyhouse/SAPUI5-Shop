@@ -44,32 +44,6 @@ sap.ui.define([
         },
 
         /**
-         * "Open Popover" button press event handler.
-         *
-         *  @param {sap.ui.base.Event} oEvent event object.
-         */
-        onMessagePopoverPress : function (oEvent) {
-			this._getMessagePopover().openBy(oEvent.getSource());
-		},
-
-        /**
-         * This method create Popover.
-         *
-         *  @param {sap.ui.base.Event} oEvent event object.
-         */
-        _getMessagePopover : function () {
-			// create popover lazily (singleton)
-			if (!this._oMessagePopover) {
-				this._oMessagePopover = sap.ui.xmlfragment(
-                    this.getView().getId(),
-                    "sap.ui.Shop.view.fragments.MessageErrorPopover",
-                    this);
-				this.getView().addDependent(this._oMessagePopover);
-			}
-			return this._oMessagePopover;
-        },
-
-        /**
          *  Bind context to the view.
          *
          * @param {sap.ui.base.Event} oEvent event object.
@@ -77,8 +51,6 @@ sap.ui.define([
         _onObjectMatched: function (oEvent) {
             var nProductId = parseInt(oEvent.getParameter("arguments").productId, 10),
                 nProductIndex = this._getProductIndex(nProductId);
-
-            // this.getModel("ProductList").getProperty("/Sale");
 
             this.getView().bindElement({
                 path: "/product/" + nProductIndex,
@@ -92,15 +64,17 @@ sap.ui.define([
         onNavToSupplierInfo: function (oEvent) {
             var oSelectedListItem = oEvent.getSource(),
                 oRouter = sap.ui.core.UIComponent.getRouterFor(this),
+                nProductId = this.getView()
+                    .getBindingContext("ProductList")
+                    .getProperty("productId"),
                 nSupplierId = oSelectedListItem
                     .getBindingContext("ProductList")
-                    .getProperty("productId");
+                    .getProperty("SupplierId");
 
-            console.log(nSupplierId);
-
-            // var nSupplierId = 0;
-
-            // oRouter.navTo("SupplierInfo", { SupplierId: nSupplierId });
+            oRouter.navTo("SupplierInfo", {
+                productId: nProductId,
+                SupplierId: nSupplierId
+            });
         },
 
         /**
@@ -205,10 +179,40 @@ sap.ui.define([
         onCancelChanges: function () {
             var oProduct = this.getModel("ProductList").getProperty("/oldProducts");
 
+            // sap.ui
+            //     .getCore()
+            //     .getMessageManager().removeAllMessages();
+
             // toggle edit
             this.getModel("ProductList").setProperty("/State/editProduct", false);
             // set old products
             this.getModel("ProductList").setProperty("/product", oProduct);
+        },
+
+        /**
+         * "Open Popover" button press event handler.
+         *
+         *  @param {sap.ui.base.Event} oEvent event object.
+         */
+        onMessagePopoverPress: function (oEvent) {
+			this._getMessagePopover().openBy(oEvent.getSource());
+		},
+
+        /**
+         * This method create Popover.
+         *
+         *  @param {sap.ui.base.Event} oEvent event object.
+         */
+        _getMessagePopover: function () {
+			// create popover lazily (singleton)
+			if (!this._oMessagePopover) {
+				this._oMessagePopover = sap.ui.xmlfragment(
+                    this.getView().getId(),
+                    "sap.ui.Shop.view.fragments.MessageErrorPopover",
+                    this);
+				this.getView().addDependent(this._oMessagePopover);
+			}
+			return this._oMessagePopover;
         },
 
         /**

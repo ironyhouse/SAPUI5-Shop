@@ -15,6 +15,7 @@ sap.ui.define([
 	) {
 		"use strict";
 		return BaseController.extend("sap.ui.Shop.controller.ProductList", {
+
 			/**
              * Controller's "init" lifecycle method.
              */
@@ -161,7 +162,7 @@ sap.ui.define([
              */
             onCancelProductPress: function () {
 				this.byId("productCreator").close();
-				this.onClearForm();
+			//	this.onClearForm();
 			},
 
 			/**
@@ -216,7 +217,10 @@ sap.ui.define([
 					// get product list
 					aProducts = oModel.getProperty("/product"),
 					// get product Id
-					nProductId = this.byId("ProductsTable").getSelectedItem().getBindingContext("ProductList").getProperty("productId"),
+					nProductId = this.byId("ProductsTable")
+						.getSelectedItem()
+						.getBindingContext("ProductList")
+						.getProperty("productId"),
 					onDeleteProduct = this.onDeleteProduct.bind(this),
 					oBundle = this.getModel("i18n").getResourceBundle(),
 					sMessageWord = [];
