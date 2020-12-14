@@ -3,13 +3,8 @@
 	xmlns:core="sap.ui.core"
 	xmlns="sap.uxap"
 	xmlns:layout="sap.ui.layout"
-	xmlns:m="sap.m"
 	xmlns:f="sap.f"
-	xmlns:forms="sap.ui.layout.form"
-    xmlns:viz="sap.viz.ui5.controls"
-    xmlns:viz.feeds="sap.viz.ui5.controls.common.feeds"
-    xmlns:viz.data="sap.viz.ui5.data"
-	xmlns:fc="sap.ui.Shop.comp">
+	xmlns:m="sap.m">
 	<ObjectPageLayout
 		showTitleInHeaderContent="true"
 		showEditHeaderButton="true"
@@ -33,8 +28,8 @@
 						fitContainer="true"
 						alignItems="Center">
 						<f:Avatar
-								src="{ProductList>ProductImage}"
-								class="sapUiTinyMarginEnd"/>
+							src="{ProductList>ProductImage}"
+							class="sapUiTinyMarginEnd"/>
 						<layout:VerticalLayout class="sapUiSmallMarginBeginEnd">
 							<!-- Name -->
 							<m:Title
@@ -76,151 +71,9 @@
 				titleUppercase="false"
 				title="{i18n>productTitleAboutProduct}">
 				<subSections>
-					<ObjectPageSubSection title="Connect">
-						<forms:SimpleForm
-							editable="true"
-							layout="ColumnLayout"
-							columnsM="2"
-							columnsL="2"
-							columnsXL="2"
-							adjustLabelSpan="true">
-
-							<!-- Column 1 -->
-							<!-- Price -->
-							<m:Label text="{i18n>price}">
-								<m:layoutData>
-									<forms:ColumnElementData cellsSmall="4" cellsLarge="1" />
-								</m:layoutData>
-							</m:Label>
-							<m:ObjectNumber
-								number="{
-									parts: [{path:'ProductList>Price'}],
-									formatOptions: {showMeasure: false}}"
-								unit="{path:'ProductList>Unit'}"
-								state="{=	${ProductList>Quantity} > 0 ? 'Success' : 'Error' }"
-								visible="{= !${ProductList>/State/editProduct}}">
-							</m:ObjectNumber>
-							<m:Input
-								id="ProductPrice"
-								value="{
-									path: 'ProductList>Price',
-									type: 'sap.ui.model.type.Float',
-									formatOptions: {
-										decimals: 0
-									},
-									constraints: {
-										minimum: 1,
-										maximum: 100000000
-									}
-								}"
-								visible="{ProductList>/State/editProduct}">
-							</m:Input>
-							<!-- Unit -->
-							<!-- <m:Label
-								text="{i18n>unit}"
-								visible="{ProductList>/State/editProduct}">
-								<m:layoutData>
-									<forms:ColumnElementData cellsSmall="4" cellsLarge="1" />
-								</m:layoutData>
-							</m:Label> -->
-							<m:ComboBox
-								items="{ProductList>/Unit}"
-								selectedKey="{
-									path: 'ProductList>Unit',
-									type: 'sap.ui.model.type.String',
-									constraints: {
-										minLength: 1,
-										maxLength: 255
-									}
-								}"
-								width=""
-								visible="{ProductList>/State/editProduct}" >
-								<core:Item
-									key="{ProductList>unit}"
-									text="{ProductList>unit}" />
-							</m:ComboBox>
-							<!-- Quantity -->
-							<m:Label text="{i18n>quantity}">
-								<m:layoutData>
-									<forms:ColumnElementData cellsSmall="4" cellsLarge="1" />
-								</m:layoutData>
-							</m:Label>
-							<m:ObjectNumber
-								number="{
-									parts:[{path:'ProductList>Quantity'}],
-									formatOptions: {showMeasure: false}}"
-								state="{=	${ProductList>Quantity} > 0 ? 'Success' : 'Error' }"
-								visible="{= !${ProductList>/State/editProduct}}"/>
-							<m:Input
-								id="ProductQuantity"
-								value="{
-									path: 'ProductList>Quantity',
-									type: 'sap.ui.model.type.Float',
-									formatOptions: {
-										decimals: 0
-									},
-									constraints: {
-										minimum: 1,
-										maximum: 100000000
-									}
-								}"
-								visible="{ProductList>/State/editProduct}"/>
-
-							<!-- Column 2 -->
-							<!-- Manufacture -->
-							<m:Label text="{i18n>manufacture}">
-								<m:layoutData>
-									<forms:ColumnElementData cellsSmall="4" cellsLarge="1" />
-								</m:layoutData>
-							</m:Label>
-							<m:Text
-								text="{ProductList>Manufacture}"
-								visible="{= !${ProductList>/State/editProduct}}"/>
-							<m:ComboBox
-								items="{ProductList>/Manufacture}"
-								selectedKey="{
-									path: 'ProductList>Manufacture',
-									type: 'sap.ui.model.type.String',
-									constraints: {
-										minLength: 1,
-										maxLength: 255
-									}
-								}"
-								visible="{ProductList>/State/editProduct}" >
-								<core:Item
-									key="{ProductList>manufacture}"
-									text="{ProductList>manufacture}" />
-							</m:ComboBox>
-							<!-- CreationDate -->
-							<m:Label text="{i18n>productTitleDate}">
-								<m:layoutData>
-									<forms:ColumnElementData cellsSmall="4" cellsLarge="4" />
-								</m:layoutData>
-							</m:Label>
-							<m:Text text="{
-										path: 'ProductList>CreationDate',
-										type: 'sap.ui.model.type.Date',
-										formatOptions: {
-											source: {
-												pattern: 'yyyy-MM-ddTHH:mm:ss'
-											}
-										}
-									}"
-									visible="{= !${ProductList>/State/editProduct}}"
-							/>
-							<m:DatePicker
-								id="ProductDate"
-								value="{
-										path: 'ProductList>CreationDate',
-										type: 'sap.ui.model.type.Date',
-										formatOptions: {
-											source: {
-												pattern: 'yyyy-MM-ddTHH:mm:ss'
-											}
-										}
-									}"
-								visible="{ProductList>/State/editProduct}" />
-						</forms:SimpleForm>
+					<ObjectPageSubSection title="About Product">
+						<!-- About -->
+						<mvc:XMLView viewName="sap.ui.Shop.view.ProductInfoAbout"/>
 					</ObjectPageSubSection>
 				</subSections>
 			</ObjectPageSection>
@@ -232,96 +85,13 @@
 					<ObjectPageSubSection>
 						<blocks>
 							<!-- Table -->
-							<m:Table
-								id="SuppliersTable"
-								mode="MultiSelect"
-								selectionChange="onSelectSupplierPress"
-								items="{ProductList>Suppliers}">
-								<m:headerToolbar>
-									<m:OverflowToolbar design="Solid">
-										<!-- Title -->
-										<m:Title
-											class="sapUiSmallMarginBegin"
-											text="{i18n>suppliersTableTitle}" />
-										<!-- Spacer -->
-										<m:ToolbarSpacer />
-										<!-- Search Product -->
-										<m:SearchField
-											id="suppliersSearch"
-											value=""
-											width="30%"
-											placeholder="{i18n>suppliersSearchPlaceholder}"
-											search="onSuppliersSearch" />
-										<!-- Edit Buttons -->
-										<fc:TableButtons
-											width="auto"
-											buttonAddText="{i18n>add}"
-											buttonDeleteText="{i18n>delete}"
-											pressAdd="onAddSupplierPress"
-											pressDelete="onDeleteSupplierPress"
-											enabledAdd="{= !${ProductList>/State/editProduct}}"
-											enabledDelete="{ProductList>/State/deleteSupplier}" >
-										</fc:TableButtons>
-									</m:OverflowToolbar>
-								</m:headerToolbar>
-								<m:columns>
-									<m:Column width="25%">
-										<m:HBox
-											alignItems="Center"
-											justifyContent="Center">
-											<m:Label
-												text="{i18n>supplierName}"
-												design="Bold" />
-										</m:HBox>
-									</m:Column>
-									<m:Column>
-										<m:HBox
-											alignItems="Center"
-											justifyContent="Center">
-											<m:Label
-												text="{i18n>supplierAddress}"
-												design="Bold" />
-										</m:HBox>
-									</m:Column>
-								</m:columns>
-								<m:items>
-									<m:ColumnListItem
-										type="Navigation"
-										press=".onNavToSupplierInfo">
-										<m:HBox
-											width="30%"
-											alignItems="Center"
-											justifyContent="Start">
-												<m:Text text="{ProductList>SupplierName}" />
-										</m:HBox>
-										<m:HBox
-											width="100%"
-											alignItems="Center"
-											justifyContent="Start">
-											<m:Text
-												core:require="{
-													formatMessage: 'sap/base/strings/formatMessage'
-												}"
-												text="{
-													parts: [
-														{path: 'i18n>supplierFullAddress'},
-														{path: 'ProductList>SuppliersAddress'},
-														{path: 'ProductList>SuppliersCity'},
-														{path: 'ProductList>SuppliersCountry'}
-													],
-													formatter: 'formatMessage'
-												}" />
-										</m:HBox>
-									</m:ColumnListItem>
-								</m:items>
-							</m:Table>
+							<mvc:XMLView viewName="sap.ui.Shop.view.ProductInfoSuppliers"/>
 						</blocks>
 					</ObjectPageSubSection>
 				</subSections>
 			</ObjectPageSection>
 		</sections>
 		<sections>
-			<!-- Chart -->
 			<ObjectPageSection
 				titleUppercase="false"
 				showTitle="false"
@@ -329,59 +99,8 @@
 				<subSections>
 					<ObjectPageSubSection>
 						<blocks>
-							<layout:FixFlex
-								minFlexSize="300">
-								<layout:flexContent>
-									<viz:VizFrame
-										vizProperties="{
-											title: {
-												text : 'Sales',
-												visible : true
-											}
-										}"
-										height="100%"
-										width="100%"
-										vizType='dual_timeseries_combination'>
-										<viz:dataset>
-											<viz.data:FlattenedDataset data="{ProductList>Sale}">
-												<viz.data:dimensions>
-													<viz.data:DimensionDefinition
-														name="Date"
-														value="{SaleDate}"
-														dataType="date" />
-												</viz.data:dimensions>
-
-												<viz.data:measures>
-													<viz.data:MeasureDefinition
-														name="Price"
-														value="{SalePrice}" />
-												</viz.data:measures>
-
-												<viz.data:measures>
-													<viz.data:MeasureDefinition
-														name="Quantity"
-														value="{SaleQuantity}" />
-												</viz.data:measures>
-											</viz.data:FlattenedDataset>
-										</viz:dataset>
-
-										<viz:feeds>
-											<viz.feeds:FeedItem
-												uid="valueAxis"
-												type="Measure"
-												values="Price" />
-											<viz.feeds:FeedItem
-												uid="valueAxis2"
-												type="Measure"
-												values="Quantity" />
-											<viz.feeds:FeedItem
-												uid="timeAxis"
-												type="Dimension"
-												values="Date" />
-										</viz:feeds>
-									</viz:VizFrame>
-								</layout:flexContent>
-							</layout:FixFlex>
+							<!-- Chart -->
+							<mvc:XMLView viewName="sap.ui.Shop.view.ProductInfoChart"/>
 						</blocks>
 					</ObjectPageSubSection>
 				</subSections>

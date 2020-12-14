@@ -1,0 +1,61 @@
+<mvc:View
+    xmlns:mvc="sap.ui.core.mvc"
+    xmlns="sap.m"
+    xmlns:layout="sap.ui.layout"
+    xmlns:viz="sap.viz.ui5.controls"
+    xmlns:viz.feeds="sap.viz.ui5.controls.common.feeds"
+    xmlns:viz.data="sap.viz.ui5.data">
+    <layout:FixFlex
+        minFlexSize="300">
+        <layout:flexContent>
+            <viz:VizFrame
+                vizProperties="{
+                    title: {
+                        text : 'Sales',
+                        visible : true
+                    }
+                }"
+                height="100%"
+                width="100%"
+                vizType='dual_timeseries_combination'>
+                <viz:dataset>
+                    <viz.data:FlattenedDataset data="{ProductList>Sale}">
+                        <viz.data:dimensions>
+                            <viz.data:DimensionDefinition
+                                name="Date"
+                                value="{SaleDate}"
+                                dataType="date" />
+                        </viz.data:dimensions>
+
+                        <viz.data:measures>
+                            <viz.data:MeasureDefinition
+                                name="Price"
+                                value="{SalePrice}" />
+                        </viz.data:measures>
+
+                        <viz.data:measures>
+                            <viz.data:MeasureDefinition
+                                name="Quantity"
+                                value="{SaleQuantity}" />
+                        </viz.data:measures>
+                    </viz.data:FlattenedDataset>
+                </viz:dataset>
+
+                <viz:feeds>
+                    <viz.feeds:FeedItem
+                        uid="valueAxis"
+                        type="Measure"
+                        values="Price" />
+                    <viz.feeds:FeedItem
+                        uid="valueAxis2"
+                        type="Measure"
+                        values="Quantity" />
+                    <viz.feeds:FeedItem
+                        uid="timeAxis"
+                        type="Dimension"
+                        values="Date" />
+                </viz:feeds>
+            </viz:VizFrame>
+        </layout:flexContent>
+    </layout:FixFlex>
+</mvc:View>
