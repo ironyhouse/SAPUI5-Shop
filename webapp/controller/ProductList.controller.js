@@ -33,7 +33,7 @@ sap.ui.define([
              */
 			onNavToProductInfo: function (oEvent) {
 				var oSelectedListItem = oEvent.getSource(),
-					oRouter = sap.ui.core.UIComponent.getRouterFor(this),
+					oRouter = this.getRouterForThis(),
 					nProductId = oSelectedListItem
 						.getBindingContext("ProductList")
 						.getProperty("productId");
@@ -162,7 +162,6 @@ sap.ui.define([
              */
             onCancelProductPress: function () {
 				this.byId("productCreator").close();
-			//	this.onClearForm();
 			},
 
 			/**
@@ -174,7 +173,7 @@ sap.ui.define([
 					oProductFormButton = this.byId("ProductFormButton"),
 					nValidationError = sap.ui
 						.getCore()
-						.getMessageManager().getMessageModel().oData.length,
+						.getMessageManager().getMessageModel().getData().length,
 					// check invalid value
 					bCheckForm = nValidationError === 0;
 
@@ -198,8 +197,10 @@ sap.ui.define([
 				// clear form
 				for (let key in oProductForm) {
 					oProductForm[key] = null;
-					this.byId(key).setProperty("valueState", "None");
+					this.byId(key).setValue("");
 				}
+
+				sap.ui.getCore().getMessageManager().removeAllMessages();
 
 				// set min date
 				this.byId("CreationDate").setMinDate(new Date());
@@ -223,17 +224,17 @@ sap.ui.define([
 						.getProperty("productId"),
 					onDeleteProduct = this.onDeleteProduct.bind(this),
 					oBundle = this.getModel("i18n").getResourceBundle(),
-					sMessageWord = [];
+					aMessageWord = [];
 
 				// get product name
 				aProducts.forEach(item => {
 					if (item.productId === nProductId) {
-						sMessageWord.push(item.ProductName);
+						aMessageWord.push(item.ProductName);
 					}
 				});
 
 				// get delete message
-				var sMessage = oBundle.getText("productMessageDelete", sMessageWord);
+				var sMessage = oBundle.getText("productMessageDelete", aMessageWord);
 
 				// show confirmation
                 MessageBox.confirm(
@@ -241,7 +242,7 @@ sap.ui.define([
                     {
                         onClose: function (oAction) {
                             if (oAction === "OK") {
-                                onDeleteProduct(aProducts, nProductId, sMessageWord);
+                                onDeleteProduct(aProducts, nProductId, aMessageWord);
                             }
                         },
                     }
@@ -253,10 +254,9 @@ sap.ui.define([
              *
              * @param {number} nProductId event object
              */
-            onDeleteProduct: function (aProducts, nProductId, sMessageWord) {
+            onDeleteProduct: function (aProducts, nProductId, aMessageWord) {
                 var oModel = this.getModel("ProductList"),
-					oBundle = this.getModel("i18n").getResourceBundle(),
-					sMessage = oBundle.getText("productMessageDeleteSuccessful", sMessageWord);
+					sMessage = this.getI18nWord("productMessageDeleteSuccessful", aMessageWord);
 
 				// filtered products
 				aProducts = aProducts.filter(item => item.productId !== nProductId);

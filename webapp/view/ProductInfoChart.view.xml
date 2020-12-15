@@ -1,4 +1,4 @@
-<mvc:View
+<mvc:View controllerName="sap.ui.Shop.controller.ProductInfo"
     xmlns:mvc="sap.ui.core.mvc"
     xmlns="sap.m"
     xmlns:layout="sap.ui.layout"

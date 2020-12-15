@@ -5,7 +5,6 @@
     xmlns:fc="sap.ui.Shop.comp">
     <Table
         id="SuppliersTable"
-        mode="MultiSelect"
         selectionChange="onSelectSupplierPress"
         items="{ProductList>Suppliers}">
         <headerToolbar>
@@ -30,7 +29,7 @@
                     buttonDeleteText="{i18n>delete}"
                     pressAdd="onAddSupplierPress"
                     pressDelete="onDeleteSupplierPress"
-                    enabledAdd="{= !${ProductList>/State/editProduct}}"
+                    enabledAdd="{ProductList>/State/editProduct}"
                     enabledDelete="{ProductList>/State/deleteSupplier}" >
                 </fc:TableButtons>
             </OverflowToolbar>

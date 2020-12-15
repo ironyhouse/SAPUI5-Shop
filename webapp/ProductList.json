@@ -2,7 +2,9 @@
 	"State" : {
 		"deleteProduct": false,
 		"deleteSupplier": false,
-		"editProduct": false
+		"editProduct": false,
+		"productIndex": null,
+		"productId": null
 	},
 	"Manufacture" : [
 		{"manufacture": "All"},

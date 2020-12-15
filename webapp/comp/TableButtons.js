@@ -3,8 +3,8 @@ sap.ui.define(['sap/ui/core/XMLComposite'], function(XMLComposite) {
 	var oTableButtons = XMLComposite.extend("sap.ui.Shop.comp.TableButtons", {
 		metadata: {
 			properties: {
-				buttonAddText: { type: "string", defaultValue: "Add" },
-				buttonDeleteText: { type: "string", defaultValue: "Delete" },
+				buttonAddText: { type: "string", defaultValue: "add" },
+				buttonDeleteText: { type: "string", defaultValue: "delete" },
 				enabledAdd: { type: "boolean", defaultValue: true },
 				enabledDelete: { type: "boolean", defaultValue: true }
 			},

@@ -58,7 +58,7 @@
 						text="{i18n>edit}"
 						type="Emphasized"
 						enabled="{= !${ProductList>/State/editProduct}}"
-						press="onEditProductPress"/>
+						press=".onEditProductPress"/>
 				</actions>
 			</ObjectPageDynamicHeaderTitle>
 		</headerTitle>
@@ -73,7 +73,7 @@
 				<subSections>
 					<ObjectPageSubSection title="About Product">
 						<!-- About -->
-						<mvc:XMLView viewName="sap.ui.Shop.view.ProductInfoAbout"/>
+						<mvc:XMLView id="ProductAbout" viewName="sap.ui.Shop.view.ProductInfoAbout"/>
 					</ObjectPageSubSection>
 				</subSections>
 			</ObjectPageSection>
@@ -85,7 +85,7 @@
 					<ObjectPageSubSection>
 						<blocks>
 							<!-- Table -->
-							<mvc:XMLView viewName="sap.ui.Shop.view.ProductInfoSuppliers"/>
+							<mvc:XMLView id="ProductSuppliers" viewName="sap.ui.Shop.view.ProductInfoSuppliers"/>
 						</blocks>
 					</ObjectPageSubSection>
 				</subSections>

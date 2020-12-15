@@ -25,7 +25,7 @@ sap.ui.define([
          */
 		onInit: function () {
             // Route
-            var oRouter = sap.ui.core.UIComponent.getRouterFor(this);
+            var oRouter = this.getRouterForThis();
 
             oRouter
                 .getRoute("ProductInfo")
@@ -52,10 +52,14 @@ sap.ui.define([
             var nProductId = parseInt(oEvent.getParameter("arguments").productId, 10),
                 nProductIndex = this._getProductIndex(nProductId);
 
+            // set product index
+            this.getModel("ProductList").setProperty("/State/productIndex", nProductIndex);
+
             this.getView().bindElement({
                 path: "/product/" + nProductIndex,
                 model: "ProductList",
             });
+
         },
 
         /**
@@ -63,7 +67,7 @@ sap.ui.define([
          */
         onNavToSupplierInfo: function (oEvent) {
             var oSelectedListItem = oEvent.getSource(),
-                oRouter = sap.ui.core.UIComponent.getRouterFor(this),
+                oRouter = this.getRouterForThis(),
                 nProductId = this.getView()
                     .getBindingContext("ProductList")
                     .getProperty("productId"),
@@ -132,13 +136,18 @@ sap.ui.define([
          * "Edit Product" button press event handler.
          */
         onEditProductPress: function () {
+            var nProductIndex = this.getModel("ProductList").getProperty("/State/productIndex"),
+                oSuppliersTable = this.byId("ProductSuppliers").byId("SuppliersTable");
+
+            oSuppliersTable.setProperty("mode", "MultiSelect");
+
             // toggle "Edit Product"
             this.getModel("ProductList").setProperty("/State/editProduct", true);
 
-            // copy product list
-            var oProduct = this.getModel("ProductList").getProperty("/product");
-            var oOldProducts = jQuery.extend(true, {}, oProduct);
-            this.getModel("ProductList").setProperty("/oldProducts", oOldProducts);
+            // copy product
+            var oProduct = this.getModel("ProductList").getProperty("/product/" + nProductIndex);
+            var oOldProduct = jQuery.extend(true, {}, oProduct);
+            this.getModel("ProductList").setProperty("/oldProduct", oOldProduct);
         },
 
         /**
@@ -146,11 +155,14 @@ sap.ui.define([
          */
         onSaveChangesPress: function () {
             var nValidationError = sap.ui
-                .getCore()
-                .getMessageManager().getMessageModel().oData.length;
+                    .getCore()
+                    .getMessageManager().getMessageModel().getData().length,
+                oSuppliersTable = this.byId("ProductSuppliers").byId("SuppliersTable");
 
             if (nValidationError === 0) {
                 this.getModel("ProductList").setProperty("/State/editProduct", false);
+
+                oSuppliersTable.setProperty("mode", "None");
             }
         },
 
@@ -177,16 +189,25 @@ sap.ui.define([
          * This method cancels edit.
          */
         onCancelChanges: function () {
-            var oProduct = this.getModel("ProductList").getProperty("/oldProducts");
+            var oProduct = this.getModel("ProductList").getProperty("/oldProduct"),
+                nProductIndex = this.getModel("ProductList").getProperty("/State/productIndex"),
+                oSuppliersTable = this.byId("ProductSuppliers").byId("SuppliersTable");
 
-            // sap.ui
-            //     .getCore()
-            //     .getMessageManager().removeAllMessages();
+
+
+            // this.byId("ProductName").setValue("");
+            // this.byId("ProductAbout").byId("ProductPrice").setValue("{path: ProductList>Price}");
+            // this.byId("ProductAbout").byId("ProductQuantity").setValue("");
+            // this.byId("ProductAbout").byId("ProductDate").setValue("");
+
+            sap.ui.getCore().getMessageManager().removeAllMessages();
 
             // toggle edit
             this.getModel("ProductList").setProperty("/State/editProduct", false);
             // set old products
-            this.getModel("ProductList").setProperty("/product", oProduct);
+            this.getModel("ProductList").setProperty("/product/" + nProductIndex, oProduct);
+
+            oSuppliersTable.setProperty("mode", "None");
         },
 
         /**
@@ -294,7 +315,7 @@ sap.ui.define([
                 oSupplierFormButton = this.byId("SupplierFormButton"),
                 nValidationError = sap.ui
                     .getCore()
-                    .getMessageManager().getMessageModel().oData.length,
+                    .getMessageManager().getMessageModel().getData().length,
                 // check invalid value
                 bCheckForm = nValidationError === 0;
 
