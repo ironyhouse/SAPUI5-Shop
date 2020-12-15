@@ -59,7 +59,6 @@ sap.ui.define([
                 path: "/product/" + nProductIndex,
                 model: "ProductList",
             });
-
         },
 
         /**
@@ -73,10 +72,14 @@ sap.ui.define([
                     .getProperty("productId"),
                 nSupplierId = oSelectedListItem
                     .getBindingContext("ProductList")
-                    .getProperty("SupplierId");
+                    .getProperty("SupplierId"),
+                sSupplierName = oSelectedListItem
+                    .getBindingContext("ProductList")
+                    .getProperty("SupplierName");
 
             oRouter.navTo("SupplierInfo", {
                 productId: nProductId,
+                SupplierName: sSupplierName,
                 SupplierId: nSupplierId
             });
         },

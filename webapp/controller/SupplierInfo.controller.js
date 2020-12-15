@@ -14,7 +14,7 @@ sap.ui.define([
                 var oRouter = sap.ui.core.UIComponent.getRouterFor(this);
 
                 oRouter
-                    .getRoute("ProductInfo")
+                    .getRoute("SupplierInfo")
                     .attachPatternMatched(this._onObjectMatched, this);
                 this.myRouter = oRouter;
             },
@@ -25,14 +25,22 @@ sap.ui.define([
              * @param {sap.ui.base.Event} oEvent event object.
              */
             _onObjectMatched: function (oEvent) {
-                var nSupplierId = parseInt(oEvent.getParameter("arguments").SupplierId, 10),
-                    nSupplierIndex = this.getSupplierIndex(nSupplierId);
+                var oModel = this.getModel("ProductList"),
+                    aProducts = oModel.getProperty("/Supplier"),
+                    sSupplierName = oEvent.getParameter("arguments").SupplierName,
+                    nSupplierIndex;
+
+                // get product index
+                aProducts.forEach(function(item, index) {
+                    if (item.supplierName === sSupplierName) {
+                        nSupplierIndex = index;
+                    }
+                });
 
                 this.getView().bindElement({
-                    path: "/supplier/" + nSupplierIndex,
-                    model: "SupplierInfo",
+                    path: "/Supplier/" + nSupplierIndex,
+                    model: "ProductList",
                 });
             },
-
 		});
 });

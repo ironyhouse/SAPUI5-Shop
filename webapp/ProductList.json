@@ -155,66 +155,6 @@
 					"productUnit": "USD"
 				}
 			]
-		},
-		{
-			"supplierName": "OSFS",
-			"products": [
-				{
-					"productName": "Apple",
-					"productPrice": "12",
-					"productUnit": "USD"
-				},
-				{
-					"productName": "Salad",
-					"productPrice": "12",
-					"productUnit": "USD"
-				},
-				{
-					"productName": "Apple",
-					"productPrice": "12",
-					"productUnit": "USD"
-				},
-				{
-					"productName": "Bread",
-					"productPrice": "12",
-					"productUnit": "USD"
-				},
-				{
-					"productName": "Pumpkin Pie",
-					"productPrice": "12",
-					"productUnit": "USD"
-				}
-			]
-		},
-		{
-			"supplierName": "OSFS",
-			"products": [
-				{
-					"productName": "Apple",
-					"productPrice": "12",
-					"productUnit": "USD"
-				},
-				{
-					"productName": "Salad",
-					"productPrice": "12",
-					"productUnit": "USD"
-				},
-				{
-					"productName": "Apple",
-					"productPrice": "12",
-					"productUnit": "USD"
-				},
-				{
-					"productName": "Bread",
-					"productPrice": "12",
-					"productUnit": "USD"
-				},
-				{
-					"productName": "Pumpkin Pie",
-					"productPrice": "12",
-					"productUnit": "USD"
-				}
-			]
 		}
 	],
 	"product": [

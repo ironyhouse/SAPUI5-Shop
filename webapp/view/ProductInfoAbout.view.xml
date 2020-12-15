@@ -112,7 +112,7 @@
         <!-- CreationDate -->
         <Label text="{i18n>productTitleDate}">
             <layoutData>
-                <forms:ColumnElementData cellsSmall="4" cellsLarge="4" />
+                <forms:ColumnElementData cellsSmall="4" cellsLarge="1" />
             </layoutData>
         </Label>
         <Text text="{
