@@ -1,23 +1,26 @@
 <mvc:View controllerName="sap.ui.Shop.controller.SupplierInfo"
-	xmlns:m="sap.m"
-	xmlns:f="sap.f"
-	xmlns:mvc="sap.ui.core.mvc"
-	height="100%">
-	<f:FlexibleColumnLayout
-		layout="TwoColumnsMidExpanded">
+	displayBlock="true"
+	height="100%"
+	xmlns="sap.f"
+	xmlns:mvc="sap.ui.core.mvc">
+	<FlexibleColumnLayout
+		layout="TwoColumnsMidExpanded"
+		id="SipplierInfoLayout"
+		backgroundDesign="Solid">
 		<!-- Products -->
-		<f:beginColumnPages>
-			<!-- Products -->
+		<beginColumnPages>
 			<mvc:XMLView
 				id="SupplierProducts"
-				viewName="sap.ui.Shop.view.SupplierInfoProducts"/>
-		</f:beginColumnPages>
+				viewName="sap.ui.Shop.view.SupplierProductList"/>
+		</beginColumnPages>
 		<!-- Product Info -->
-		<f:midColumnPages>
+		<midColumnPages>
+			<!-- <mvc:XMLView
+				viewName="sap.ui.Shop.view.SupplierProductList"/> -->
 			<mvc:XMLView
 				id="SupplierProductInfo"
-				viewName="sap.ui.Shop.view.SupplierInfoProducts"/>
-		</f:midColumnPages>
+				viewName="sap.ui.Shop.view.SupplierProductInfo"/>
+		</midColumnPages>
 
-	</f:FlexibleColumnLayout>
+	</FlexibleColumnLayout>
 </mvc:View>

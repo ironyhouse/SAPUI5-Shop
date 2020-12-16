@@ -80,7 +80,8 @@ sap.ui.define([
             oRouter.navTo("SupplierInfo", {
                 productId: nProductId,
                 SupplierName: sSupplierName,
-                SupplierId: nSupplierId
+                SupplierId: nSupplierId,
+                layout: "OneColumn"
             });
         },
 

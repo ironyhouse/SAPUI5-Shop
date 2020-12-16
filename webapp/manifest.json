@@ -75,9 +75,26 @@
 					"target": "ProductInfo"
 				},
 				{
-					"pattern": "product/{productId}/supplier/{SupplierName}",
+					"pattern": "/supplier/{SupplierName}/{layout}",
 					"name": "SupplierInfo",
-					"target": "SupplierInfo"
+					"target":  [
+						"SupplierInfo"
+					]
+				},
+				{
+					"pattern": "/supplier/{SupplierName}/{layout}",
+					"name": "SupplierProductList",
+					"target":  [
+						"SupplierInfo"
+					]
+				},
+				{
+					"pattern": "/supplier/{SupplierName}/{ProductName}/{layout}",
+					"name": "SupplierProductInfo",
+					"target": [
+						"SupplierInfo",
+						"SupplierProductInfo"
+					]
 				}
 			],
 			"targets": {
@@ -92,6 +109,11 @@
 				"SupplierInfo": {
 					"viewId": "3",
 					"viewName": "SupplierInfo"
+				},
+				"SupplierProductInfo": {
+					"viewId": "4",
+					"viewName": "SupplierProductInfo",
+					"controlAggregation": "midColumnPages"
 				}
 			}
 		}

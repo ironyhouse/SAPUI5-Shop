@@ -1,7 +1,9 @@
 sap.ui.define([
-	"./BaseController"
+	"./BaseController",
+	'sap/f/library'
 	], function (
-		BaseController
+        BaseController,
+        fioriLibrary
 	) {
 		"use strict";
 		return BaseController.extend("sap.ui.Shop.controller.SupplierInfo", {
@@ -9,14 +11,12 @@ sap.ui.define([
              * Controller's "init" lifecycle method.
              */
 			onInit: function () {
-
                 // Route
-                var oRouter = sap.ui.core.UIComponent.getRouterFor(this);
+                var oRouter = this.getRouterForThis();
 
                 oRouter
                     .getRoute("SupplierInfo")
-                    .attachPatternMatched(this._onObjectMatched, this);
-                this.myRouter = oRouter;
+                    .attachPatternMatched(this._onSupplierMatched, this);
             },
 
             /**
@@ -24,7 +24,7 @@ sap.ui.define([
              *
              * @param {sap.ui.base.Event} oEvent event object.
              */
-            _onObjectMatched: function (oEvent) {
+            _onSupplierMatched: function (oEvent) {
                 var oModel = this.getModel("ProductList"),
                     aProducts = oModel.getProperty("/Supplier"),
                     sSupplierName = oEvent.getParameter("arguments").SupplierName,
@@ -37,9 +37,29 @@ sap.ui.define([
                     }
                 });
 
+                this._sSupplierName = sSupplierName;
+                this._nSupplierIndex = nSupplierIndex;
+
                 this.getView().bindElement({
                     path: "/Supplier/" + nSupplierIndex,
                     model: "ProductList",
+                });
+            },
+
+
+            onProductPress: function (oEvent) {
+                var oRouter = this.getRouterForThis(),
+                    oFCL = this.oView.getParent().getParent(),
+                    sProductName = oEvent.getSource()
+                        .getBindingContext("ProductList")
+                        .getProperty("productName");
+
+                oFCL.setLayout(fioriLibrary.LayoutType.TwoColumnsMidExpanded);
+
+                oRouter.navTo("SupplierProductInfo", {
+                    SupplierName: this._sSupplierName,
+                    ProductName: sProductName,
+                    layout: "TwoColumnsMidExpanded"
                 });
             },
 		});

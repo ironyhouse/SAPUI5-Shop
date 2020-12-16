@@ -41,28 +41,38 @@
 			"products": [
 				{
 					"productName": "Apple",
-					"productPrice": "12",
-					"productUnit": "USD"
+					"ProductImage": "https://picsum.photos/200/300",
+					"productPrice": "32",
+					"productUnit": "USD",
+					"productInfo": "An apple is an edible fruit produced by an apple tree (Malus domestica). Apple trees are cultivated worldwide and are the most widely grown species in the genus Malus."
 				},
 				{
 					"productName": "Salad",
-					"productPrice": "12",
-					"productUnit": "USD"
+					"ProductImage": "https://picsum.photos/200/300",
+					"productPrice": "42",
+					"productUnit": "USD",
+					"productInfo": "A salad is a dish consisting of pieces of food in a mixture, sometimes with at least one raw ingredient. It is often dressed, and is typically served at room temperature or chilled, though some (such as south German potato salad, or chicken salad) can be served warm."
 				},
 				{
-					"productName": "Apple",
-					"productPrice": "12",
-					"productUnit": "USD"
+					"productName": "Tomato",
+					"ProductImage": "https://picsum.photos/200/300",
+					"productPrice": "13",
+					"productUnit": "USD",
+					"productInfo": "The tomato is the edible berry of the plant Solanum lycopersicum,[1][2] commonly known as a tomato plant. The species originated in western South America and Central America.[2][3] The Nahuatl (the language used by the Aztecs) word tomatl gave rise to the Spanish word tomate, from which the English word tomato derived.[3][4] Its domestication and use as a cultivated food may have originated with the indigenous peoples of Mexico."
 				},
 				{
 					"productName": "Bread",
-					"productPrice": "12",
-					"productUnit": "USD"
+					"ProductImage": "https://picsum.photos/200/300",
+					"productPrice": "23",
+					"productUnit": "USD",
+					"productInfo": "Bread is a staple food prepared from a dough of flour and water, usually by baking. Throughout recorded history, it has been a prominent food in large parts of the world. It is one of the oldest man-made foods, having been of significant importance since the dawn of agriculture, and plays an essential role in both religious rituals and secular culture."
 				},
 				{
 					"productName": "Pumpkin Pie",
+					"ProductImage": "https://picsum.photos/200/300",
 					"productPrice": "12",
-					"productUnit": "USD"
+					"productUnit": "USD",
+					"productInfo": "Pumpkin pie is a dessert pie with a spiced, pumpkin-based custard filling. The pumpkin is a symbol of harvest time, and pumpkin pie is generally eaten during the fall and early winter. In the United States and Canada, it is usually prepared for Thanksgiving,[1] and other occasions when pumpkin is in season."
 				}
 			]
 		},
@@ -71,28 +81,38 @@
 			"products": [
 				{
 					"productName": "Apple",
-					"productPrice": "12",
-					"productUnit": "USD"
+					"ProductImage": "https://picsum.photos/200/300",
+					"productPrice": "32",
+					"productUnit": "USD",
+					"productInfo": "An apple is an edible fruit produced by an apple tree (Malus domestica). Apple trees are cultivated worldwide and are the most widely grown species in the genus Malus."
 				},
 				{
 					"productName": "Salad",
-					"productPrice": "12",
-					"productUnit": "USD"
+					"ProductImage": "https://picsum.photos/200/300",
+					"productPrice": "42",
+					"productUnit": "USD",
+					"productInfo": "A salad is a dish consisting of pieces of food in a mixture, sometimes with at least one raw ingredient. It is often dressed, and is typically served at room temperature or chilled, though some (such as south German potato salad, or chicken salad) can be served warm."
 				},
 				{
-					"productName": "Apple",
-					"productPrice": "12",
-					"productUnit": "USD"
+					"productName": "Tomato",
+					"ProductImage": "https://picsum.photos/200/300",
+					"productPrice": "13",
+					"productUnit": "USD",
+					"productInfo": "The tomato is the edible berry of the plant Solanum lycopersicum,[1][2] commonly known as a tomato plant. The species originated in western South America and Central America.[2][3] The Nahuatl (the language used by the Aztecs) word tomatl gave rise to the Spanish word tomate, from which the English word tomato derived.[3][4] Its domestication and use as a cultivated food may have originated with the indigenous peoples of Mexico."
 				},
 				{
 					"productName": "Bread",
-					"productPrice": "12",
-					"productUnit": "USD"
+					"ProductImage": "https://picsum.photos/200/300",
+					"productPrice": "23",
+					"productUnit": "USD",
+					"productInfo": "Bread is a staple food prepared from a dough of flour and water, usually by baking. Throughout recorded history, it has been a prominent food in large parts of the world. It is one of the oldest man-made foods, having been of significant importance since the dawn of agriculture, and plays an essential role in both religious rituals and secular culture."
 				},
 				{
 					"productName": "Pumpkin Pie",
+					"ProductImage": "https://picsum.photos/200/300",
 					"productPrice": "12",
-					"productUnit": "USD"
+					"productUnit": "USD",
+					"productInfo": "Pumpkin pie is a dessert pie with a spiced, pumpkin-based custard filling. The pumpkin is a symbol of harvest time, and pumpkin pie is generally eaten during the fall and early winter. In the United States and Canada, it is usually prepared for Thanksgiving,[1] and other occasions when pumpkin is in season."
 				}
 			]
 		},
@@ -101,28 +121,38 @@
 			"products": [
 				{
 					"productName": "Apple",
-					"productPrice": "12",
-					"productUnit": "USD"
+					"ProductImage": "https://picsum.photos/200/300",
+					"productPrice": "32",
+					"productUnit": "USD",
+					"productInfo": "An apple is an edible fruit produced by an apple tree (Malus domestica). Apple trees are cultivated worldwide and are the most widely grown species in the genus Malus."
 				},
 				{
 					"productName": "Salad",
-					"productPrice": "12",
-					"productUnit": "USD"
+					"ProductImage": "https://picsum.photos/200/300",
+					"productPrice": "42",
+					"productUnit": "USD",
+					"productInfo": "A salad is a dish consisting of pieces of food in a mixture, sometimes with at least one raw ingredient. It is often dressed, and is typically served at room temperature or chilled, though some (such as south German potato salad, or chicken salad) can be served warm."
 				},
 				{
-					"productName": "Apple",
-					"productPrice": "12",
-					"productUnit": "USD"
+					"productName": "Tomato",
+					"ProductImage": "https://picsum.photos/200/300",
+					"productPrice": "13",
+					"productUnit": "USD",
+					"productInfo": "The tomato is the edible berry of the plant Solanum lycopersicum,[1][2] commonly known as a tomato plant. The species originated in western South America and Central America.[2][3] The Nahuatl (the language used by the Aztecs) word tomatl gave rise to the Spanish word tomate, from which the English word tomato derived.[3][4] Its domestication and use as a cultivated food may have originated with the indigenous peoples of Mexico."
 				},
 				{
 					"productName": "Bread",
-					"productPrice": "12",
-					"productUnit": "USD"
+					"ProductImage": "https://picsum.photos/200/300",
+					"productPrice": "23",
+					"productUnit": "USD",
+					"productInfo": "Bread is a staple food prepared from a dough of flour and water, usually by baking. Throughout recorded history, it has been a prominent food in large parts of the world. It is one of the oldest man-made foods, having been of significant importance since the dawn of agriculture, and plays an essential role in both religious rituals and secular culture."
 				},
 				{
 					"productName": "Pumpkin Pie",
+					"ProductImage": "https://picsum.photos/200/300",
 					"productPrice": "12",
-					"productUnit": "USD"
+					"productUnit": "USD",
+					"productInfo": "Pumpkin pie is a dessert pie with a spiced, pumpkin-based custard filling. The pumpkin is a symbol of harvest time, and pumpkin pie is generally eaten during the fall and early winter. In the United States and Canada, it is usually prepared for Thanksgiving,[1] and other occasions when pumpkin is in season."
 				}
 			]
 		},
@@ -131,28 +161,38 @@
 			"products": [
 				{
 					"productName": "Apple",
-					"productPrice": "12",
-					"productUnit": "USD"
+					"ProductImage": "https://picsum.photos/200/300",
+					"productPrice": "32",
+					"productUnit": "USD",
+					"productInfo": "An apple is an edible fruit produced by an apple tree (Malus domestica). Apple trees are cultivated worldwide and are the most widely grown species in the genus Malus."
 				},
 				{
 					"productName": "Salad",
-					"productPrice": "12",
-					"productUnit": "USD"
+					"ProductImage": "https://picsum.photos/200/300",
+					"productPrice": "42",
+					"productUnit": "USD",
+					"productInfo": "A salad is a dish consisting of pieces of food in a mixture, sometimes with at least one raw ingredient. It is often dressed, and is typically served at room temperature or chilled, though some (such as south German potato salad, or chicken salad) can be served warm."
 				},
 				{
-					"productName": "Apple",
-					"productPrice": "12",
-					"productUnit": "USD"
+					"productName": "Tomato",
+					"ProductImage": "https://picsum.photos/200/300",
+					"productPrice": "13",
+					"productUnit": "USD",
+					"productInfo": "The tomato is the edible berry of the plant Solanum lycopersicum,[1][2] commonly known as a tomato plant. The species originated in western South America and Central America.[2][3] The Nahuatl (the language used by the Aztecs) word tomatl gave rise to the Spanish word tomate, from which the English word tomato derived.[3][4] Its domestication and use as a cultivated food may have originated with the indigenous peoples of Mexico."
 				},
 				{
 					"productName": "Bread",
-					"productPrice": "12",
-					"productUnit": "USD"
+					"ProductImage": "https://picsum.photos/200/300",
+					"productPrice": "23",
+					"productUnit": "USD",
+					"productInfo": "Bread is a staple food prepared from a dough of flour and water, usually by baking. Throughout recorded history, it has been a prominent food in large parts of the world. It is one of the oldest man-made foods, having been of significant importance since the dawn of agriculture, and plays an essential role in both religious rituals and secular culture."
 				},
 				{
 					"productName": "Pumpkin Pie",
+					"ProductImage": "https://picsum.photos/200/300",
 					"productPrice": "12",
-					"productUnit": "USD"
+					"productUnit": "USD",
+					"productInfo": "Pumpkin pie is a dessert pie with a spiced, pumpkin-based custard filling. The pumpkin is a symbol of harvest time, and pumpkin pie is generally eaten during the fall and early winter. In the United States and Canada, it is usually prepared for Thanksgiving,[1] and other occasions when pumpkin is in season."
 				}
 			]
 		}

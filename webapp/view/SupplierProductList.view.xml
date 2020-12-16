@@ -28,6 +28,7 @@
                 items="{ProductList>products}"
                 headerText="{i18n>productListTitle}">
                 <ObjectListItem
+                    press="onProductPress"
                     type="Active"
                     title="{ProductList>productName}"
                     number="{ProductList>productPrice}"
