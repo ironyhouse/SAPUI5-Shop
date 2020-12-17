@@ -1,0 +1,74 @@
+<core:FragmentDefinition
+	height="100%"
+	xmlns:mvc="sap.ui.core.mvc"
+	xmlns:core="sap.ui.core"
+	xmlns="sap.m"
+	xmlns:f="sap.f">
+	<f:DynamicPage>
+		<!-- Title -->
+		<f:title>
+			<f:DynamicPageTitle>
+				<f:heading>
+					<Title
+						class="sapUiSmallMarginBegin"
+						text="{ProductList>supplierName}" />
+				</f:heading>
+			</f:DynamicPageTitle>
+		</f:title>
+		<!-- Header -->
+		<f:header>
+			<f:DynamicPageHeader pinnable="true">
+				<f:content>
+				</f:content>
+			</f:DynamicPageHeader>
+		</f:header>
+		<!-- Content -->
+		<f:content>
+			<Table
+				id="SupplierProductsTable"
+				items="{ProductList>products}"
+				class="sapUiResponsiveMargin"
+				width="auto">
+				<!-- Product List Title -->
+				<headerToolbar>
+					<OverflowToolbar design="Solid">
+						<!-- Title -->
+						<Title
+							class="sapUiSmallMarginBegin"
+							text="{i18n>productListTitle}" />
+						<!-- Spacer -->
+						<ToolbarSpacer />
+						<!-- Edit Buttons -->
+					</OverflowToolbar>
+				</headerToolbar>
+				<!-- Product List Header -->
+				<columns>
+					<Column>
+						<HBox
+							alignItems="Center"
+							justifyContent="Center">
+							<Label
+								text="{i18n>name}"
+								design="Bold" />
+						</HBox>
+					</Column>
+				</columns>
+				<!-- Product List -->
+				<items>
+					<ColumnListItem
+						type="Navigation"
+						press="onProductPress">
+						<VBox>
+							<ObjectIdentifier title="{ProductList>productName}"/>
+						</VBox>
+					</ColumnListItem>
+				</items>
+			</Table>
+		</f:content>
+		<!-- Footer -->
+		<f:footer>
+			<OverflowToolbar>
+			</OverflowToolbar>
+		</f:footer>
+	</f:DynamicPage>
+</core:FragmentDefinition>

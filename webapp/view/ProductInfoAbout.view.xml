@@ -15,7 +15,7 @@
         <!-- Price -->
         <Label text="{i18n>price}">
             <layoutData>
-                <forms:ColumnElementData cellsSmall="4" cellsLarge="1" />
+                <forms:ColumnElementData cellsSmall="3" cellsLarge="1" />
             </layoutData>
         </Label>
         <ObjectNumber
@@ -60,7 +60,7 @@
         <!-- Quantity -->
         <Label text="{i18n>quantity}">
             <layoutData>
-                <forms:ColumnElementData cellsSmall="4" cellsLarge="1" />
+                <forms:ColumnElementData cellsSmall="3" cellsLarge="1" />
             </layoutData>
         </Label>
         <ObjectNumber

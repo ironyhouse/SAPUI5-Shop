@@ -30,6 +30,8 @@ sap.ui.define([
 
 			/**
              *  This method navigates to product info.
+			 *
+			 * @param {sap.ui.base.Event} oEvent event object.
              */
 			onNavToProductInfo: function (oEvent) {
 				var oSelectedListItem = oEvent.getSource(),
@@ -252,7 +254,9 @@ sap.ui.define([
             /**
              * Execute "delete" request of the product.
              *
-             * @param {number} nProductId event object
+			 * @param {Array} nProductId products list
+             * @param {number} nProductId product Id
+			 * @param {Array} nProductId message words
              */
             onDeleteProduct: function (aProducts, nProductId, aMessageWord) {
                 var oModel = this.getModel("ProductList"),
