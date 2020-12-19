@@ -1,9 +1,8 @@
 sap.ui.define([
 	"./BaseController",
-	'sap/f/library'
+	"sap/f/library"
 	], function (
-        BaseController,
-        Library
+        BaseController
 	) {
 		"use strict";
 		return BaseController.extend("sap.ui.Shop.controller.SupplierInfo", {
@@ -25,10 +24,20 @@ sap.ui.define([
              * @param {sap.ui.base.Event} oEvent event object.
              */
             _onSupplierMatched: function (oEvent) {
-                var oModel = this.getModel("SupplierList"),
+                var sLayoutName = oEvent.getParameter("arguments").sLayoutName,
+                    oModel = this.getModel("SupplierList"),
                     aProducts = oModel.getProperty("/Supplier"),
-                    sSupplierName = oEvent.getParameter("arguments").SupplierName,
+                    nProductId = oEvent.getParameter("arguments").nProductId,
+                    sSupplierName = oEvent.getParameter("arguments").sSupplierName,
                     nSupplierIndex;
+
+                // set page layout
+                this.setLayout(sLayoutName);
+
+                // toggle fullscreen buttons
+                if (sLayoutName === "EndColumnFullScreen") {
+                    this.getModel("State").setProperty("/State/isFullScreenEndColumn", true);
+                }
 
                 // get product index
                 aProducts.forEach(function(item, index) {
@@ -37,7 +46,8 @@ sap.ui.define([
                     }
                 });
 
-                this._nSupplierIndex = nSupplierIndex;
+                this.nProductId = nProductId
+                this.sSupplierName = sSupplierName;
 
                 this.getView().bindElement({
                     path: "/Supplier/" + nSupplierIndex,
@@ -48,11 +58,17 @@ sap.ui.define([
             /**
              *  Open end column in full screen mode.
              */
-            onOpenFullScreenEndColumn: function () {
+            onCloseFullScreenEndColumn: function () {
                 // change layout
-                this.getView().getParent().getParent().setLayout(Library.LayoutType.EndColumnFullScreen);
+                this.setLayout("EndColumnFullScreen");
                 // change fullscreen button
-                this.getModel("State").setProperty("/State/supplierEndColumn", false);
+                this.getModel("State").setProperty("/State/isFullScreenEndColumn", true);
+
+                this.getRouterForThis().navTo("SupplierInfo", {
+                    nProductId: this.nProductId,
+                    sSupplierName: this.sSupplierName,
+                    sLayoutName: "EndColumnFullScreen"
+                });
             },
 
             /**
@@ -60,9 +76,15 @@ sap.ui.define([
              */
             onOpenEndColumn: function () {
                 // change layout
-                this.getView().getParent().getParent().setLayout(Library.LayoutType.ThreeColumnsMidExpanded);
+                this.setLayout("ThreeColumnsMidExpanded");
                 // change fullscreen button
-                this.getModel("State").setProperty("/State/supplierEndColumn", true);
+                this.getModel("State").setProperty("/State/isFullScreenEndColumn", false);
+
+                this.getRouterForThis().navTo("SupplierInfo", {
+                    nProductId: this.nProductId,
+                    sSupplierName: this.sSupplierName,
+                    sLayoutName: "ThreeColumnsMidExpanded"
+                });
             },
 
             /**
@@ -70,12 +92,18 @@ sap.ui.define([
              */
             onCloseEndColumn: function () {
                 // change layout
-                this.getView().getParent().getParent().setLayout(Library.LayoutType.TwoColumnsMidExpanded);
+                this.setLayout("TwoColumnsMidExpanded");
 
                 // show end column buttons
-                this.getModel("State").setProperty("/State/pageLayoutButtons", true);
+                this.getModel("State").setProperty("/State/isShowEndColumnButtons", false);
                 // change fullscreen button
-                this.getModel("State").setProperty("/State/supplierEndColumn", true);
+                this.getModel("State").setProperty("/State/isFullScreenEndColumn", false);
+
+                this.getRouterForThis().navTo("SupplierInfo", {
+                    nProductId: this.nProductId,
+                    sSupplierName: this.sSupplierName,
+                    sLayoutName: "TwoColumnsMidExpanded"
+                });
             },
 
 		});

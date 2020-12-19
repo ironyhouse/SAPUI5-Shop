@@ -29,13 +29,13 @@
 				</heading>
 				<!-- Edit Button -->
 				<actions>
-					<m:Button text="{i18n>edit}" type="Emphasized" enabled="{= !${State>/State/isEditProduct}}" press=".onisEditProductPress"/>
+					<m:Button text="{i18n>edit}" type="Emphasized" enabled="{= !${State>/State/isEditProduct}}" press=".onEditProductPress"/>
 				</actions>
 
 				<navigationActions>
-					<m:OverflowToolbarButton visible="{= ${State>/State/middleColumn} &amp;&amp; ${State>/State/pageLayoutButtons}}" type="Transparent" icon="sap-icon://full-screen" press=".onOpenFullScreenMiddleColumn"/>
-					<m:OverflowToolbarButton visible="{= !${State>/State/middleColumn} &amp;&amp; ${State>/State/pageLayoutButtons}}" type="Transparent" icon="sap-icon://exit-full-screen" press=".onOpenMiddleColumn"/>
-					<m:OverflowToolbarButton visible="{State>/State/pageLayoutButtons}" type="Transparent" icon="sap-icon://decline" press=".onCloseMiddleColumn"/>
+					<m:OverflowToolbarButton visible="{= !${State>/State/isFullScreenMiddleColumn} &amp;&amp; !${State>/State/isShowEndColumnButtons}}" type="Transparent" icon="sap-icon://full-screen" press=".onOpenFullScreenMiddleColumn"/>
+					<m:OverflowToolbarButton visible="{= ${State>/State/isFullScreenMiddleColumn} &amp;&amp; !${State>/State/isShowEndColumnButtons}}" type="Transparent" icon="sap-icon://exit-full-screen" press=".onCloseFullScreenMiddleColumn"/>
+					<m:OverflowToolbarButton visible="{= !${State>/State/isShowEndColumnButtons}}" type="Transparent" icon="sap-icon://decline" press=".onCloseMiddleColumn"/>
 				</navigationActions>
 			</ObjectPageDynamicHeaderTitle>
 		</headerTitle>

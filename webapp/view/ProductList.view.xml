@@ -30,7 +30,7 @@
 							<!-- Manufacture -->
 							<fb:FilterGroupItem groupName="G1" visibleInFilterBar="true" visible="true" name="Manufacture" label="{i18n>manufacture}">
 								<fb:control>
-									<Select id="FilterManufacture" change="onSelectFilter" forceSelection="true" items="{
+									<Select id="SelectManufacture" change="onSelectFilter" forceSelection="true" items="{
 											path:'ProductList>/Manufacture',
 											templateShareable:false
 										}">
@@ -45,7 +45,7 @@
 		</f:header>
 		<!-- Content -->
 		<f:content>
-			<Table id="ProductsTable" items="{ProductList>/product}" class="sapUiResponsiveMargin" mode="SingleSelectLeft" selectionChange="onSelectProductPress" width="auto">
+			<Table id="ProductsTable" class="sapUiResponsiveMargin" mode="SingleSelectLeft" selectionChange="onSelectProductPress" width="auto">
 				<!-- Product List Title -->
 				<headerToolbar>
 					<OverflowToolbar design="Solid">
@@ -55,7 +55,7 @@
 						<ToolbarSpacer />
 						<!-- Edit Buttons -->
 						<Button text="{i18n>add}" type="Transparent" press="onAddProductPress" />
-						<Button text= "{i18n>delete}" type="Transparent" enabled="{State>/State/isDeleteProductButton}" press="onisDeleteProductButtonPress" />
+						<Button text= "{i18n>delete}" type="Transparent" enabled="{State>/State/isShowDeleteProductButton}" press="onDeleteProductButtonPress" />
 					</OverflowToolbar>
 				</headerToolbar>
 				<!-- Product List Header -->
@@ -83,24 +83,6 @@
 				</columns>
 				<!-- Product List -->
 				<items>
-					<ColumnListItem type="Navigation" press=".onNavToProductInfo">
-						<VBox>
-							<ObjectIdentifier title="{ProductList>ProductName}"/>
-						</VBox>
-						<VBox>
-							<ObjectNumber number="{
-									parts:[{path:'ProductList>Quantity'}]
-								}" state="{= ${ProductList>Quantity} > 0 ? 'Success' : 'Error' }"/>
-						</VBox>
-						<VBox>
-							<ObjectNumber number="{
-									parts:[{path:'ProductList>Price'}]
-								}" unit="{path:'ProductList>Unit'}" state="{= ${ProductList>Quantity} > 0 ? 'Success' : 'Error' }"/>
-						</VBox>
-						<VBox>
-							<ObjectIdentifier title="{ProductList>Manufacture}"/>
-						</VBox>
-					</ColumnListItem>
 				</items>
 			</Table>
 		</f:content>

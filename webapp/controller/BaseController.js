@@ -1,8 +1,14 @@
 sap.ui.define([
-    "sap/ui/core/mvc/Controller"
-    ], function (Controller) {
+    "sap/ui/core/mvc/Controller",
+    "sap/ui/core/UIComponent"
+    ], function (Controller, UIComponent) {
     "use strict";
     return Controller.extend("sap.ui.Shop.controller.BaseController", {
+
+        // set page layout
+        setLayout: function (sLayoutName) {
+            return this.getModel("State").setProperty( "/State/sPageLayout", sLayoutName);
+        },
 
         // get model
         getModel: function (sName) {
@@ -19,7 +25,7 @@ sap.ui.define([
 
         // get this router
         getRouterForThis: function () {
-            return sap.ui.core.UIComponent.getRouterFor(this);
+            return UIComponent.getRouterFor(this);
         },
 
     });

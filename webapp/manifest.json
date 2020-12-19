@@ -74,16 +74,16 @@
 			"routes": [
 				{
 					"pattern": "",
-					"name": "App",
+					"name": "ProductList",
 					"target": "App"
 				},
 				{
-					"pattern": "product/{productId}",
+					"pattern": "product/{nProductId}/{sLayoutName}",
 					"name": "ProductInfo",
 					"target": "App"
 				},
 				{
-					"pattern": "product/{productId}/supplier/{SupplierName}/",
+					"pattern": "product/{nProductId}/supplier/{sSupplierName}/{sLayoutName}",
 					"name": "SupplierInfo",
 					"target": "App"
 				}

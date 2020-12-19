@@ -5,6 +5,7 @@
 	xmlns="sap.m"
 	xmlns:f="sap.f">
  	<List
+	 	id="SupplierProductList"
 		items="{SupplierList>products}"
 		headerText="{i18n>productListTitle}">
 		<ObjectListItem

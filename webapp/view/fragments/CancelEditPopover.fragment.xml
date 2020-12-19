@@ -1,0 +1,21 @@
+<core:FragmentDefinition
+	xmlns="sap.m"
+	xmlns:core="sap.ui.core">
+	<Popover
+		title="{i18n>editCancel}"
+		class="sapUiResponsivePadding--header sapUiResponsivePadding--footer"
+		placement="Top"
+		initialFocus="email">
+        <content>
+            <VBox justifyContent="Center" class="sapUiTinyMargin">
+                <Button
+                    width="100%"
+                    type="Emphasized"
+                    text="{i18n>cancelEdit}"
+                    press="onCancelChanges" />
+            </VBox>
+        </content>
+		<footer>
+		</footer>
+	</Popover>
+</core:FragmentDefinition>

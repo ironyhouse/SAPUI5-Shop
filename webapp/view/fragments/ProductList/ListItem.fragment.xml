@@ -1,0 +1,18 @@
+<ColumnListItem xmlns="sap.m" xmlns:core="sap.ui.core" type="Navigation" press=".onNavToProductInfo">
+    <VBox>
+        <ObjectIdentifier title="{ProductList>ProductName}"/>
+    </VBox>
+    <VBox>
+        <ObjectNumber number="{
+                parts:[{path:'ProductList>Quantity'}]
+            }" state="{= ${ProductList>Quantity} > 0 ? 'Success' : 'Error' }"/>
+    </VBox>
+    <VBox>
+        <ObjectNumber number="{
+                parts:[{path:'ProductList>Price'}]
+            }" unit="{path:'ProductList>Unit'}" state="{= ${ProductList>Quantity} > 0 ? 'Success' : 'Error' }"/>
+    </VBox>
+    <VBox>
+        <ObjectIdentifier title="{ProductList>Manufacture}"/>
+    </VBox>
+</ColumnListItem>

@@ -4,16 +4,14 @@ sap.ui.define([
 	"sap/ui/model/FilterOperator",
 	"sap/m/MessageToast",
 	"sap/m/MessageBox",
-	"sap/ui/core/Fragment",
-    'sap/f/library'
+	"sap/ui/core/Fragment"
 	], function (
 		BaseController,
 		Filter,
 		FilterOperator,
 		MessageToast,
 		MessageBox,
-		Fragment,
-        Library
+		Fragment
 	) {
 		"use strict";
 		return BaseController.extend("sap.ui.Shop.controller.ProductList", {
@@ -28,6 +26,19 @@ sap.ui.define([
 					.getCore()
 					.getMessageManager()
 					.registerObject(this.getView(), true);
+
+				var oTable = this.byId("ProductsTable")
+				Fragment.load({
+						id: this.getView().getId(),
+						name: "sap.ui.Shop.view.fragments.ProductList.ListItem",
+						controller: this,
+				})
+				.then(function (oFragment) {
+					oTable.bindItems({
+						path: "ProductList>/product",
+						template: oFragment,
+					})
+				})
 			},
 
 			/**
@@ -40,14 +51,18 @@ sap.ui.define([
 					oRouter = this.getRouterForThis(),
 					nProductId = oSelectedListItem
 						.getBindingContext("ProductList")
-						.getProperty("productId");
+						.getProperty("nProductId");
 
 				// set layout
-				this.getView().getParent().getParent().setLayout(Library.LayoutType.TwoColumnsMidExpanded);
+				this.setLayout("TwoColumnsMidExpanded");
 				// show middle column buttons
-				this.getModel("State").setProperty("/State/pageLayoutButtons", true);
+				this.getModel("State").setProperty("/State/isShowEndColumnButtons", false);
 
-				oRouter.navTo("ProductInfo", { productId: nProductId });
+				oRouter.navTo("ProductInfo",
+					{
+						nProductId: nProductId,
+						sLayoutName: "TwoColumnsMidExpanded"
+					});
 			},
 
 			/**
@@ -57,7 +72,7 @@ sap.ui.define([
 				var oProductsTable = this.byId("ProductsTable"),
 					oItemsBinding = oProductsTable.getBinding("items"),
 					sQueryName = this.getView().byId("FilterName").getValue(),
-					sQueryManufacture = this.byId("FilterManufacture").getSelectedKey();
+					sQueryManufacture = this.byId("SelectManufacture").getSelectedKey();
 
 				if (sQueryManufacture === "All") { sQueryManufacture = "" };
 
@@ -77,7 +92,7 @@ sap.ui.define([
              * "Clear" button press event handler of the "FilterBar".
              */
 			onFiltersClear: function () {
-				var oManufacture = this.byId("FilterManufacture"),
+				var oManufacture = this.byId("SelectManufacture"),
 					oProductsTable = this.byId("ProductsTable"),
 					oItemsBinding = oProductsTable.getBinding("items");
 
@@ -87,14 +102,6 @@ sap.ui.define([
 				this.getView().byId("FilterName").setValue();
 				// update product list
 				oItemsBinding.filter();
-			},
-
-			/**
-             * "Product Select" button press event handler.
-             */
-			onSelectProductPress: function () {
-				var bIsDelete = !!this.byId("ProductsTable").getSelectedItems().length;
-				this.getModel("State").setProperty("/State/isDeleteProductButton", bIsDelete);
 			},
 
 			/**
@@ -131,7 +138,6 @@ sap.ui.define([
 					// show form
 					oStoreCreatorForm.open();
 				}
-
 			},
 
 			/**
@@ -143,6 +149,8 @@ sap.ui.define([
 					oStoreCreatorForm = this.byId("productCreator"),
 					// get product list
 					oProducts = oModel.getProperty("/product"),
+					// product length
+					nProductLength = oProducts.length,
 					// get product form
 					oProductForm = oModel.getProperty("/productForm");
 					// bCheckForm;
@@ -151,15 +159,13 @@ sap.ui.define([
 				oProductForm = jQuery.extend(true, {}, oProductForm);
 
 				// create new product id
-				oProductForm.productId = oProducts[oProducts.length - 1].productId + 1;
+				oProductForm.nProductId = oProducts[oProducts.length - 1].nProductId + 1;
 				// set product img
 				oProductForm.ProductImage = "https://picsum.photos/200/300";
 
-				// add product
-				oProducts.push(oProductForm);
-
 				// set new products
-				oModel.setProperty("/product", oProducts)
+				oModel.setProperty("/product/" + nProductLength, oProductForm);
+
 				// show message
 				MessageToast.show(sProductMessageCreate);
 				// close dialog
@@ -193,6 +199,7 @@ sap.ui.define([
 					}
 				}
 
+				// toggle form button
 				oProductFormButton.setProperty("enabled", bCheckForm);
 			},
 
@@ -209,6 +216,7 @@ sap.ui.define([
 					this.byId(key).setValue("");
 				}
 
+				// clear error message
 				sap.ui.getCore().getMessageManager().removeAllMessages();
 
 				// set min date
@@ -219,10 +227,18 @@ sap.ui.define([
 				this.getModel("ProductList").setProperty("/productForm", oProductForm);
 			},
 
+			/**
+             * "Product Select" button press event handler.
+             */
+			onSelectProductPress: function () {
+				var bIsDelete = !!this.byId("ProductsTable").getSelectedItems().length;
+				this.getModel("State").setProperty("/State/isShowDeleteProductButton", bIsDelete);
+			},
+
             /**
              * Execute "delete" request of the product.
              */
-			onisDeleteProductButtonPress: function () {
+			onDeleteProductButtonPress: function () {
 				var oModel = this.getModel("ProductList"),
 					// get product list
 					aProducts = oModel.getProperty("/product"),
@@ -230,14 +246,14 @@ sap.ui.define([
 					nProductId = this.byId("ProductsTable")
 						.getSelectedItem()
 						.getBindingContext("ProductList")
-						.getProperty("productId"),
-					onisDeleteProductButton = this.onisDeleteProductButton.bind(this),
+						.getProperty("nProductId"),
+					onDeleteProduct = this.onDeleteProduct.bind(this),
 					oBundle = this.getModel("i18n").getResourceBundle(),
 					aMessageWord = [];
 
 				// get product name
 				aProducts.forEach(item => {
-					if (item.productId === nProductId) {
+					if (item.nProductId === nProductId) {
 						aMessageWord.push(item.ProductName);
 					}
 				});
@@ -251,7 +267,7 @@ sap.ui.define([
                     {
                         onClose: function (oAction) {
                             if (oAction === "OK") {
-                                onisDeleteProductButton(aProducts, nProductId, aMessageWord);
+                                onDeleteProduct(aProducts, nProductId, aMessageWord);
                             }
                         },
                     }
@@ -265,12 +281,12 @@ sap.ui.define([
              * @param {number} nProductId product Id
 			 * @param {Array} nProductId message words
              */
-            onisDeleteProductButton: function (aProducts, nProductId, aMessageWord) {
+            onDeleteProduct: function (aProducts, nProductId, aMessageWord) {
                 var oModel = this.getModel("ProductList"),
 					sMessage = this.getI18nWord("productMessageDeleteSuccessful", aMessageWord);
 
 				// filtered products
-				aProducts = aProducts.filter(item => item.productId !== nProductId);
+				aProducts = aProducts.filter(item => item.nProductId !== nProductId);
 
 				// set filtered products
 				oModel.setProperty("/product", aProducts);

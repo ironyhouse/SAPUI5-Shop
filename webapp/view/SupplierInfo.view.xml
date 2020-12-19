@@ -16,21 +16,9 @@
 				</heading>
 
 				<navigationActions>
-					<m:OverflowToolbarButton
-						visible="{= ${State>/State/supplierEndColumn} &amp;&amp; !${State>/State/pageLayoutButtons}}"
-						type="Transparent"
-						icon="sap-icon://full-screen"
-						press=".onOpenFullScreenEndColumn"/>
-					<m:OverflowToolbarButton
-						visible="{= !${State>/State/supplierEndColumn} &amp;&amp; !${State>/State/pageLayoutButtons}}"
-						type="Transparent"
-						icon="sap-icon://exit-full-screen"
-						press=".onOpenEndColumn"/>
-					<m:OverflowToolbarButton
-						visible="{= !${State>/State/pageLayoutButtons}}"
-						type="Transparent"
-						icon="sap-icon://decline"
-						press=".onCloseEndColumn"/>
+					<m:OverflowToolbarButton visible="{= !${State>/State/isFullScreenEndColumn} &amp;&amp; ${State>/State/isShowEndColumnButtons}}" type="Transparent" icon="sap-icon://full-screen" press=".onCloseFullScreenEndColumn"/>
+					<m:OverflowToolbarButton visible="{= ${State>/State/isFullScreenEndColumn} &amp;&amp; ${State>/State/isShowEndColumnButtons}}" type="Transparent" icon="sap-icon://exit-full-screen" press=".onOpenEndColumn"/>
+					<m:OverflowToolbarButton visible="{State>/State/isShowEndColumnButtons}" type="Transparent" icon="sap-icon://decline" press=".onCloseEndColumn"/>
 				</navigationActions>
 			</ObjectPageDynamicHeaderTitle>
 		</headerTitle>
@@ -39,15 +27,11 @@
 
 		<!-- Content -->
 		<sections>
-			<ObjectPageSection
-				titleUppercase="false"
-				title="{i18n>suppliedProducts}">
+			<ObjectPageSection titleUppercase="false" title="{i18n>suppliedProducts}">
 				<subSections>
 					<ObjectPageSubSection>
 						<blocks>
-						<core:Fragment
-							fragmentName="sap.ui.Shop.view.fragments.SupplierInfo.SupplierProductList"
-							type="XML"/>
+							<core:Fragment fragmentName="sap.ui.Shop.view.fragments.SupplierInfo.SupplierProductList" type="XML"/>
 						</blocks>
 					</ObjectPageSubSection>
 				</subSections>

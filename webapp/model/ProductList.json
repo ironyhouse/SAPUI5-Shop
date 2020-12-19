@@ -37,7 +37,7 @@
 			"Unit": "USD",
 			"ProductImage": "https://picsum.photos/200/300",
 			"Manufacture": "DxA",
-			"productId": 0,
+			"nProductId": 0,
 			"Suppliers": [
 				{
 					"SupplierName": "ODa",
@@ -115,7 +115,7 @@
 			"Unit": "USD",
 			"ProductImage": "https://picsum.photos/200/300",
 			"Manufacture": "DG",
-			"productId": 1,
+			"nProductId": 1,
 			"Suppliers": [
 				{
 					"SupplierName": "ODa",
@@ -193,7 +193,7 @@
 			"Unit": "EUR",
 			"ProductImage": "https://picsum.photos/200/300",
 			"Manufacture": "FPQ",
-			"productId": 2,
+			"nProductId": 2,
 			"Suppliers": [
 				{
 					"SupplierName": "ODa",
@@ -271,7 +271,7 @@
 			"Unit": "RUB",
 			"ProductImage": "https://picsum.photos/200/300",
 			"Manufacture": "OPA",
-			"productId": 3,
+			"nProductId": 3,
 			"Suppliers": [
 				{
 					"SupplierName": "ODa",
@@ -349,7 +349,7 @@
 			"Unit": "USD",
 			"ProductImage": "https://picsum.photos/200/300",
 			"Manufacture": "POAI",
-			"productId": 4,
+			"nProductId": 4,
 			"Suppliers": [
 				{
 					"SupplierName": "ODa",
@@ -427,7 +427,7 @@
 			"Unit": "BYN",
 			"ProductImage": "https://picsum.photos/200/300",
 			"Manufacture": "DxA",
-			"productId": 8,
+			"nProductId": 8,
 			"Suppliers": [
 				{
 					"SupplierName": "ODa",

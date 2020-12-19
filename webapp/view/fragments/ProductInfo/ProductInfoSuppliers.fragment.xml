@@ -12,7 +12,7 @@
                 <!-- Search Product -->
                 <SearchField id="suppliersSearch" value="" width="30%" placeholder="{i18n>suppliersSearchPlaceholder}" search="onSuppliersSearch" />
                 <!-- Edit Buttons -->
-                <fc:TableButtons width="auto" buttonAddText="{i18n>add}" buttonDeleteText="{i18n>delete}" pressAdd="onAddSupplierPress" pressDelete="onisDeleteSupplierButtonPress" enabledAdd="{State>/State/isEditProduct}" enabledDelete="{State>/State/isDeleteSupplierButton}">
+                <fc:TableButtons width="auto" buttonAddText="{i18n>add}" buttonDeleteText="{i18n>delete}" pressAdd="onAddSupplierPress" pressDelete="onDeleteSupplierButtonPress" enabledAdd="{State>/State/isEditProduct}" enabledDelete="{State>/State/isShowDeleteSupplierButton}">
                 </fc:TableButtons>
             </OverflowToolbar>
         </headerToolbar>
