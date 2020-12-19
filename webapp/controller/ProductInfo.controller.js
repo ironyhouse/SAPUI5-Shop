@@ -5,7 +5,8 @@ sap.ui.define([
     "sap/ui/model/FilterOperator",
     "sap/m/MessageToast",
     "sap/m/MessageBox",
-    "sap/ui/core/Fragment"
+    "sap/ui/core/Fragment",
+    'sap/f/library'
 ], function (
         BaseController,
         formatter,
@@ -14,6 +15,7 @@ sap.ui.define([
         MessageToast,
         MessageBox,
         Fragment,
+        Library
     ) {
 	"use strict";
 	return BaseController.extend("sap.ui.Shop.controller.ProductInfo", {
@@ -40,7 +42,7 @@ sap.ui.define([
 			oMessageManager = sap.ui.getCore().getMessageManager();
 			oView.setModel(oMessageManager.getMessageModel(), "message");
 			// or just do it for the whole view
-			oMessageManager.registerObject(oView, true);
+            oMessageManager.registerObject(oView, true);
         },
 
         /**
@@ -53,7 +55,7 @@ sap.ui.define([
                 nProductIndex = this._getProductIndex(nProductId);
 
             // set product index
-            this.getModel("ProductList").setProperty("/State/productIndex", nProductIndex);
+            this.getModel("State").setProperty("/State/productIndex", nProductIndex)
 
             this.getView().bindElement({
                 path: "/product/" + nProductIndex,
@@ -77,11 +79,15 @@ sap.ui.define([
                     .getBindingContext("ProductList")
                     .getProperty("SupplierName");
 
+            // set layout
+            this.getView().getParent().getParent().setLayout(Library.LayoutType.ThreeColumnsMidExpanded);
+            // show end column buttons
+            this.getModel("State").setProperty("/State/pageLayoutButtons", false);
+
             oRouter.navTo("SupplierInfo", {
                 productId: nProductId,
                 SupplierName: sSupplierName,
-                SupplierId: nSupplierId,
-                layout: "OneColumn"
+                SupplierId: nSupplierId
             });
         },
 
@@ -94,59 +100,47 @@ sap.ui.define([
         },
 
         /**
-         *  Bind context to the view.
-         *
-         * @param {sap.ui.base.Event} oEvent event object.
+         *  Open middle column in full screen mode.
          */
-        _getProductIndex: function (nProductId) {
-            var oModel = this.getModel("ProductList"),
-                aProducts = oModel.getProperty("/product"),
-                nProductIndex = null;
-
-            // get product index
-            aProducts.forEach(function(item, index) {
-                if (item.productId === nProductId) {
-                    nProductIndex = index;
-                }
-            });
-
-            return nProductIndex;
+        onOpenFullScreenMiddleColumn: function () {
+            // change layout
+            this.getView().getParent().getParent().setLayout(Library.LayoutType.MidColumnFullScreen);
+            // change fullscreen button
+            this.getModel("State").setProperty("/State/middleColumn", false);
         },
 
         /**
-         * "Search" event handler of the "SearchField".
-         *
-         * @param {sap.ui.base.Event} oEvent event object.
+         *  Open middle column.
          */
-        onSuppliersSearch: function (oEvent) {
-            var oSuppliersTable = this.byId("SuppliersTable"),
-                oItemsBinding = oSuppliersTable.getBinding("items"),
-                sQuery = oEvent.getParameter("query");
+        onOpenMiddleColumn: function () {
+            // change layout
+            this.getView().getParent().getParent().setLayout(Library.LayoutType.TwoColumnsMidExpanded);
+            // change fullscreen button
+            this.getModel("State").setProperty("/State/middleColumn", true);
+        },
 
-            var aFilter = new Filter({
-                filters: [
-                    new Filter("SupplierName", FilterOperator.Contains, sQuery),
-                    new Filter("SuppliersAddress", FilterOperator.Contains, sQuery),
-                    new Filter("SuppliersCity", FilterOperator.Contains, sQuery),
-                    new Filter("SuppliersCountry", FilterOperator.Contains, sQuery)
-                ],
-                and: false
-            });
-
-            oItemsBinding.filter(aFilter);
+        /**
+         *  Close middle column.
+         */
+        onCloseMiddleColumn: function () {
+            // change layout
+            this.getView().getParent().getParent().setLayout(Library.LayoutType.OneColumn);
+            // change fullscreen button
+            this.getModel("State").setProperty("/State/middleColumn", true);
         },
 
         /**
          * "Edit Product" button press event handler.
          */
-        onEditProductPress: function () {
-            var nProductIndex = this.getModel("ProductList").getProperty("/State/productIndex"),
-                oSuppliersTable = this.byId("ProductSuppliers").byId("SuppliersTable");
+        onisEditProductPress: function () {
+            var nProductIndex = this.getModel("State").getProperty("/State/productIndex"),
+                oSuppliersTable = this.byId("SuppliersTable");
 
+            // change delete mode
             oSuppliersTable.setProperty("mode", "MultiSelect");
 
             // toggle "Edit Product"
-            this.getModel("ProductList").setProperty("/State/editProduct", true);
+            this.getModel("State").setProperty("/State/isEditProduct", true);
 
             // copy product
             var oProduct = this.getModel("ProductList").getProperty("/product/" + nProductIndex);
@@ -161,10 +155,10 @@ sap.ui.define([
             var nValidationError = sap.ui
                     .getCore()
                     .getMessageManager().getMessageModel().getData().length,
-                oSuppliersTable = this.byId("ProductSuppliers").byId("SuppliersTable");
+                oSuppliersTable = this.byId("SuppliersTable");
 
             if (nValidationError === 0) {
-                this.getModel("ProductList").setProperty("/State/editProduct", false);
+                this.getModel("State").setProperty("/State/isEditProduct", false);
 
                 oSuppliersTable.setProperty("mode", "None");
             }
@@ -194,23 +188,30 @@ sap.ui.define([
          */
         onCancelChanges: function () {
             var oProduct = this.getModel("ProductList").getProperty("/oldProduct"),
-                nProductIndex = this.getModel("ProductList").getProperty("/State/productIndex"),
-                oSuppliersTable = this.byId("ProductSuppliers").byId("SuppliersTable");
+                nProductIndex = this.getModel("State").getProperty("/State/productIndex"),
+                oSuppliersTable = this.byId("SuppliersTable");
 
-
-
-            // this.byId("ProductName").setValue("");
-            // this.byId("ProductAbout").byId("ProductPrice").setValue("{path: ProductList>Price}");
-            // this.byId("ProductAbout").byId("ProductQuantity").setValue("");
-            // this.byId("ProductAbout").byId("ProductDate").setValue("");
-
+            // remove error message
             sap.ui.getCore().getMessageManager().removeAllMessages();
+            // set new value (error)
+            var sProductPrice = this.getModel("ProductList").getProperty("/oldProduct/Price"),
+                sProductUnit = this.getModel("ProductList").getProperty("/oldProduct/Unit"),
+                sProductQuantity = this.getModel("ProductList").getProperty("/oldProduct/Quantity"),
+                sProductManufacture = this.getModel("ProductList").getProperty("/oldProduct/Manufacture"),
+                sProductCreationDate = this.getModel("ProductList").getProperty("/oldProduct/CreationDate");
+            this.byId("ProductPrice").setValue(sProductPrice);
+            this.byId("ProductUnit").setValue(sProductUnit);
+            this.byId("ProductQuantity").setValue(sProductQuantity);
+            this.byId("ProductManufacture").setValue(sProductManufacture);
+            this.byId("ProductDate").setValue(sProductCreationDate);
+
 
             // toggle edit
-            this.getModel("ProductList").setProperty("/State/editProduct", false);
+            this.getModel("State").setProperty("/State/isEditProduct", false);
             // set old products
             this.getModel("ProductList").setProperty("/product/" + nProductIndex, oProduct);
 
+            // change delete mode
             oSuppliersTable.setProperty("mode", "None");
         },
 
@@ -238,6 +239,29 @@ sap.ui.define([
 				this.getView().addDependent(this._oMessagePopover);
 			}
 			return this._oMessagePopover;
+        },
+
+        /**
+         * "Search" event handler of the "SearchField".
+         *
+         * @param {sap.ui.base.Event} oEvent event object.
+         */
+        onSuppliersSearch: function (oEvent) {
+            var oSuppliersTable = this.byId("SuppliersTable"),
+                oItemsBinding = oSuppliersTable.getBinding("items"),
+                sQuery = oEvent.getParameter("query");
+
+            var aFilter = new Filter({
+                filters: [
+                    new Filter("SupplierName", FilterOperator.Contains, sQuery),
+                    new Filter("SuppliersAddress", FilterOperator.Contains, sQuery),
+                    new Filter("SuppliersCity", FilterOperator.Contains, sQuery),
+                    new Filter("SuppliersCountry", FilterOperator.Contains, sQuery)
+                ],
+                and: false
+            });
+
+            oItemsBinding.filter(aFilter);
         },
 
         /**
@@ -286,17 +310,17 @@ sap.ui.define([
             // copy supplier form
             oSupplierForm = jQuery.extend(true, {}, oSupplierForm);
 
-            // create supplier list empty
-            if (!aSuppliers) { aSuppliers = [] };
-
-            // create new supplier id
-            oSupplierForm.SupplierId = aSuppliers[aSuppliers.length - 1].SupplierId + 1;
-
-            // create new supplier
-            aSuppliers.push(oSupplierForm);
+            // if supplier list empty
+            if (!aSuppliers) {
+                aSuppliers = []
+                oSupplierForm.SupplierId = 0;
+            } else {
+                // create new supplier id
+                oSupplierForm.SupplierId = aSuppliers[aSuppliers.length - 1].SupplierId + 1;
+            }
 
             // set new products
-            oModel.setProperty("/product", oProducts)
+            oModel.setProperty("/product/" + nProductIndex + "/Suppliers/", aSuppliers)
             // show message
             MessageToast.show(sSupplierMessageCreate);
             // close dialog
@@ -355,7 +379,7 @@ sap.ui.define([
         onSelectSupplierPress: function () {
             var bIsDelete = !!this.byId("SuppliersTable").getSelectedItems().length;
 
-            this.getModel("ProductList").setProperty("/State/deleteSupplier", bIsDelete);
+            this.getModel("State").setProperty("/State/isDeleteSupplierButton", bIsDelete);
         },
 
         /**
@@ -363,16 +387,16 @@ sap.ui.define([
          *
          * @param {sap.ui.base.Event} oEvent event object
          */
-        onDeleteSupplierPress: function () {
+        onisDeleteSupplierButtonPress: function () {
             var sSupplierMessageDelete = this.getI18nWord("supplierMessageDelete"),
-                onDeleteSupplier = this.onDeleteSupplier.bind(this);
+                onisDeleteSupplierButton = this.onisDeleteSupplierButton.bind(this);
 
             MessageBox.confirm(
                 sSupplierMessageDelete,
                 {
                     onClose: function (oAction) {
                         if (oAction === "OK") {
-                            onDeleteSupplier();
+                            onisDeleteSupplierButton();
                         }
                     },
                 }
@@ -382,7 +406,7 @@ sap.ui.define([
         /**
          * Execute "delete" request of the supplier.
          */
-        onDeleteSupplier: function () {
+        onisDeleteSupplierButton: function () {
             var nSupplierId,
                 sSupplierMessageDeleteSuccessful = this.getI18nWord("supplierMessageDeleteSuccessful"),
                 oModel = this.getModel("ProductList"),
@@ -420,7 +444,27 @@ sap.ui.define([
 			oSuppliersTable.removeSelections();
             // toggle delete button
             onSelectSupplier();
-        }
+        },
+
+        /**
+         *  Get product index.
+         *
+         * @param {sap.ui.base.Event} oEvent event object.
+         */
+        _getProductIndex: function (nProductId) {
+            var oModel = this.getModel("ProductList"),
+                aProducts = oModel.getProperty("/product"),
+                nProductIndex = null;
+
+            // get product index
+            aProducts.forEach(function(item, index) {
+                if (item.productId === nProductId) {
+                    nProductIndex = index;
+                }
+            });
+
+            return nProductIndex;
+        },
 
 	});
 });

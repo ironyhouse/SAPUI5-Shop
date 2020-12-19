@@ -48,9 +48,17 @@
 					"fallbackLocale": ""
 				}
 			},
+			"State": {
+				"type": "sap.ui.model.json.JSONModel",
+				"uri": "model/State.json"
+			},
 			"ProductList": {
 				"type": "sap.ui.model.json.JSONModel",
-				"uri": "ProductList.json"
+				"uri": "model/ProductList.json"
+			},
+			"SupplierList": {
+				"type": "sap.ui.model.json.JSONModel",
+				"uri": "model/SupplierList.json"
 			}
 		},
 		"routing": {
@@ -66,34 +74,24 @@
 			"routes": [
 				{
 					"pattern": "",
-					"name": "ProductList",
-					"target": "ProductList"
+					"name": "App",
+					"target": "App"
 				},
 				{
 					"pattern": "product/{productId}",
 					"name": "ProductInfo",
-					"target": "ProductInfo"
+					"target": "App"
 				},
 				{
-					"pattern": "supplier/{SupplierName}/{layout}",
+					"pattern": "product/{productId}/supplier/{SupplierName}/",
 					"name": "SupplierInfo",
-					"target":  [
-						"SupplierInfo"
-					]
+					"target": "App"
 				}
 			],
 			"targets": {
-				"ProductList": {
+				"App": {
 					"viewId": "1",
-					"viewName": "ProductList"
-				},
-				"ProductInfo": {
-					"viewId": "2",
-					"viewName": "ProductInfo"
-				},
-				"SupplierInfo": {
-					"viewId": "3",
-					"viewName": "SupplierInfo"
+					"viewName": "App"
 				}
 			}
 		}

@@ -1,31 +1,60 @@
 <mvc:View controllerName="sap.ui.Shop.controller.SupplierInfo"
-	displayBlock="true"
-	height="100%"
-	xmlns:f="sap.f"
-	xmlns="sap.m"
 	xmlns:mvc="sap.ui.core.mvc"
-	xmlns:core="sap.ui.core">
-	<f:FlexibleColumnLayout
-		id="SupplierInfoLayout"
-		backgroundDesign="Solid">
-		<!-- Products -->
-		<f:beginColumnPages>
-			<core:Fragment
-				fragmentName="sap.ui.Shop.view.fragments.SupplierProductList"
-				type="XML"/>
-		</f:beginColumnPages>
-		<!-- Product Info -->
-		<f:midColumnPages>
-			<core:Fragment
-				fragmentName="sap.ui.Shop.view.fragments.SupplierProductInfo"
-				type="XML"/>
-		</f:midColumnPages>
-		<!-- Product Supplies -->
-		<f:endColumnPages>
-			<core:Fragment
-				fragmentName="sap.ui.Shop.view.fragments.SupplierProductSupplies"
-				type="XML"/>
-		</f:endColumnPages>
+	xmlns:core="sap.ui.core"
+	xmlns="sap.uxap"
+	xmlns:f="sap.f"
+	xmlns:m="sap.m">
+	<ObjectPageLayout id="SupplierProductInfo" showTitleInHeaderContent="true" showEditHeaderButton="true" upperCaseAnchorBar="false" editHeaderButtonPress="handleEditBtnPress">
+		<headerTitle>
+			<ObjectPageDynamicHeaderTitle>
+				<!-- Title -->
+				<heading>
+					<m:FlexBox fitContainer="true" alignItems="Center">
+						<!-- Name -->
+						<m:Title text="{SupplierList>supplierName}" wrapping="true" />
+					</m:FlexBox>
+				</heading>
 
-	</f:FlexibleColumnLayout>
+				<navigationActions>
+					<m:OverflowToolbarButton
+						visible="{= ${State>/State/supplierEndColumn} &amp;&amp; !${State>/State/pageLayoutButtons}}"
+						type="Transparent"
+						icon="sap-icon://full-screen"
+						press=".onOpenFullScreenEndColumn"/>
+					<m:OverflowToolbarButton
+						visible="{= !${State>/State/supplierEndColumn} &amp;&amp; !${State>/State/pageLayoutButtons}}"
+						type="Transparent"
+						icon="sap-icon://exit-full-screen"
+						press=".onOpenEndColumn"/>
+					<m:OverflowToolbarButton
+						visible="{= !${State>/State/pageLayoutButtons}}"
+						type="Transparent"
+						icon="sap-icon://decline"
+						press=".onCloseEndColumn"/>
+				</navigationActions>
+			</ObjectPageDynamicHeaderTitle>
+		</headerTitle>
+		<headerContent>
+		</headerContent>
+
+		<!-- Content -->
+		<sections>
+			<ObjectPageSection
+				titleUppercase="false"
+				title="{i18n>suppliedProducts}">
+				<subSections>
+					<ObjectPageSubSection>
+						<blocks>
+						<core:Fragment
+							fragmentName="sap.ui.Shop.view.fragments.SupplierInfo.SupplierProductList"
+							type="XML"/>
+						</blocks>
+					</ObjectPageSubSection>
+				</subSections>
+			</ObjectPageSection>
+		</sections>
+
+		<footer>
+		</footer>
+	</ObjectPageLayout>
 </mvc:View>

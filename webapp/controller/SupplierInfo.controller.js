@@ -25,7 +25,7 @@ sap.ui.define([
              * @param {sap.ui.base.Event} oEvent event object.
              */
             _onSupplierMatched: function (oEvent) {
-                var oModel = this.getModel("ProductList"),
+                var oModel = this.getModel("SupplierList"),
                     aProducts = oModel.getProperty("/Supplier"),
                     sSupplierName = oEvent.getParameter("arguments").SupplierName,
                     nSupplierIndex;
@@ -37,66 +37,45 @@ sap.ui.define([
                     }
                 });
 
-                this._sSupplierName = sSupplierName;
                 this._nSupplierIndex = nSupplierIndex;
 
                 this.getView().bindElement({
                     path: "/Supplier/" + nSupplierIndex,
-                    model: "ProductList",
+                    model: "SupplierList",
                 });
             },
 
             /**
-             *  Bind context to the Product Info.
-             *
-             * @param {sap.ui.base.Event} oEvent event object.
+             *  Open end column in full screen mode.
              */
-            onProductPress: function (oEvent) {
-                var sProductName = oEvent.getSource()
-                        .getBindingContext("ProductList")
-                        .getProperty("productName"),
-                    oModel = this.getModel("ProductList"),
-                    aProducts = oModel.getProperty("/Supplier/" + this._nSupplierIndex + "/products/"),
-                    nProductIndex;
-
+            onOpenFullScreenEndColumn: function () {
                 // change layout
-                this.onOpenMiddleColumn();
-
-                // get product index
-                aProducts.forEach(function(item, index) {
-                    if (item.productName === sProductName) {
-                        nProductIndex = index;
-                    }
-                });
-
-                // bine middle column context
-                var sPath = "/Supplier/" + this._nSupplierIndex + "/products/" + nProductIndex;
-                this.byId("SupplierProductInfo").bindElement({
-                    path: sPath,
-                    model: "ProductList",
-                });
-            },
-
-            onOpenFullScreenMiddleColumn: function () {
-                // change layout
-                this.getView().byId("SupplierInfoLayout").setLayout(Library.LayoutType.MidColumnFullScreen);
-                this.getView().getModel("ProductList").setProperty("/State/middleColumn", false);
-            },
-
-            onOpenMiddleColumn: function () {
-                // change layout
-                this.getView().byId("SupplierInfoLayout").setLayout(Library.LayoutType.TwoColumnsMidExpanded);
-                this.getView().getModel("ProductList").setProperty("/State/middleColumn", true);
+                this.getView().getParent().getParent().setLayout(Library.LayoutType.EndColumnFullScreen);
+                // change fullscreen button
+                this.getModel("State").setProperty("/State/supplierEndColumn", false);
             },
 
             /**
-             *  Close the middle column.
-             *
-             * @param {sap.ui.base.Event} oEvent event object.
+             *  Open end column.
              */
-            onCloseMiddleColumn: function () {
+            onOpenEndColumn: function () {
                 // change layout
-                this.getView().byId("SupplierInfoLayout").setLayout(Library.LayoutType.OneColumn);
+                this.getView().getParent().getParent().setLayout(Library.LayoutType.ThreeColumnsMidExpanded);
+                // change fullscreen button
+                this.getModel("State").setProperty("/State/supplierEndColumn", true);
+            },
+
+            /**
+             *  Close end column.
+             */
+            onCloseEndColumn: function () {
+                // change layout
+                this.getView().getParent().getParent().setLayout(Library.LayoutType.TwoColumnsMidExpanded);
+
+                // show end column buttons
+                this.getModel("State").setProperty("/State/pageLayoutButtons", true);
+                // change fullscreen button
+                this.getModel("State").setProperty("/State/supplierEndColumn", true);
             },
 
 		});

@@ -1,65 +1,42 @@
 <mvc:View controllerName="sap.ui.Shop.controller.ProductInfo"
-    xmlns:mvc="sap.ui.core.mvc"
+	xmlns:mvc="sap.ui.core.mvc"
 	xmlns:core="sap.ui.core"
 	xmlns="sap.uxap"
 	xmlns:layout="sap.ui.layout"
 	xmlns:f="sap.f"
 	xmlns:m="sap.m">
-	<ObjectPageLayout
-		showTitleInHeaderContent="true"
-		showEditHeaderButton="true"
-		upperCaseAnchorBar="false"
-		editHeaderButtonPress="handleEditBtnPress"
-		showFooter="{ProductList>/State/editProduct}">
+	<ObjectPageLayout showTitleInHeaderContent="true" showEditHeaderButton="true" upperCaseAnchorBar="false" editHeaderButtonPress="handleEditBtnPress" showFooter="{State>/State/isEditProduct}">
 		<headerTitle>
 			<ObjectPageDynamicHeaderTitle>
-				<!-- Breadcrumbs -->
-				<breadcrumbs>
-					<m:Breadcrumbs id="breadcrumbsId">
-						<m:Link
-							text="{i18n>productListTitle}"
-							press="navToProductList"/>
-						<m:Link text="{i18n>productInfoTitle}" />
-					</m:Breadcrumbs>
-				</breadcrumbs>
 				<!-- Title -->
 				<heading>
-					<m:FlexBox
-						fitContainer="true"
-						alignItems="Center">
-						<f:Avatar
-							src="{ProductList>ProductImage}"
-							class="sapUiTinyMarginEnd"/>
+					<m:FlexBox fitContainer="true" alignItems="Center">
+						<f:Avatar src="{ProductList>ProductImage}" class="sapUiTinyMarginEnd"/>
 						<layout:VerticalLayout class="sapUiSmallMarginBeginEnd">
 							<!-- Name -->
-							<m:Title
-								text="{ProductList>ProductName}"
-								wrapping="true"
-								visible="{= !${ProductList>/State/editProduct}}"/>
-							<m:Label text="{i18n>name}"
-								visible="{ProductList>/State/editProduct}" />
-							<m:Input
-								id="ProductName"
-								value= "{
+							<m:Title text="{ProductList>ProductName}" wrapping="true" visible="{= !${State>/State/isEditProduct}}"/>
+							<m:Label text="{i18n>name}" visible="{State>/State/isEditProduct}" />
+							<m:Input id="ProductName" value= "{
 									path: 'ProductList>ProductName',
 									type: 'sap.ui.model.type.String',
 									constraints: {
 										minLength: 5,
 										maxLength: 255
 									}
-								}"
-								visible="{ProductList>/State/editProduct}" />
+								}" visible="{State>/State/isEditProduct}" />
 						</layout:VerticalLayout>
 					</m:FlexBox>
 				</heading>
 				<!-- Edit Button -->
 				<actions>
-					<m:Button
-						text="{i18n>edit}"
-						type="Emphasized"
-						enabled="{= !${ProductList>/State/editProduct}}"
-						press=".onEditProductPress"/>
+					<m:Button text="{i18n>edit}" type="Emphasized" enabled="{= !${State>/State/isEditProduct}}" press=".onisEditProductPress"/>
 				</actions>
+
+				<navigationActions>
+					<m:OverflowToolbarButton visible="{= ${State>/State/middleColumn} &amp;&amp; ${State>/State/pageLayoutButtons}}" type="Transparent" icon="sap-icon://full-screen" press=".onOpenFullScreenMiddleColumn"/>
+					<m:OverflowToolbarButton visible="{= !${State>/State/middleColumn} &amp;&amp; ${State>/State/pageLayoutButtons}}" type="Transparent" icon="sap-icon://exit-full-screen" press=".onOpenMiddleColumn"/>
+					<m:OverflowToolbarButton visible="{State>/State/pageLayoutButtons}" type="Transparent" icon="sap-icon://decline" press=".onCloseMiddleColumn"/>
+				</navigationActions>
 			</ObjectPageDynamicHeaderTitle>
 		</headerTitle>
 		<headerContent>
@@ -67,40 +44,32 @@
 
 		<!-- Content -->
 		<sections>
-			<ObjectPageSection
-				titleUppercase="false"
-				title="{i18n>productTitleAboutProduct}">
+			<ObjectPageSection titleUppercase="false" title="{i18n>productTitleAboutProduct}">
 				<subSections>
-					<ObjectPageSubSection title="About Product">
+					<ObjectPageSubSection>
 						<!-- About -->
-						<mvc:XMLView id="ProductAbout" viewName="sap.ui.Shop.view.ProductInfoAbout"/>
+						<core:Fragment fragmentName="sap.ui.Shop.view.fragments.ProductInfo.ProductInfoAbout" type="XML"/>
 					</ObjectPageSubSection>
 				</subSections>
 			</ObjectPageSection>
-			<ObjectPageSection
-				titleUppercase="false"
-				showTitle="false"
-				title="{i18n>productTitleSuppliers}">
+			<ObjectPageSection titleUppercase="false" showTitle="false" title="{i18n>productTitleSuppliers}">
 				<subSections>
 					<ObjectPageSubSection>
 						<blocks>
 							<!-- Table -->
-							<mvc:XMLView id="ProductSuppliers" viewName="sap.ui.Shop.view.ProductInfoSuppliers"/>
+							<core:Fragment fragmentName="sap.ui.Shop.view.fragments.ProductInfo.ProductInfoSuppliers" type="XML"/>
 						</blocks>
 					</ObjectPageSubSection>
 				</subSections>
 			</ObjectPageSection>
 		</sections>
 		<sections>
-			<ObjectPageSection
-				titleUppercase="false"
-				showTitle="false"
-				title="{i18n>productTitleSales}">
+			<ObjectPageSection titleUppercase="false" showTitle="false" title="{i18n>productTitleSales}">
 				<subSections>
 					<ObjectPageSubSection>
 						<blocks>
 							<!-- Chart -->
-							<mvc:XMLView viewName="sap.ui.Shop.view.ProductInfoChart"/>
+							<core:Fragment fragmentName="sap.ui.Shop.view.fragments.ProductInfo.ProductInfoChart" type="XML"/>
 						</blocks>
 					</ObjectPageSubSection>
 				</subSections>
@@ -110,22 +79,10 @@
 		<footer>
 			<m:OverflowToolbar>
 				<m:content>
-					<m:Button
-						icon="sap-icon://sys-cancel"
-						text="{= ${message>/}.length }"
-						visible="{= ${message>/}.length > 0 }"
-						type="Reject"
-						press="onMessagePopoverPress" />
-
+					<m:Button icon="sap-icon://sys-cancel" text="{= ${message>/}.length }" visible="{= ${message>/}.length > 0 }" type="Reject" press="onMessagePopoverPress" />
 					<m:ToolbarSpacer />
-
-					<m:Button
-						text="{i18n>save}"
-						type="Emphasized"
-						press="onSaveChangesPress" />
-					<m:Button
-						text="{i18n>cancel}"
-						press="onCancelChangesPress" />
+					<m:Button text="{i18n>save}" type="Emphasized" press="onSaveChangesPress" />
+					<m:Button text="{i18n>cancel}" press="onCancelChangesPress" />
 				</m:content>
 			</m:OverflowToolbar>
 		</footer>

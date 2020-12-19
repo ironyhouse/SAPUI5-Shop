@@ -4,14 +4,16 @@ sap.ui.define([
 	"sap/ui/model/FilterOperator",
 	"sap/m/MessageToast",
 	"sap/m/MessageBox",
-	"sap/ui/core/Fragment"
+	"sap/ui/core/Fragment",
+    'sap/f/library'
 	], function (
 		BaseController,
 		Filter,
 		FilterOperator,
 		MessageToast,
 		MessageBox,
-		Fragment
+		Fragment,
+        Library
 	) {
 		"use strict";
 		return BaseController.extend("sap.ui.Shop.controller.ProductList", {
@@ -39,6 +41,11 @@ sap.ui.define([
 					nProductId = oSelectedListItem
 						.getBindingContext("ProductList")
 						.getProperty("productId");
+
+				// set layout
+				this.getView().getParent().getParent().setLayout(Library.LayoutType.TwoColumnsMidExpanded);
+				// show middle column buttons
+				this.getModel("State").setProperty("/State/pageLayoutButtons", true);
 
 				oRouter.navTo("ProductInfo", { productId: nProductId });
 			},
@@ -87,7 +94,7 @@ sap.ui.define([
              */
 			onSelectProductPress: function () {
 				var bIsDelete = !!this.byId("ProductsTable").getSelectedItems().length;
-				this.getModel("ProductList").setProperty("/State/deleteProduct", bIsDelete);
+				this.getModel("State").setProperty("/State/isDeleteProductButton", bIsDelete);
 			},
 
 			/**
@@ -215,7 +222,7 @@ sap.ui.define([
             /**
              * Execute "delete" request of the product.
              */
-			onDeleteProductPress: function () {
+			onisDeleteProductButtonPress: function () {
 				var oModel = this.getModel("ProductList"),
 					// get product list
 					aProducts = oModel.getProperty("/product"),
@@ -224,7 +231,7 @@ sap.ui.define([
 						.getSelectedItem()
 						.getBindingContext("ProductList")
 						.getProperty("productId"),
-					onDeleteProduct = this.onDeleteProduct.bind(this),
+					onisDeleteProductButton = this.onisDeleteProductButton.bind(this),
 					oBundle = this.getModel("i18n").getResourceBundle(),
 					aMessageWord = [];
 
@@ -244,7 +251,7 @@ sap.ui.define([
                     {
                         onClose: function (oAction) {
                             if (oAction === "OK") {
-                                onDeleteProduct(aProducts, nProductId, aMessageWord);
+                                onisDeleteProductButton(aProducts, nProductId, aMessageWord);
                             }
                         },
                     }
@@ -258,7 +265,7 @@ sap.ui.define([
              * @param {number} nProductId product Id
 			 * @param {Array} nProductId message words
              */
-            onDeleteProduct: function (aProducts, nProductId, aMessageWord) {
+            onisDeleteProductButton: function (aProducts, nProductId, aMessageWord) {
                 var oModel = this.getModel("ProductList"),
 					sMessage = this.getI18nWord("productMessageDeleteSuccessful", aMessageWord);
 

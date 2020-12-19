@@ -1,5 +1,6 @@
-<mvc:View controllerName="sap.ui.Shop.controller.ProductInfo"
+<core:FragmentDefinition
     xmlns:mvc="sap.ui.core.mvc"
+     xmlns:core="sap.ui.core"
     xmlns="sap.m"
     xmlns:layout="sap.ui.layout"
     xmlns:viz="sap.viz.ui5.controls"
@@ -58,4 +59,4 @@
             </viz:VizFrame>
         </layout:flexContent>
     </layout:FixFlex>
-</mvc:View>
+</core:FragmentDefinition>

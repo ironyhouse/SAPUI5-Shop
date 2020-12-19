@@ -1,5 +1,4 @@
-<mvc:View controllerName="sap.ui.Shop.controller.ProductList"
-	height="100%"
+<mvc:View controllerName="sap.ui.Shop.controller.ProductList" height="100%"
 	xmlns:mvc="sap.ui.core.mvc"
 	xmlns:core="sap.ui.core"
 	xmlns:layout="sap.ui.layout"
@@ -12,9 +11,7 @@
 		<f:title>
 			<f:DynamicPageTitle>
 				<f:heading>
-					<Title
-						class="sapUiSmallMarginBegin"
-						text="{i18n>homePageTitle}" />
+					<Title class="sapUiSmallMarginBegin" text="{i18n>homePageTitle}" />
 				</f:heading>
 			</f:DynamicPageTitle>
 		</f:title>
@@ -22,48 +19,22 @@
 		<f:header>
 			<f:DynamicPageHeader pinnable="true">
 				<f:content>
-					<fb:FilterBar
-						showClearOnFB="true"
-						clear="onFiltersClear"
-						showFilterConfiguration="true"
-						id="filterbar" reset="onReset"
-						search="onSelectFilter"
-						useToolbar="false"
-						showGoOnFB="true">
+					<fb:FilterBar showClearOnFB="true" clear="onFiltersClear" showFilterConfiguration="true" id="filterbar" reset="onReset" search="onSelectFilter" useToolbar="false" showGoOnFB="true">
 						<fb:filterGroupItems >
 							<!-- Name -->
-							<fb:FilterGroupItem
-								groupName="G1"
-								visibleInFilterBar="true"
-								name="Name"
-								label="{i18n>name}">
+							<fb:FilterGroupItem groupName="G1" visibleInFilterBar="true" name="Name" label="{i18n>name}">
 								<fb:control>
-									<Input
-										id="FilterName"
-										placeholder="{i18n>productSearchPlaceholder}"
-										value=""
-										submit="onSelectFilter" />
+									<Input id="FilterName" placeholder="{i18n>productSearchPlaceholder}" value="" submit="onSelectFilter" />
 								</fb:control>
 							</fb:FilterGroupItem>
 							<!-- Manufacture -->
-							<fb:FilterGroupItem
-								groupName="G1"
-								visibleInFilterBar="true"
-								visible="true"
-								name="Manufacture"
-								label="{i18n>manufacture}">
+							<fb:FilterGroupItem groupName="G1" visibleInFilterBar="true" visible="true" name="Manufacture" label="{i18n>manufacture}">
 								<fb:control>
-									<Select
-										id="FilterManufacture"
-										change="onSelectFilter"
-										forceSelection="true"
-										items="{
+									<Select id="FilterManufacture" change="onSelectFilter" forceSelection="true" items="{
 											path:'ProductList>/Manufacture',
 											templateShareable:false
 										}">
-										<core:Item
-											key="{ProductList>manufacture}"
-											text="{ProductList>manufacture}"/>
+										<core:Item key="{ProductList>manufacture}" text="{ProductList>manufacture}"/>
 									</Select>
 								</fb:control>
 							</fb:FilterGroupItem>
@@ -74,95 +45,57 @@
 		</f:header>
 		<!-- Content -->
 		<f:content>
-			<Table
-				id="ProductsTable"
-				items="{ProductList>/product}"
-				class="sapUiResponsiveMargin"
-				mode="SingleSelectLeft"
-				selectionChange="onSelectProductPress"
-				width="auto">
+			<Table id="ProductsTable" items="{ProductList>/product}" class="sapUiResponsiveMargin" mode="SingleSelectLeft" selectionChange="onSelectProductPress" width="auto">
 				<!-- Product List Title -->
 				<headerToolbar>
 					<OverflowToolbar design="Solid">
 						<!-- Title -->
-						<Title
-							class="sapUiSmallMarginBegin"
-							text="{i18n>productListTitle}" />
+						<Title class="sapUiSmallMarginBegin" text="{i18n>productListTitle}" />
 						<!-- Spacer -->
 						<ToolbarSpacer />
 						<!-- Edit Buttons -->
-						<Button
-							text="{i18n>add}"
-							type="Transparent"
-							press="onAddProductPress" />
-						<Button
-							text= "{i18n>delete}"
-							type="Transparent"
-							enabled="{ProductList>/State/deleteProduct}"
-							press="onDeleteProductPress" />
+						<Button text="{i18n>add}" type="Transparent" press="onAddProductPress" />
+						<Button text= "{i18n>delete}" type="Transparent" enabled="{State>/State/isDeleteProductButton}" press="onisDeleteProductButtonPress" />
 					</OverflowToolbar>
 				</headerToolbar>
 				<!-- Product List Header -->
 				<columns>
 					<Column>
-						<HBox
-							alignItems="Center"
-							justifyContent="Center">
-							<Label
-								text="{i18n>name}"
-								design="Bold" />
+						<HBox alignItems="Center" justifyContent="Center">
+							<Label text="{i18n>name}" design="Bold" />
 						</HBox>
 					</Column>
 					<Column>
-						<HBox
-							alignItems="Center"
-							justifyContent="Center">
-							<Label
-								text="{i18n>quantity}"
-								design="Bold" />
+						<HBox alignItems="Center" justifyContent="Center">
+							<Label text="{i18n>quantity}" design="Bold" />
 						</HBox>
 					</Column>
-					<Column>
-						<HBox
-							alignItems="Center"
-							justifyContent="Center">
-							<Label
-								text="{i18n>price}"
-								design="Bold" />
+					<Column minScreenWidth="576px" demandPopin="true">
+						<HBox alignItems="Center" justifyContent="Center">
+							<Label text="{i18n>price}" design="Bold" />
 						</HBox>
 					</Column>
-					<Column>
-						<HBox
-							alignItems="Center"
-							justifyContent="Center">
-							<Label
-								text="{i18n>manufacture}"
-								design="Bold" />
+					<Column minScreenWidth="992px" demandPopin="true">
+						<HBox alignItems="Center" justifyContent="Center">
+							<Label text="{i18n>manufacture}" design="Bold" />
 						</HBox>
 					</Column>
 				</columns>
 				<!-- Product List -->
 				<items>
-					<ColumnListItem
-						type="Navigation"
-						press=".onNavToProductInfo">
+					<ColumnListItem type="Navigation" press=".onNavToProductInfo">
 						<VBox>
 							<ObjectIdentifier title="{ProductList>ProductName}"/>
 						</VBox>
 						<VBox>
-							<ObjectNumber
-								number="{
+							<ObjectNumber number="{
 									parts:[{path:'ProductList>Quantity'}]
-								}"
-								state="{= ${ProductList>Quantity} > 0 ? 'Success' : 'Error' }"/>
+								}" state="{= ${ProductList>Quantity} > 0 ? 'Success' : 'Error' }"/>
 						</VBox>
 						<VBox>
-							<ObjectNumber
-								number="{
+							<ObjectNumber number="{
 									parts:[{path:'ProductList>Price'}]
-								}"
-								unit="{path:'ProductList>Unit'}"
-								state="{= ${ProductList>Quantity} > 0 ? 'Success' : 'Error' }"/>
+								}" unit="{path:'ProductList>Unit'}" state="{= ${ProductList>Quantity} > 0 ? 'Success' : 'Error' }"/>
 						</VBox>
 						<VBox>
 							<ObjectIdentifier title="{ProductList>Manufacture}"/>

@@ -1,0 +1,13 @@
+{
+    "State" : {
+        "isDeleteProductButton": false,
+        "isDeleteSupplierButton": false,
+        "isEditProduct": false,
+        "productIndex": null,
+        "productId": null,
+        "middleColumn": true,
+        "supplierMiddleColumn": true,
+        "supplierEndColumn": true,
+        "pageLayoutButtons": true
+    }
+}

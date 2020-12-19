@@ -21,5 +21,6 @@ sap.ui.define([
         getRouterForThis: function () {
             return sap.ui.core.UIComponent.getRouterFor(this);
         },
+
     });
 });

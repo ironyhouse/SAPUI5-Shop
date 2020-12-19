@@ -1,6 +1,6 @@
 sap.ui.define(['sap/ui/core/XMLComposite'], function(XMLComposite) {
 	"use strict";
-	var oTableButtons = XMLComposite.extend("sap.ui.Shop.comp.TableButtons", {
+	var oTableButtons = XMLComposite.extend("sap.ui.Shop.CompositeControls.TableButtons", {
 		metadata: {
 			properties: {
 				buttonAddText: { type: "string", defaultValue: "add" },

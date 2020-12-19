@@ -1,0 +1,124 @@
+{
+	"Supplier": [
+		{
+			"supplierName": "ODa",
+			"products": [
+				{
+					"productName": "Apple",
+					"productPrice": "32",
+					"productUnit": "USD"
+				},
+				{
+					"productName": "Salad",
+					"productPrice": "42",
+					"productUnit": "USD"
+				},
+				{
+					"productName": "Tomato",
+					"productPrice": "13",
+					"productUnit": "USD"
+				},
+				{
+					"productName": "Bread",
+					"productPrice": "23",
+					"productUnit": "USD"
+				},
+				{
+					"productName": "Pie",
+					"productPrice": "12",
+					"productUnit": "USD"
+				}
+			]
+		},
+		{
+			"supplierName": "OSFS",
+			"products": [
+				{
+					"productName": "Apple",
+					"productPrice": "32",
+					"productUnit": "USD"
+				},
+				{
+					"productName": "Salad",
+					"productPrice": "32",
+					"productUnit": "USD"
+				},
+				{
+					"productName": "Tomato",
+					"productPrice": "43",
+					"productUnit": "USD"
+				},
+				{
+					"productName": "Bread",
+					"productPrice": "34",
+					"productUnit": "USD"
+				},
+				{
+					"productName": "Pie",
+					"productPrice": "89",
+					"productUnit": "USD"
+				}
+			]
+		},
+		{
+			"supplierName": "SEDW",
+			"products": [
+				{
+					"productName": "Apple",
+					"productPrice": "63",
+					"productUnit": "USD"
+				},
+				{
+					"productName": "Salad",
+					"productPrice": "32",
+					"productUnit": "USD"
+				},
+				{
+					"productName": "Tomato",
+					"productPrice": "34",
+					"productUnit": "USD"
+				},
+				{
+					"productName": "Bread",
+					"productPrice": "32",
+					"productUnit": "USD"
+				},
+				{
+					"productName": "Pie",
+					"productPrice": "13",
+					"productUnit": "USD"
+				}
+			]
+		},
+		{
+			"supplierName": "DFA",
+			"products": [
+				{
+					"productName": "Apple",
+					"productPrice": "42",
+					"productUnit": "USD"
+				},
+				{
+					"productName": "Salad",
+					"productPrice": "85",
+					"productUnit": "USD"
+				},
+				{
+					"productName": "Tomato",
+					"productPrice": "65",
+					"productUnit": "USD"
+				},
+				{
+					"productName": "Bread",
+					"productPrice": "35",
+					"productUnit": "USD"
+				},
+				{
+					"productName": "Pie",
+					"productPrice": "49",
+					"productUnit": "USD"
+				}
+			]
+		}
+	]
+}

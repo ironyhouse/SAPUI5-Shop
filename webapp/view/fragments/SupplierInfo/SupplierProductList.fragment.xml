@@ -1,0 +1,19 @@
+<core:FragmentDefinition
+	height="100%"
+	xmlns:mvc="sap.ui.core.mvc"
+	xmlns:core="sap.ui.core"
+	xmlns="sap.m"
+	xmlns:f="sap.f">
+ 	<List
+		items="{SupplierList>products}"
+		headerText="{i18n>productListTitle}">
+		<ObjectListItem
+			press="onProductPress"
+			type="Active"
+			title="{SupplierList>productName}"
+			number="{SupplierList>productPrice}"
+			numberUnit="{SupplierList>productUnit}"
+			numberState="Success" >
+		</ObjectListItem>
+	</List>
+</core:FragmentDefinition>

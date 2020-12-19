@@ -1,6 +1,25 @@
 <mvc:View
+	displayBlock="true"
+	height="100%"
+	xmlns:f="sap.f"
 	xmlns="sap.m"
 	xmlns:mvc="sap.ui.core.mvc"
-	displayBlock="true">
-	<App class="myAppDemoWT" id="app" />
+	xmlns:core="sap.ui.core">
+		<App class="myAppDemoWT" id="app" >
+			<f:FlexibleColumnLayout
+				backgroundDesign="Solid">
+				<!-- Products -->
+				<f:beginColumnPages>
+					<mvc:XMLView viewName="sap.ui.Shop.view.ProductList"/>
+				</f:beginColumnPages>
+				<!-- Product Info -->
+				<f:midColumnPages>
+					<mvc:XMLView viewName="sap.ui.Shop.view.ProductInfo"/>
+				</f:midColumnPages>
+				<!-- Supplier Info-->
+				<f:endColumnPages>
+					<mvc:XMLView viewName="sap.ui.Shop.view.SupplierInfo"/>
+				</f:endColumnPages>
+			</f:FlexibleColumnLayout>
+		</App>
 </mvc:View>
