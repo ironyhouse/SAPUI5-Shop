@@ -21,7 +21,7 @@ sap.ui.define([
             /**
              *  Bind context to the view.
              *
-             * @param {sap.ui.base.Event} oEvent event object.
+             *  @param {sap.ui.base.Event} oEvent event object.
              */
             _onSupplierMatched: function (oEvent) {
                 var sLayoutName = oEvent.getParameter("arguments").sLayoutName,
@@ -40,11 +40,12 @@ sap.ui.define([
                 }
 
                 // get product index
-                aProducts.forEach(function(item, index) {
-                    if (item.supplierName === sSupplierName) {
-                        nSupplierIndex = index;
+                for (var i = 0; i < aProducts.length; i++) {
+                    if (aProducts[i].supplierName === sSupplierName) {
+                        nSupplierIndex = i;
+                        break;
                     }
-                });
+                }
 
                 this.nProductId = nProductId
                 this.sSupplierName = sSupplierName;

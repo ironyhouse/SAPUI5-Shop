@@ -77,16 +77,16 @@
                 }">
             </Input>
             <!-- Unit -->
-            <ComboBox id="ProductUnit" items="{ProductList>/Unit}" selectedKey="{
-                    path: 'ProductList>Unit',
-                    type: 'sap.ui.model.type.String',
-                    constraints: {
-                        minLength: 1,
-                        maxLength: 255
-                    }
+            <Select
+                id="ProductUnit"
+                forceSelection="false"
+                selectedKey="{ProductList>Unit}"
+                items="{
+                    path:'ProductList>/Unit',
+                    templateShareable:false
                 }">
                 <core:Item key="{ProductList>unit}" text="{ProductList>unit}" />
-            </ComboBox>
+            </Select>
             <!-- Quantity -->
             <Label text="{i18n>quantity}">
                 <layoutData>
@@ -115,14 +115,11 @@
                     <forms:ColumnElementData cellsSmall="6" />
                 </layoutData>
             </Label>
-            <ComboBox id="ProductManufacture" items="{ProductList>/Manufacture}" selectedKey="{
-                    path: 'ProductList>Manufacture',
-                    type: 'sap.ui.model.type.String',
-                    constraints: {
-                        minLength: 1,
-                        maxLength: 255
-                    }
-                }">
+            <ComboBox id="ProductManufacture" valueState="None" valueStateText="{i18n>invalidManufact}" showValueStateMessage="false" items="{ProductList>/Manufacture}" selectedKey="{
+                    path: 'ProductList>Manufacture'
+                }"
+                change="onEnterValue"
+                selectionChange="onManufactureChange" >
                 <core:Item key="{ProductList>manufacture}" text="{ProductList>manufacture}" />
             </ComboBox>
             <!-- CreationDate -->

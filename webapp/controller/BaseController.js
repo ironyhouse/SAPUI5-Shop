@@ -28,5 +28,9 @@ sap.ui.define([
             return UIComponent.getRouterFor(this);
         },
 
+        // get message manager
+        getMessageManager: function () {
+            return sap.ui.getCore().getMessageManager();
+        },
     });
 });

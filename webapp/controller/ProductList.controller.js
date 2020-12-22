@@ -22,11 +22,9 @@ sap.ui.define([
 			onInit: function () {
 
 				// Register the view with the message manager
-				sap.ui
-					.getCore()
-					.getMessageManager()
-					.registerObject(this.getView(), true);
+				this.getMessageManager().registerObject(this.getView(), true);
 
+				// bind product list items
 				var oTable = this.byId("ProductsTable")
 				Fragment.load({
 						id: this.getView().getId(),
@@ -106,6 +104,7 @@ sap.ui.define([
 
 			/**
              * "Create product" button press event handler.
+			 * 	This method opens product form popover.
              */
 			onAddProductPress: function () {
 				var oView = this.getView(),
@@ -144,16 +143,16 @@ sap.ui.define([
              *  This method create a product.
              */
             onCreateProductPress: function () {
-				var sProductMessageCreate = this.getI18nWord("productCreate"),
-					oModel = this.getModel("ProductList"),
+				var oModel = this.getModel("ProductList"),
 					oStoreCreatorForm = this.byId("productCreator"),
+					sNotApplicable = this.getI18nWord("notApplicable"),
 					// get product list
 					oProducts = oModel.getProperty("/product"),
+					// get product form
+					oProductForm = oModel.getProperty("/productForm"),
 					// product length
 					nProductLength = oProducts.length,
-					// get product form
-					oProductForm = oModel.getProperty("/productForm");
-					// bCheckForm;
+					sProductMessageCreate;
 
 				// copy product form
 				oProductForm = jQuery.extend(true, {}, oProductForm);
@@ -162,39 +161,45 @@ sap.ui.define([
 				oProductForm.nProductId = oProducts[oProducts.length - 1].nProductId + 1;
 				// set product img
 				oProductForm.ProductImage = "https://picsum.photos/200/300";
+				// if product info empty
+				if (!oProductForm["ProductInfo"]) {
+					oProductForm["ProductInfo"] = sNotApplicable;
+				}
 
 				// set new products
 				oModel.setProperty("/product/" + nProductLength, oProductForm);
 
+				// set product name
+				sProductMessageCreate = this.getI18nWord("productCreate", oProductForm.ProductName);
 				// show message
 				MessageToast.show(sProductMessageCreate);
+
 				// close dialog
 				oStoreCreatorForm.close();
 			},
 
 			/**
              * "Cancel" button press event handler (in the dialog).
+			 *  This method closes product form popover.
              */
             onCancelProductPress: function () {
 				this.byId("productCreator").close();
 			},
 
 			/**
-			 * Check form validation.
+			 * Check form for validation.
 			 */
 			checkFormValid: function () {
 				var oModel = this.getModel("ProductList"),
 					oProductForm = oModel.getProperty("/productForm"),
 					oProductFormButton = this.byId("ProductFormButton"),
-					nValidationError = sap.ui
-						.getCore()
-						.getMessageManager().getMessageModel().getData().length,
+					nValidationError = this.getMessageManager().getMessageModel().getData().length,
 					// check invalid value
 					bCheckForm = nValidationError === 0;
 
 				// check empty value
 				for (let key in oProductForm) {
-					if(!oProductForm[key]) {
+					if(!oProductForm[key] && key !== "ProductInfo") {
 						bCheckForm = false;
 					}
 				}
@@ -204,7 +209,7 @@ sap.ui.define([
 			},
 
 			/**
-			 * Clearing product form data.
+			 * Clear product form data.
 			 */
 			onClearForm: function () {
 				var oModel = this.getModel("ProductList"),
@@ -217,7 +222,7 @@ sap.ui.define([
 				}
 
 				// clear error message
-				sap.ui.getCore().getMessageManager().removeAllMessages();
+				this.getMessageManager().removeAllMessages();
 
 				// set min date
 				this.byId("CreationDate").setMinDate(new Date());
@@ -228,7 +233,7 @@ sap.ui.define([
 			},
 
 			/**
-             * "Product Select" button press event handler.
+             * Row selection event handler.
              */
 			onSelectProductPress: function () {
 				var bIsDelete = !!this.byId("ProductsTable").getSelectedItems().length;
@@ -236,30 +241,22 @@ sap.ui.define([
 			},
 
             /**
-             * Execute "delete" request of the product.
+             * This method show delete product confirmation.
              */
 			onDeleteProductButtonPress: function () {
 				var oModel = this.getModel("ProductList"),
 					// get product list
 					aProducts = oModel.getProperty("/product"),
 					// get product Id
-					nProductId = this.byId("ProductsTable")
+					oSelectItem = this.byId("ProductsTable")
 						.getSelectedItem()
-						.getBindingContext("ProductList")
-						.getProperty("nProductId"),
-					onDeleteProduct = this.onDeleteProduct.bind(this),
-					oBundle = this.getModel("i18n").getResourceBundle(),
-					aMessageWord = [];
-
-				// get product name
-				aProducts.forEach(item => {
-					if (item.nProductId === nProductId) {
-						aMessageWord.push(item.ProductName);
-					}
-				});
+						.getBindingContext("ProductList"),
+					nProductId = oSelectItem.getProperty("nProductId"),
+					sProductName = oSelectItem.getProperty("ProductName"),
+					sMessage;
 
 				// get delete message
-				var sMessage = oBundle.getText("productMessageDelete", aMessageWord);
+				sMessage = this.getI18nWord("productMessageDelete", sProductName)
 
 				// show confirmation
                 MessageBox.confirm(
@@ -267,9 +264,9 @@ sap.ui.define([
                     {
                         onClose: function (oAction) {
                             if (oAction === "OK") {
-                                onDeleteProduct(aProducts, nProductId, aMessageWord);
+                                this.onDeleteProduct(aProducts, nProductId, sProductName);
                             }
-                        },
+                        }.bind(this),
                     }
                 );
 			},
@@ -277,13 +274,13 @@ sap.ui.define([
             /**
              * Execute "delete" request of the product.
              *
-			 * @param {Array} nProductId products list
-             * @param {number} nProductId product Id
-			 * @param {Array} nProductId message words
+			 * @param {Array} aProducts products list.
+             * @param {number} nProductId product Id.
+			 * @param {Array} sProductName message words.
              */
-            onDeleteProduct: function (aProducts, nProductId, aMessageWord) {
+            onDeleteProduct: function (aProducts, nProductId, sProductName) {
                 var oModel = this.getModel("ProductList"),
-					sMessage = this.getI18nWord("productMessageDeleteSuccessful", aMessageWord);
+					sMessage = this.getI18nWord("productMessageDeleteSuccessful", sProductName);
 
 				// filtered products
 				aProducts = aProducts.filter(item => item.nProductId !== nProductId);

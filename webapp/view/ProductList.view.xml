@@ -19,7 +19,7 @@
 		<f:header>
 			<f:DynamicPageHeader pinnable="true">
 				<f:content>
-					<fb:FilterBar showClearOnFB="true" clear="onFiltersClear" showFilterConfiguration="true" id="filterbar" reset="onReset" search="onSelectFilter" useToolbar="false" showGoOnFB="true">
+					<fb:FilterBar showClearOnFB="true" clear="onFiltersClear" showFilterConfiguration="true" id="filterbar" reset="onReset" useToolbar="false" showGoOnFB="true">
 						<fb:filterGroupItems >
 							<!-- Name -->
 							<fb:FilterGroupItem groupName="G1" visibleInFilterBar="true" name="Name" label="{i18n>name}">
@@ -46,7 +46,7 @@
 		<!-- Content -->
 		<f:content>
 			<Table id="ProductsTable" class="sapUiResponsiveMargin" mode="SingleSelectLeft" selectionChange="onSelectProductPress" width="auto">
-				<!-- Product List Title -->
+				<!-- Product List Bar -->
 				<headerToolbar>
 					<OverflowToolbar design="Solid">
 						<!-- Title -->
@@ -58,7 +58,7 @@
 						<Button text= "{i18n>delete}" type="Transparent" enabled="{State>/State/isShowDeleteProductButton}" press="onDeleteProductButtonPress" />
 					</OverflowToolbar>
 				</headerToolbar>
-				<!-- Product List Header -->
+				<!-- Product List Column Titles -->
 				<columns>
 					<Column>
 						<HBox alignItems="Center" justifyContent="Center">
@@ -81,15 +81,7 @@
 						</HBox>
 					</Column>
 				</columns>
-				<!-- Product List -->
-				<items>
-				</items>
 			</Table>
 		</f:content>
-		<!-- Footer -->
-		<f:footer>
-			<OverflowToolbar>
-			</OverflowToolbar>
-		</f:footer>
 	</f:DynamicPage>
 </mvc:View>

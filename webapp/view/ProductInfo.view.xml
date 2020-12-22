@@ -10,22 +10,7 @@
 			<ObjectPageDynamicHeaderTitle>
 				<!-- Title -->
 				<heading>
-					<m:FlexBox fitContainer="true" alignItems="Center">
-						<f:Avatar src="{ProductList>ProductImage}" class="sapUiTinyMarginEnd"/>
-						<layout:VerticalLayout class="sapUiSmallMarginBeginEnd">
-							<!-- Name -->
-							<m:Title text="{ProductList>ProductName}" wrapping="true" visible="{= !${State>/State/isEditProduct}}"/>
-							<m:Label text="{i18n>name}" visible="{State>/State/isEditProduct}" />
-							<m:Input id="ProductName" value= "{
-									path: 'ProductList>ProductName',
-									type: 'sap.ui.model.type.String',
-									constraints: {
-										minLength: 5,
-										maxLength: 255
-									}
-								}" visible="{State>/State/isEditProduct}" />
-						</layout:VerticalLayout>
-					</m:FlexBox>
+					<m:Title text="{ProductList>ProductName}" wrapping="true" />
 				</heading>
 				<!-- Edit Button -->
 				<actions>
@@ -40,6 +25,14 @@
 			</ObjectPageDynamicHeaderTitle>
 		</headerTitle>
 		<headerContent>
+			<m:FlexBox fitContainer="true" alignItems="Center">
+				<!-- Product Img -->
+				<f:Avatar src="{ProductList>ProductImage}" class="sapUiTinyMarginEnd"/>
+				<!-- Product Info -->
+				<layout:VerticalLayout class="sapUiSmallMarginBeginEnd">
+					<m:Title text="{ProductList>ProductInfo}" wrapping="true" />
+				</layout:VerticalLayout>
+			</m:FlexBox>
 		</headerContent>
 
 		<!-- Content -->

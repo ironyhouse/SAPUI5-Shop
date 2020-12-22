@@ -89,7 +89,6 @@
 							maxLength: 255
 						}
 					}"
-                    required="true"
                     placeholder="{i18n>producPlaceholdertInfo}"
                     change="checkFormValid"/>
                 <!-- Creation Date -->
@@ -102,7 +101,7 @@
                         path: 'ProductList>/productForm/CreationDate',
                         type: 'sap.ui.model.type.Date',
 					    formatOptions: {
-                            style: 'long',
+                            style: 'long'
                         }
                     }"
                     change="checkFormValid" />
@@ -114,11 +113,14 @@
                     id="Manufacture"
                     forceSelection="false"
                     selectedKey="{ProductList>/productForm/Manufacture}"
-                    change="checkFormValid">
-                    <core:Item key="DxA" text="DxA"/>
-                    <core:Item key="DG" text="DG"/>
-                    <core:Item key="FPQ" text="FPQ"/>
-                    <core:Item key="OPA" text="OPA"/>
+                    change="checkFormValid"
+                    items="{
+                        path:'ProductList>/Manufacture',
+                        templateShareable:false
+                    }">
+                    <core:Item
+                        key="{ProductList>manufacture}"
+                        text="{ProductList>manufacture}"/>
                 </Select>
             </f:content>
         </f:SimpleForm>

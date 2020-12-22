@@ -1,6 +1,5 @@
 sap.ui.define([
     "./BaseController",
-    "sap/ui/Shop/Controller/utils/formatter",
     "sap/ui/model/Filter",
     "sap/ui/model/FilterOperator",
     "sap/m/MessageToast",
@@ -8,7 +7,6 @@ sap.ui.define([
     "sap/ui/core/Fragment"
 ], function (
         BaseController,
-        formatter,
         Filter,
         FilterOperator,
         MessageToast,
@@ -18,15 +16,13 @@ sap.ui.define([
 	"use strict";
 	return BaseController.extend("sap.ui.Shop.controller.ProductInfo", {
 
-        formatter: formatter,
-
         /**
          * Controller's "init" lifecycle method.
          */
 		onInit: function () {
             var oView = this.getView(),
                 oRouter = this.getRouterForThis(),
-                oMessageManager = sap.ui.getCore().getMessageManager();
+                oMessageManager = this.getMessageManager();
 
             // Route
             oRouter
@@ -78,6 +74,8 @@ sap.ui.define([
 
         /**
          *  This method navigates to supplier info.
+         *
+         *  @param {sap.ui.base.Event} oEvent event object.
          */
         onNavToSupplierInfo: function (oEvent) {
             var oSelectedListItem = oEvent.getSource(),
@@ -145,6 +143,7 @@ sap.ui.define([
 
         /**
          * "Edit Product" button press event handler.
+         *  This method changes page to edit mode.
          */
         onEditProductPress: function () {
             var nProductIndex = this.nProductIndex,
@@ -166,9 +165,7 @@ sap.ui.define([
          *  This method change a product.
          */
         onSaveChangesPress: function () {
-            var nValidationError = sap.ui
-                    .getCore()
-                    .getMessageManager().getMessageModel().getData().length,
+            var nValidationError = this.getMessageManager().getMessageModel().getData().length,
                 oSuppliersTable = this.byId("SuppliersTable");
 
             if (nValidationError === 0) {
@@ -179,7 +176,7 @@ sap.ui.define([
         },
 
         /**
-         * "Open Cancel Edit Popover" button press event handler.
+         *  This method opens popover.
          *
          *  @param {sap.ui.base.Event} oEvent event object.
          */
@@ -204,7 +201,7 @@ sap.ui.define([
         },
 
         /**
-         * This method cancels edit.
+         * This method discards edit.
          */
         onCancelChanges: function () {
             var oProduct = this.getModel("ProductList").getProperty("/oldProduct"),
@@ -212,7 +209,7 @@ sap.ui.define([
                 oSuppliersTable = this.byId("SuppliersTable");
 
             // remove error message
-            sap.ui.getCore().getMessageManager().removeAllMessages();
+            this.getMessageManager().removeAllMessages();
             // set new value (error)
             var sProductPrice = this.getModel("ProductList").getProperty("/oldProduct/Price"),
                 sProductUnit = this.getModel("ProductList").getProperty("/oldProduct/Unit"),
@@ -222,6 +219,7 @@ sap.ui.define([
             this.byId("ProductUnit").setValue(sProductUnit);
             this.byId("ProductQuantity").setValue(sProductQuantity);
             this.byId("ProductManufacture").setValue(sProductManufacture);
+            this.byId("ProductManufacture").setProperty("valueState", "None");
 
             // toggle edit
             this.getModel("State").setProperty("/State/isEditProduct", false);
@@ -233,29 +231,53 @@ sap.ui.define([
         },
 
         /**
-         * "Open Error Popover" button press event handler.
+         * This method clears input error state.
+         */
+        onManufactureChange: function () {
+            this.byId("ProductManufacture").setProperty("valueState", "None");
+        },
+
+        /**
+         * This method validates combobox.
+         */
+        onEnterValue: function () {
+            var oCombobox = this.byId("ProductManufacture"),
+                aBoxItems = oCombobox.getItems(),
+                sInputValue = oCombobox.getValue();
+
+            for (var i = 0; i < aBoxItems.length; i++) {
+                if (aBoxItems[i].getText() === sInputValue) {
+                    return
+                }
+            }
+
+            oCombobox.setProperty("valueState", "Error");
+            oCombobox.setProperty("showValueStateMessage", true);
+        },
+
+        /**
+         * This method open error popover.
          *
          *  @param {sap.ui.base.Event} oEvent event object.
          */
         onMessagePopoverPress: function (oEvent) {
-			this._getMessagePopover().openBy(oEvent.getSource());
-		},
+            var oButton = oEvent.getSource(),
+            oView = this.getView();
 
-        /**
-         * This method create Error Popover.
-         *
-         *  @param {sap.ui.base.Event} oEvent event object.
-         */
-        _getMessagePopover: function () {
-			// create popover lazily (singleton)
-			if (!this._oMessagePopover) {
-				this._oMessagePopover = sap.ui.xmlfragment(
-                    this.getView().getId(),
-                    "sap.ui.Shop.view.fragments.MessageErrorPopover",
-                    this);
-				this.getView().addDependent(this._oMessagePopover);
-			}
-			return this._oMessagePopover;
+            // create popover
+            if (!this._pPopoverError) {
+                this._pPopoverError = Fragment.load({
+                    id: oView.getId(),
+                    name: "sap.ui.Shop.view.fragments.MessageErrorPopover",
+                    controller: this
+                }).then(function(oPopover) {
+                    oView.addDependent(oPopover);
+                    return oPopover;
+                });
+            }
+            this._pPopoverError.then(function(oPopover) {
+                oPopover.openBy(oButton);
+            });
         },
 
         /**
@@ -282,7 +304,7 @@ sap.ui.define([
         },
 
         /**
-         * "Create supplier" button press event handler.
+         * "Add (supplier)" button press event handler.
          */
         onAddSupplierPress: function () {
             var oView = this.getView(),
@@ -314,14 +336,15 @@ sap.ui.define([
          *  This method create a supplier.
          */
         onCreateSupplierPress: function () {
-            var sSupplierMessageCreate = this.getI18nWord("supplierCreate"),
-                oModel = this.getModel("ProductList"),
+            var oModel = this.getModel("ProductList"),
                 oProducts = oModel.getProperty("/product"),
                 oSupplierForm = oModel.getProperty("/supplierForm"),
                 oSupplierCreatorForm = this.byId("supplierCreator"),
+                sNotApplicable = this.getI18nWord("notApplicable"),
                 nProductIndex = this.nProductIndex,
                 // get product suppliers
                 aSuppliers = oProducts[nProductIndex].Suppliers,
+                sSupplierMessageCreate,
                 nSupplierLength;
 
             // copy supplier form
@@ -339,8 +362,16 @@ sap.ui.define([
                 nSupplierLength = aSuppliers.length;
             }
 
+            // if city empty
+            if (!oSupplierForm["SuppliersCity"]) {
+                oSupplierForm["SuppliersCity"] = sNotApplicable;
+            }
+
             // set new products
-            oModel.setProperty("/product/" + nProductIndex + "/Suppliers/" + nSupplierLength, oSupplierForm)
+            oModel.setProperty("/product/" + nProductIndex + "/Suppliers/" + nSupplierLength, oSupplierForm);
+
+            // get message
+            sSupplierMessageCreate = this.getI18nWord("supplierCreate", oSupplierForm.SupplierName );
             // show message
             MessageToast.show(sSupplierMessageCreate);
             // close dialog
@@ -355,7 +386,7 @@ sap.ui.define([
         },
 
         /**
-         * Check form validation.
+         * Check supplier form for validation.
          */
         checkFormValid: function () {
             var oModel = this.getModel("ProductList"),
@@ -365,7 +396,7 @@ sap.ui.define([
 
             // validation form
             for (let key in oSupplierForm) {
-                if(!oSupplierForm[key]) {
+                if(!oSupplierForm[key] && key !== "SuppliersCity") {
                     bCheckForm = false;
                 }
             }
@@ -374,7 +405,7 @@ sap.ui.define([
         },
 
         /**
-         * Clearing supplier form data.
+         * Clear supplier form data.
          */
         onClearForm: function () {
             var oModel = this.getModel("ProductList"),
@@ -390,7 +421,8 @@ sap.ui.define([
         },
 
         /**
-         * "Supplier Select" button press event handler.
+         * Row selection event handler.
+         * After selection "delete button" will be enabled.
          */
         onSelectSupplierPress: function () {
             var bIsDelete = !!this.byId("SuppliersTable").getSelectedItems().length;
@@ -398,22 +430,21 @@ sap.ui.define([
         },
 
         /**
-         * "Delete Suppliers" button press event handler.
+         * This method show delete supplier confirmation.
          *
          * @param {sap.ui.base.Event} oEvent event object
          */
         onDeleteSupplierButtonPress: function () {
-            var sSupplierMessageDelete = this.getI18nWord("supplierMessageDelete"),
-                onDeleteSupplier = this.onDeleteSupplier.bind(this);
+            var sSupplierMessageDelete = this.getI18nWord("supplierMessageDelete");
 
             MessageBox.confirm(
                 sSupplierMessageDelete,
                 {
                     onClose: function (oAction) {
                         if (oAction === "OK") {
-                            onDeleteSupplier();
+                            this.onDeleteSupplier();
                         }
-                    },
+                    }.bind(this),
                 }
             );
         },
@@ -422,15 +453,14 @@ sap.ui.define([
          * Execute "delete" request of the supplier.
          */
         onDeleteSupplier: function () {
-            var nSupplierId,
-                sSupplierMessageDeleteSuccessful = this.getI18nWord("supplierMessageDeleteSuccessful"),
+            var sSupplierMessageDeleteSuccessful = this.getI18nWord("supplierMessageDeleteSuccessful"),
                 oModel = this.getModel("ProductList"),
                 aProducts = oModel.getProperty("/product"),
                 aSuppliers = this.getView().getBindingContext("ProductList").getProperty("Suppliers"),
                 oSuppliersTable = this.byId("SuppliersTable"),
                 aSelectedSuppliers = oSuppliersTable.getSelectedItems(),
                 nProductIndex = this.nProductIndex,
-                onSelectSupplier = this.onSelectSupplierPress.bind(this);
+                nSupplierId;
 
             // filtered suppliers
             if (aSelectedSuppliers.length) {
@@ -457,13 +487,16 @@ sap.ui.define([
             // clear selections
 			oSuppliersTable.removeSelections();
             // toggle delete button
-            onSelectSupplier();
+            this.onSelectSupplierPress();
         },
 
         /**
          *  Get product index.
+         * @param {number} nProductId product ID.
          *
-         * @param {sap.ui.base.Event} oEvent event object.
+         * @return {number} product index.
+         * 
+         * @private
          */
         _getProductIndex: function (nProductId) {
             var oModel = this.getModel("ProductList"),

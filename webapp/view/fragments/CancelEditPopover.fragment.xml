@@ -10,8 +10,7 @@
             <VBox justifyContent="Center" class="sapUiTinyMargin">
                 <Button
                     width="100%"
-                    type="Emphasized"
-                    text="{i18n>cancelEdit}"
+                    text="{i18n>discard}"
                     press="onCancelChanges" />
             </VBox>
         </content>
